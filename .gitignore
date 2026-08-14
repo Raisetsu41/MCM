@@ -24,9 +24,9 @@
 *.toc
 *.xdv
 
-# 编译生成的 PDF（资料/参考资料 下的 PDF 保留）
-资料/模板/**/*.pdf
-工作区/**/*.pdf
+# 编译生成的 PDF（materials/references 下的 PDF 保留）
+materials/templates/**/*.pdf
+workspace/**/*.pdf
 
 # 编辑器与系统文件
 .vscode/

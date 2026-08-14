@@ -1,13 +1,13 @@
-# 三人协作规范（简版）
+# 协作规范
 
 ## 目录约定
 
-- `资料/`：模板与参考资料，共享只读；要改模板先和队友商量。
-- `工作区/`：论文工作区，正文、代码、图表都放这里。
+- `materials/`：模板与参考资料，共享只读；要改模板先和队友商量。
+- `workspace/`：论文工作区，正文、代码、图表都放这里。
 
 ## 分工建议
 
-- 一人**统稿**：维护 `工作区/main.tex`、`sections/00-摘要.tex`、`ref.bib` 和附录，负责最终编译与定稿。
+- 一人**统稿**：维护 `workspace/main.tex`、`sections/00-abstract.tex`、`ref.bib` 和附录，负责最终编译与定稿。
 - 另外两人按题拆分：分别负责问题一/二、问题三/四，各自维护对应的 `sections/` 文件。
 
 ## 减少冲突
@@ -35,7 +35,7 @@
 ```bash
 git pull --rebase origin main
 git checkout -b feature/xx
-git add 工作区/sections/03-问题一.tex
+git add workspace/sections/03-problem1.tex
 git commit -m "补充问题一模型建立"
 git push -u origin feature/xx
 ```
