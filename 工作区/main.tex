@@ -1,0 +1,61 @@
+% !TEX program = xelatex
+% 论文主文档：汇总章节、参考文献与附录。
+% 正文内容请到 sections/ 下按章节编辑，避免多人同时改本文件。
+
+\PassOptionsToPackage{quiet}{xeCJK}
+\documentclass[withoutpreface,bwprint]{cumcmthesis}
+
+% ================= 宏包与格式 =================
+\usepackage{etoolbox}
+\usepackage{ctex}
+\BeforeBeginEnvironment{tabular}{\zihao{-5}}
+\usepackage[numbers,sort&compress]{natbib}   % 参考文献
+\usepackage[framemethod=TikZ]{mdframed}      % 框架
+\usepackage{url}
+\usepackage{subcaption}                      % 子图
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\renewcommand{\textbf}[1]{{\song\bfseries #1}}
+
+% 流程图样式（技术路线图等可用）
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning}
+\tikzstyle{startstop}=[rectangle, rounded corners, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=red!20]
+\tikzstyle{process}=[rectangle, minimum width=3.5cm, minimum height=1cm, text centered, draw=black, fill=blue!20]
+\tikzstyle{decision}=[diamond, aspect=2, minimum width=3.5cm, minimum height=1cm, text centered, draw=black, fill=green!20]
+\tikzstyle{arrow}=[thick,->,>=stealth]
+
+% ================= 论文基本信息 =================
+\title{论文标题（待定）}
+
+\begin{document}
+
+\pagenumbering{gobble}   % 封面、目录不显示页码
+\maketitle
+
+\input{sections/00-摘要}
+
+% \tableofcontents        % 需要目录时取消注释
+
+\pagenumbering{arabic}
+\input{sections/01-问题重述与分析}
+\input{sections/02-模型假设与符号说明}
+\input{sections/03-问题一}
+\input{sections/04-问题二}
+\input{sections/05-问题三}
+\input{sections/06-问题四}
+\input{sections/07-模型检验与灵敏度分析}
+\input{sections/08-模型评价与改进}
+
+% ================= 参考文献 =================
+\clearpage
+% \nocite{*}  % 如需列出 ref.bib 中所有条目，取消注释；平时用 \cite{key} 引用
+\bibliographystyle{gbt7714-numerical}
+\bibliography{ref}
+
+% ================= 附录 =================
+\clearpage
+\input{sections/09-附录}
+
+\end{document}
