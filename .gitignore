@@ -24,6 +24,9 @@
 *.toc
 *.xdv
 
+# 模板编译生成的 PDF（references 下的参考资料 PDF 不受影响）
+templates/**/*.pdf
+
 # 编辑器与系统文件
 .vscode/
 .idea/
