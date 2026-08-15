@@ -1,7 +1,8 @@
 # 计算结果
 
 > 当前完成：数据读取与预处理（任务 1）、问题一分布拟合（任务 A）、
-> 问题一季节分解（任务 B）。
+> 问题一季节分解（任务 B）、问题一协同变动网络（任务 C）、
+> 问题一时序特征聚类（任务 D）。
 
 ## 运行环境
 
@@ -16,6 +17,14 @@
   matplotlib 3.10.8、pandas 3.0.2
 - 脚本：`code/question1/B.py`，运行命令
   `D:\Python3.13.12\python.exe code\question1\B.py`
+- 问题一任务 C：Python 3.13.12、numpy、pandas、scipy、networkx、
+  matplotlib
+- 脚本：`code/question1/C.py`，运行命令
+  `D:\Python3.13.12\python.exe code\question1\C.py`
+- 问题一任务 D：Python 3.13.12、numpy、pandas、scipy、sklearn、
+  matplotlib、chinese-calendar
+- 脚本：`code/question1/D.py`，运行命令
+  `D:\Python3.13.12\python.exe code\question1\D.py`
 
 ## 数据读取与预处理
 
@@ -67,10 +76,12 @@
 python code/clean_data.py
 D:\Python3.13.12\python.exe code\question1\A.py
 D:\Python3.13.12\python.exe code\question1\B.py
+D:\Python3.13.12\python.exe code\question1\C.py
+D:\Python3.13.12\python.exe code\question1\D.py
 ```
 
 清洗脚本自动从 `../Problem/` 读取附件，输出写入 `results/`；任务 A 脚本
-与任务 B 脚本读取 `results/` 汇总表，输出写入 `results/`、`figures/` 与
+至任务 D 脚本读取 `results/` 汇总表，输出写入 `results/`、`figures/` 与
 `code/question1/outputs/`。
 
 ## 问题一结果
@@ -155,6 +166,74 @@ D:\Python3.13.12\python.exe code\question1\B.py
 - 强度与比值独立重算一致（偏差由数值舍入引起）；
 - 结论：旺季假设仅对花叶类、花菜类、茄类成立。
 
+### 任务 C：去季节相关性与协同变动网络
+
+方法：
+
+- 单品日销量按完整日历补零，有效销售天数 >= 60 的单品进入分析
+  （132 个）；
+- 星期/月份虚拟变量 OLS 残差化，去除日历效应；
+- 残差 Spearman 秩相关，BH-FDR 校正，|r| >= 0.4 且 q < 0.05 建边；
+- 前后半样本（2020-07 至 2021-12、2022-01 至 2023-06）检验，稳健边
+  构建协同变动网络并计算中心度。
+
+关键数值：
+
+- 共 8,646 个单品对；主边 1,062 条（正相关 820、负相关 242），
+  稳健边 154 条，稳健网络包含 51 个节点；
+- 阈值敏感性：0.3 阈值 1848 条边、0.4 阈值 1062 条、0.5 阈值 523 条，
+  对应稳健边 249 / 154 / 81；
+- 品类级相关较强组合：花菜类-食用菌 0.651、花菜类-辣椒类 0.636、
+  辣椒类-食用菌 0.638；茄类与其他品类 |r| < 0.14；
+- 独立重算抽样 200 条边，相关系数最大偏差 5 x 10^-5，q 值与
+  statsmodels 的 BH 校正一致。
+
+输出文件（results/ 与 figures/）：
+
+| 文件 | 行数 | 说明 |
+| --- | --- | --- |
+| q1_corr_edges.csv | 1,062 | 主边：编码、名称、相关系数、p 值、FDR q 值、符号、是否稳健 |
+| q1_network_top.csv | 51 | 稳健网络节点中心度与正/负边数 |
+| q1_corr_threshold.csv | 3 | 阈值敏感性：0.3/0.4/0.5 边数与稳健边数 |
+| q1_corr_heatmap_cat.pdf | - | 品类级 6x6 相关热图 |
+| q1_corr_network.pdf | - | 单品级协同变动网络（红正蓝负） |
+| code/question1/outputs/C.log | - | 运行日志 |
+
+校验：全部输出无缺失值；抽样重算与阈值表核对一致。
+
+### 任务 D：单品时序特征层次聚类
+
+方法：
+
+- 提取六维时序特征：售出天数占比、有售日均销量、有售日变异系数、
+  周末偏置、节假日脉冲（chinese-calendar 法定节假日含调休）、
+  总销量占比；
+- 有效销售天数 >= 60 的 132 个单品，特征 z-score 标准化后取欧式距离，
+  Ward 层次聚类；
+- 簇数 k 在 3-10 扫描，取 silhouette 最大且不小于 0.15 的 k；
+- 80% 抽样重复聚类 50 次，以平均 ARI 报告稳定性。
+
+关键数值：
+
+- 最优簇数 k = 5，silhouette 0.2583，稳定性 ARI 0.4567；
+- 簇大小 13 / 7 / 55 / 34 / 23，命名分别为高量周末脉冲型、高频平稳型、
+  低频稀疏型、低频脉冲型、周末脉冲型；
+- 聚类标签与独立重算的 Ward 聚类完全一致，特征最大偏差约 1e-14。
+
+输出文件（results/ 与 figures/）：
+
+| 文件 | 行数 | 说明 |
+| --- | --- | --- |
+| q1_item_cluster.csv | 132 | 单品特征与簇标签 |
+| q1_cluster_profile.csv | 5 | 簇画像与建议命名 |
+| q1_cluster_k.csv | 8 | 候选 k 的 silhouette 与最优 k 的 ARI |
+| q1_dendrogram.pdf | - | Ward 树状图 |
+| q1_silhouette.pdf | - | silhouette 曲线（标注 k=5） |
+| q1_cluster_profile.pdf | - | 各簇标准化特征均值曲线 |
+| code/question1/outputs/D.log | - | 运行日志 |
+
+校验：全部输出无缺失值；标签与特征独立重算一致。
+
 ## 问题二结果
 
 待任务 3 完成后补充。
@@ -173,4 +252,7 @@ D:\Python3.13.12\python.exe code\question1\B.py
 损耗率从补货侧补偿、批发价 ffill + 均值补齐。问题一任务 A 的方法与
 draft/question1/A.md 完全一致（分布候选、AIC/BIC 选型、60 天单品门槛、
 两阶段模型、经验分位数口径）；任务 B 的方法与 draft/question1/B.md
-一致（STL 周季节、强度公式、月度聚合与旺季比值口径）。
+一致（STL 周季节、强度公式、月度聚合与旺季比值口径）；任务 C 与
+draft/question1/C.md 一致（残差化、Spearman、FDR、稳健网络口径）；
+任务 D 与 draft/question1/D.md 一致（六维特征、Ward、silhouette、
+ARI 口径）。
