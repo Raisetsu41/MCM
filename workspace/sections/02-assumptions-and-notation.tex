@@ -2,19 +2,34 @@
 \section{模型假设}
 为简化问题，本文做出以下假设：
 \begin{itemize}[itemindent=2em]
-  \item 假设1：待写。
-  \item 假设2：待写。
-  \item 假设3：待写。
+  \item 假设1：单周期零库存假设。每日凌晨到货的蔬菜品质一致，当日未售罄部分全额损耗，不结转次日（支撑独立报童模型）。
+  \item 假设2：需求价格独立假设。短期内定价调整不影响顾客对商超的长期忠诚度，即单日需求仅由当期价格决定。
+  \item 假设3：损耗率稳定假设。附件4提供的近期损耗率在预测期（2023年7月1-7日）内保持恒定。
+  \item 假设4：批发价可观测假设。未来一周批发价采用最近可得均价（2023-06-24至06-30）作为已知常数。
+  \item 假设5：需求独立与无后向转移假设。各日期的市场需求相互独立，当日因缺货未被满足的消费者需求不会顺延至次日（即不存在需求积压或跨期替代），因此每日可独立使用报童模型求解。
 \end{itemize}
 
 \section{符号说明}
 \begin{table}[H]
   \centering
-  \begin{tabularx}{\textwidth}{CL}
+  \begin{tabularx}{\textwidth}{
+    >{\centering\arraybackslash}p{0.12\textwidth}
+    >{\raggedright\arraybackslash}X
+    >{\centering\arraybackslash}p{0.12\textwidth}
+  }
     \toprule
-    符号 & 说明 \\
+    符号 & 含义 & 单位 \\
     \midrule
-    $x$ & 待写 \\
+    $i,c,t$ & 单品索引、品类索引、日期 & --- \\
+    $Q_{c,t},\,Q_{i,t}$ & 品类/单品的日净销量 & $\mathrm{kg}$ \\
+    $P_{c,t},\,W_{c,t}$ & 品类加权售价、加权批发价 & 元/$\mathrm{kg}$ \\
+    $L_{i},\,L_{c}$ & 单品/品类损耗率 & --- \\
+    $\beta_{c},\,\hat{\beta}_{i}$ & 品类价格弹性、Shrinkage 修正后的单品弹性 & --- \\
+    $E_{c}$ & 品类价格弹性的绝对值，$E_{c}=|\beta_{c}|$，用于定价公式（$E_{c}>1$时成立） & --- \\
+    $R_{c,t},\,q_{i}$ & 品类补货总量、单品补货量 & $\mathrm{kg}$ \\
+    $y_{i},\,p_{i}$ & 0‑1上架决策变量、单品定价 & ---，元/$\mathrm{kg}$ \\
+    $\gamma$ & 缺货惩罚系数（取值建议为历史毛利的80\%） & 元/$\mathrm{kg}$ \\
+    $\Phi(\cdot)$ & 标准正态分布累积分布函数 & --- \\
     \bottomrule
   \end{tabularx}
   \caption{符号说明}
