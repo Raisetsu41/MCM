@@ -1,12 +1,16 @@
 # 计算结果
 
-> 当前完成：数据读取与预处理（任务 1）。
+> 当前完成：数据读取与预处理（任务 1）、问题一分布拟合（任务 A）。
 
 ## 运行环境
 
 - Python 3.12（Codex 工作区运行时）
 - pandas 3.0.1、numpy、openpyxl 3.1.5
 - 脚本：`code/clean_data.py`，运行命令 `python code/clean_data.py`
+- 问题一任务 A：Python 3.13.12（D:\Python3.13.12\python.exe）、
+  pandas 3.0.2、scipy 1.17.1、matplotlib 3.10.8
+- 脚本：`code/question1/A.py`，运行命令
+  `D:\Python3.13.12\python.exe code\question1\A.py`
 
 ## 数据读取与预处理
 
@@ -56,13 +60,61 @@
 
 ```bash
 python code/clean_data.py
+D:\Python3.13.12\python.exe code\question1\A.py
 ```
 
-脚本自动从 `../Problem/` 读取附件，输出写入 `results/`。
+清洗脚本自动从 `../Problem/` 读取附件，输出写入 `results/`；任务 A 脚本
+读取 `results/` 汇总表，输出写入 `results/`、`figures/` 与
+`code/question1/outputs/`。
 
 ## 问题一结果
 
-待任务 2 完成后补充。
+### 任务 A：品类与单品销量分布拟合
+
+方法：
+
+- 品类级：对 6 个品类的正日净销量分别拟合 lognorm 与 gamma（固定
+  loc=0），按 AIC 选型，BIC 作为交叉核对；
+- 单品级：两阶段模型，阶段一为售出概率（有效销售天数/1096），阶段二为
+  正销量分布（lognorm 或 gamma 按 AIC 选优）；有效销售天数 >= 60 的单品
+  才做参数拟合，其余只输出经验分位数 P50/P75/P90/P95/P99。
+
+关键数值：
+
+- 品类级最优分布：gamma 在 4 个品类最优，lognorm 在 2 个品类最优；
+
+| 分类编码 | 分类名称 | 最优分布 | AIC |
+| --- | --- | --- | --- |
+| 1011010101 | 花叶类 | gamma | 12444.912 |
+| 1011010201 | 花菜类 | gamma | 9548.503 |
+| 1011010402 | 水生根茎类 | gamma | 9898.119 |
+| 1011010501 | 茄类 | gamma | 8059.611 |
+| 1011010504 | 辣椒类 | lognorm | 11037.887 |
+| 1011010801 | 食用菌 | lognorm | 10841.520 |
+
+- 单品级：有售单品 246 个，132 个满足 60 天门槛进入参数拟合
+  （gamma 81 个、lognorm 51 个），114 个稀疏单品只给分位数；
+  5 个单品无销售记录，不参与分布分析；
+- 拟合单品的有效销售天数范围 61~1076，售出概率范围 0.0557~0.9818。
+
+输出文件（results/ 与 figures/）：
+
+| 文件 | 行数 | 说明 |
+| --- | --- | --- |
+| q1_dist_cat.csv | 12 | 6 品类 x 2 分布的参数、负对数似然、AIC、BIC、最优标记 |
+| q1_dist_item.csv | 132 | 单品两阶段拟合参数与 AIC |
+| q1_item_quantiles.csv | 246 | 单品经验分位数 P50/P75/P90/P95/P99 |
+| q1_dist_cat_qq.pdf | - | 品类最优分布 QQ 图（6 面板，图内无大标题） |
+| q1_dist_item_sample.pdf | - | 高频/中频/稀疏代表单品拟合对比图 |
+| code/question1/outputs/A.log | - | 运行日志（时间、最优分布计数） |
+
+校验：
+
+- 选型以 AIC/BIC 为准；K-S 检验在参数估计后 p 值偏保守且大样本下几乎
+  必然拒绝，仅用 QQ 图做图形诊断；
+- 单品 60 天门槛与 question1.md 任务 A 一致；
+- 输入核对：品类日表 6,474 行、单品日表 46,599 行，净销量全部为正，
+  与 data_profile.json 一致。
 
 ## 问题二结果
 
@@ -78,4 +130,7 @@ python code/clean_data.py
 
 ## 与建模报告的一致性说明
 
-数据处理口径与 `reports/ANALYSIS_MODELING_REPORT.md` 第 2 节一致：退货并入净销量、损耗率从补货侧补偿、批发价 ffill + 均值补齐。
+数据处理口径与建模稿（draft/ANALYSIS_0.md）第 2 节一致：退货并入净销量、
+损耗率从补货侧补偿、批发价 ffill + 均值补齐。问题一任务 A 的方法与
+question1.md 任务 A 完全一致（分布候选、AIC/BIC 选型、60 天单品门槛、
+两阶段模型、经验分位数口径）。

@@ -24,9 +24,8 @@
 *.toc
 *.xdv
 
-# 编译生成的 PDF（materials/references 下的 PDF 保留）
+# 模板目录下的 PDF 不提交；workspace 下的图表与论文 PDF 需要提交
 materials/templates/**/*.pdf
-workspace/**/*.pdf
 
 # 编辑器与系统文件
 .vscode/
