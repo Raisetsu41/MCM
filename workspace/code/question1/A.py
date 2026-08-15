@@ -1,15 +1,10 @@
-"""问题一任务A: 品类与单品销量分布拟合.
-
-输入: results/ 下日销量表, 输出: results/ 拟合表与 figures/ 诊断图.
-运行: python code/question1/A.py
-"""
+# 任务A: 品类/单品销量分布拟合
+# 输入 results/ 日销量表, 输出 results/ 拟合表与 figures/ 图
 
 from datetime import datetime
 from pathlib import Path
+import time
 
-import matplotlib
-matplotlib.use("Agg")
-import matplotlib.font_manager as fm
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -23,23 +18,17 @@ LOG_DIR = Path(__file__).resolve().parent / "outputs"
 OUT.mkdir(parents=True, exist_ok=True)
 FIG.mkdir(parents=True, exist_ok=True)
 LOG_DIR.mkdir(parents=True, exist_ok=True)
-t = 1096          # 完整日历天数
-n_day_min = 60    # 单品参数拟合的最小有效销售天数
+t = 1096
+n_day_min = 60
 dists = {"lognorm": stats.lognorm, "gamma": stats.gamma}
-k = {"lognorm": 2, "gamma": 2}   # 固定 loc=0 后的自由参数数
+k = {"lognorm": 2, "gamma": 2}
+DEBUG = True
 
-
-def setup_font():
-  """注册中文字体并设置 matplotlib 字体.""" 
-  for p in (ROOT / "fonts").glob("*.otf"):
-    fm.fontManager.addfont(str(p))
-  plt.rcParams["font.sans-serif"] = ["Source Han Serif CN", "Microsoft YaHei",
-                                     "SimHei"]
-  plt.rcParams["axes.unicode_minus"] = False
+plt.rcParams["font.sans-serif"] = ["Microsoft YaHei", "SimHei"]
+plt.rcParams["axes.unicode_minus"] = False
 
 
 def fit(x, name):
-  """拟合指定分布, 返回参数/对数似然/AIC/BIC.""" 
   d = dists[name]
   par = d.fit(x, floc=0)
   llf = np.sum(d.logpdf(x, *par))
@@ -49,14 +38,12 @@ def fit(x, name):
 
 
 def par_str(name, par):
-  """把拟合参数转成可读字符串.""" 
   if name == "lognorm":
     return f"s={par[0]:.4f}, loc={par[1]:.4f}, scale={par[2]:.4f}"
   return f"a={par[0]:.4f}, loc={par[1]:.4f}, scale={par[2]:.4f}"
 
 
 def best_fit(x):
-  """返回 AIC 最优的分布名与参数.""" 
   best = None
   for name in dists:
     par, llf, aic, bic = fit(x, name)
@@ -66,30 +53,38 @@ def best_fit(x):
 
 
 def dist_cat():
-  """拟合 6 个品类的日净销量分布.""" 
   df = pd.read_csv(OUT / "category_daily_sales.csv", encoding="utf-8-sig")
   rows = []
   for c, g in df.groupby("分类编码"):
     x = g["净销量"].values
     x = x[x > 0]
+    if DEBUG:
+      print("[debug] cat", c, "positive days:", len(x))
+    res = []
     for name in dists:
       par, llf, aic, bic = fit(x, name)
+      res.append((name, par, llf, aic, bic))
+    best = min(res, key=lambda r: r[3])
+    for name, par, llf, aic, bic in res:
       rows.append({"分类编码": c, "分类名称": g["分类名称"].iloc[0],
                    "分布": name, "参数": par_str(name, par),
                    "负对数似然": round(-llf, 3), "AIC": round(aic, 3),
                    "BIC": round(bic, 3),
-                   "是否最优": "是" if name == best_fit(x)[0] else "否"})
+                   "是否最优": "是" if name == best[0] else "否"})
   out = pd.DataFrame(rows)
   out.to_csv(OUT / "q1_dist_cat.csv", index=False, encoding="utf-8-sig")
 
 
 def dist_item():
-  """拟合单品两阶段分布并输出经验分位数.""" 
   df = pd.read_csv(OUT / "item_daily_sales.csv", encoding="utf-8-sig")
   df = df[df["净销量"] > 0]
   n = df.groupby("单品编码").agg(n=("净销量", "size"),
                                   name=("单品名称", "first"),
                                   cat=("分类名称", "first"))
+  if DEBUG:
+    print("[debug] items:", len(n))
+    print("[debug] sale-day min/med/max:", n["n"].min(), n["n"].median(),
+          n["n"].max())
   rows, qs = [], []
   for code, r in n.iterrows():
     x = df.loc[df["单品编码"] == code, "净销量"].values
@@ -110,11 +105,12 @@ def dist_item():
                           encoding="utf-8-sig")
   pd.DataFrame(rows).to_csv(OUT / "q1_dist_item.csv", index=False,
                             encoding="utf-8-sig")
+  if DEBUG:
+    print("[debug] fitted:", len(rows), "sparse:", len(qs) - len(rows))
   return df
 
 
 def sample_codes(df):
-  """挑高频/中频/稀疏代表单品各 2 个.""" 
   n = df.groupby("单品编码")["净销量"].size()
   hi = n.nlargest(2).index.tolist()
   mid = n.iloc[(n - n.median()).abs().argsort()[:2]].index.tolist()
@@ -123,7 +119,6 @@ def sample_codes(df):
 
 
 def qq_cat():
-  """输出品类最优分布 QQ 图.""" 
   df = pd.read_csv(OUT / "category_daily_sales.csv", encoding="utf-8-sig")
   fig, axs = plt.subplots(2, 3, figsize=(12, 8))
   for ax, (c, g) in zip(axs.ravel(), df.groupby("分类编码")):
@@ -141,7 +136,6 @@ def qq_cat():
 
 
 def fig_item(df):
-  """输出代表单品拟合对比图.""" 
   codes = sample_codes(df)
   fig, axs = plt.subplots(2, 3, figsize=(14, 8))
   for ax, code in zip(axs.ravel(), codes):
@@ -164,7 +158,7 @@ def fig_item(df):
 
 
 def main():
-  setup_font()
+  t0 = time.time()
   dist_cat()
   df = dist_item()
   qq_cat()
@@ -172,6 +166,17 @@ def main():
   c = pd.read_csv(OUT / "q1_dist_cat.csv", encoding="utf-8-sig")
   it = pd.read_csv(OUT / "q1_dist_item.csv", encoding="utf-8-sig")
   qt = pd.read_csv(OUT / "q1_item_quantiles.csv", encoding="utf-8-sig")
+  if DEBUG:
+    print("[debug] cat rows:", len(c))
+    print("[debug] winners:", c.loc[c["是否最优"] == "是", "分布"].tolist())
+    print("[debug] item fitted:", len(it), "sparse:",
+          len(qt) - len(it), "no-sale:", 251 - len(qt))
+    print("[debug] nd range:", it["有效销售天数"].min(),
+          it["有效销售天数"].max())
+    print("[debug] nan total:", int(c.isna().sum().sum()
+                                    + it.isna().sum().sum()
+                                    + qt.isna().sum().sum()))
+    print("[debug] elapsed: %.1fs" % (time.time() - t0))
   lines = [
     f"run_time={datetime.now().isoformat(timespec='seconds')}",
     f"cat_winner={c.loc[c['是否最优']=='是', '分布'].tolist()}",

@@ -1,6 +1,7 @@
 # 计算结果
 
-> 当前完成：数据读取与预处理（任务 1）、问题一分布拟合（任务 A）。
+> 当前完成：数据读取与预处理（任务 1）、问题一分布拟合（任务 A）、
+> 问题一季节分解（任务 B）。
 
 ## 运行环境
 
@@ -11,6 +12,10 @@
   pandas 3.0.2、scipy 1.17.1、matplotlib 3.10.8
 - 脚本：`code/question1/A.py`，运行命令
   `D:\Python3.13.12\python.exe code\question1\A.py`
+- 问题一任务 B：Python 3.13.12、statsmodels 0.14.6、scipy 1.17.1、
+  matplotlib 3.10.8、pandas 3.0.2
+- 脚本：`code/question1/B.py`，运行命令
+  `D:\Python3.13.12\python.exe code\question1\B.py`
 
 ## 数据读取与预处理
 
@@ -61,10 +66,11 @@
 ```bash
 python code/clean_data.py
 D:\Python3.13.12\python.exe code\question1\A.py
+D:\Python3.13.12\python.exe code\question1\B.py
 ```
 
 清洗脚本自动从 `../Problem/` 读取附件，输出写入 `results/`；任务 A 脚本
-读取 `results/` 汇总表，输出写入 `results/`、`figures/` 与
+与任务 B 脚本读取 `results/` 汇总表，输出写入 `results/`、`figures/` 与
 `code/question1/outputs/`。
 
 ## 问题一结果
@@ -112,9 +118,42 @@ D:\Python3.13.12\python.exe code\question1\A.py
 
 - 选型以 AIC/BIC 为准；K-S 检验在参数估计后 p 值偏保守且大样本下几乎
   必然拒绝，仅用 QQ 图做图形诊断；
-- 单品 60 天门槛与 question1.md 任务 A 一致；
+- 单品 60 天门槛与 draft/question1/A.md 任务 A 一致；
 - 输入核对：品类日表 6,474 行、单品日表 46,599 行，净销量全部为正，
   与 data_profile.json 一致。
+
+### 任务 B：STL 季节分解
+
+方法：
+
+- 每品类按完整日历（T = 1095 天）补零，共 6,570 个品类-日（补零 96 个）；
+- 使用 statsmodels STL（period=7、robust=True）分解为趋势、季节、残差；
+- 按方差分解计算季节强度与趋势强度；
+- 年季节用月度聚合，旺季取 4-10 月、淡季取 11-3 月，输出旺季比值。
+
+关键数值：
+
+- 季节强度介于 0.1729 至 0.2616，趋势强度介于 0.5135 至 0.6268；
+- 旺季比值大于 1 的品类：花叶类 1.0945、花菜类 1.0089、茄类 1.5412；
+  水生根茎类 0.6462、辣椒类 0.8696、食用菌 0.6343，淡季销量更高；
+- 季节强度、趋势强度与旺季比值独立重算最大偏差 5 x 10^-5。
+
+输出文件（results/ 与 figures/）：
+
+| 文件 | 行数 | 说明 |
+| --- | --- | --- |
+| q1_stl_fit.csv | 6,570 | 每品类逐日净销量、趋势、季节、残差 |
+| q1_seasonal_strength.csv | 6 | 季节强度、趋势强度、旺季/淡季均值与比值 |
+| q1_monthly_mean.csv | 72 | 品类 x 月份平均日销量 |
+| q1_stl.pdf | - | 6 品类 STL 三分量图（6 面板，图内无大标题） |
+| q1_monthly_mean.pdf | - | 月度均值柱状图（4-10 月高亮） |
+| code/question1/outputs/B.log | - | 运行日志（时间、强度与比值） |
+
+校验：
+
+- 分解表无缺失值，行数 6 x 1095 = 6,570 与完整日历一致；
+- 强度与比值独立重算一致（偏差由数值舍入引起）；
+- 结论：旺季假设仅对花叶类、花菜类、茄类成立。
 
 ## 问题二结果
 
@@ -132,5 +171,6 @@ D:\Python3.13.12\python.exe code\question1\A.py
 
 数据处理口径与建模稿（draft/ANALYSIS_0.md）第 2 节一致：退货并入净销量、
 损耗率从补货侧补偿、批发价 ffill + 均值补齐。问题一任务 A 的方法与
-question1.md 任务 A 完全一致（分布候选、AIC/BIC 选型、60 天单品门槛、
-两阶段模型、经验分位数口径）。
+draft/question1/A.md 完全一致（分布候选、AIC/BIC 选型、60 天单品门槛、
+两阶段模型、经验分位数口径）；任务 B 的方法与 draft/question1/B.md
+一致（STL 周季节、强度公式、月度聚合与旺季比值口径）。
