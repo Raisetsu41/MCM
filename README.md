@@ -12,15 +12,16 @@
 ├── materials/                 # 共享资料（只读）
 │   ├── templates/CUMCM/       # 国赛 LaTeX 模板（cumcmthesis v2.6）
 │   └── references/            # Word 模板、AI 提示词、速成课讲义
-├── Problem/                    # 选题与赛题数据
+├── Problem/                    # 选题与赛题数据（附件 1-4 + C 题）
 └── workspace/                  # 主要工作区（建模、代码、论文都在这里）
     ├── README.md               # 工作区说明
     ├── todo.md                 # 待办事项
     ├── problem-preference.md   # 选题意愿表
     ├── main.tex                # 论文主文档
     ├── sections/               # 分章节正文
-    ├── draft/                  # 建模报告与结果报告
-    │   ├── ANALYSIS_MODELING_REPORT.md
+    ├── draft/                  # 建模稿与结果报告
+    │   ├── ANALYSIS_0.md
+    │   ├── ANALUSIS_lzy.md
     │   └── RESULTS_REPORT.md
     ├── code/                   # 程序源码
     ├── results/                # 清洗后数据与结果
