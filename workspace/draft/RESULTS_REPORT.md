@@ -2,8 +2,7 @@
 
 > 当前完成：数据读取与预处理（任务 1）、问题一分布拟合（任务 A）、
 > 问题一季节分解（任务 B）、问题一协同变动网络（任务 C）、
-> 问题一时序特征聚类（任务 D）、问题二主模型、问题二品类相关联合优化
-> （扩展）。
+> 问题一时序特征聚类（任务 D）、问题二主模型。
 
 ## 运行环境
 
@@ -26,11 +25,8 @@
   matplotlib、chinese-calendar
 - 脚本：`code/question1/D.py`，运行命令
   `D:\Python3.13.12\python.exe code\question1\D.py`
-- 问题二联合优化：Python 3.13.12（numpy/pandas/scipy/matplotlib）与
-  g++ 9.3（MinGW，-std=c++17）
-- 脚本：`code/question2/joint_opt.py` 与 `code/question2/joint_opt.cpp`
-- 问题二主模型：C++ 计算（q2.cpp，只输出 CSV）+ Python 画图
-  （q2_plot.py，只读 C++ 结果）
+- 问题二主模型：C++ 报童内核（nv.cpp -> nv.dll，C ABI，ctypes 调用）+
+  单一 Python 主脚本（q2.py，pandas/statsmodels/numpy 编排）
 
 ## 数据读取与预处理
 
@@ -84,11 +80,8 @@ D:\Python3.13.12\python.exe code\question1\A.py
 D:\Python3.13.12\python.exe code\question1\B.py
 D:\Python3.13.12\python.exe code\question1\C.py
 D:\Python3.13.12\python.exe code\question1\D.py
-D:\Python3.13.12\python.exe code\question2\joint_opt.py
-cd code\question2 && g++ -O2 -std=c++17 -o joint_opt.exe joint_opt.cpp
-cd code\question2 && joint_opt.exe
-cd code\question2 && g++ -O2 -std=c++17 -o q2.exe q2.cpp && q2.exe
-D:\Python3.13.12\python.exe code\question2\q2_plot.py
+cd code\question2 && g++ -O3 -shared -std=c++17 -o nv.dll nv.cpp
+D:\Python3.13.12\python.exe code\question2\q2.py
 ```
 
 清洗脚本自动从 `../Problem/` 读取附件，输出写入 `results/`；任务 A 脚本
@@ -253,7 +246,7 @@ D:\Python3.13.12\python.exe code\question2\q2_plot.py
 - 2026-08-16 图表可读性修复：q1_dendrogram.pdf 叶子按簇着色并添加
   簇标签与命名图例。
 
-### 问题二主模型（C++ 计算 + Python 绘图）
+### 问题二主模型（Python 主流程 + C++ 数学内核）
 
 方法（对应 draft/question2/Q2-modeling.md）：
 
@@ -269,14 +262,20 @@ D:\Python3.13.12\python.exe code\question2\q2_plot.py
 - 报童补货：临界比 kappa=(P*-c')/P*，分位数采用对数正态口径（与问题一
   一致），补货量 R=y*/(1-L)，并输出确定性基准 R0 与期望利润。
 
-关键数值（C++ 输出）：
+关键数值（q2.py 输出）：
 
-- 价格弹性：花叶类 -0.594、花菜类 -0.515、水生根茎类 -0.044、茄类
-  -0.259、辣椒类 -0.124、食用菌 -0.363，均小于 1，最优加价率由网格
-  搜索给出（0.440~1.140）；
+- 价格弹性与显著性：花叶类 -0.452（t=-6.79）、花菜类 -0.503（t=-5.45）、
+  水生根茎类 -0.070（t=-0.70，不显著）、茄类 -0.258（t=-3.16）、
+  辣椒类 -0.128（t=-3.03）、食用菌 -0.313（t=-5.28）；
+- 价格共线性：lnP 相关矩阵条件数 7.9，交叉价格项可识别；
+- 预测回测（后 28 天 MAPE）：花叶类 24.1%、花菜类 37.2%、水生根茎类
+  20.6%、茄类 30.3%、辣椒类 27.4%、食用菌 23.5%；
+- 最优加价率由网格搜索给出（0.440~1.140）；弱弹性品类（|E|<1）利润在
+  历史区间内单调递增，4/6 品类最优解落在加价率 P95 上界，属"历史区间
+  约束下的最优"，论文需注明对区间边界的敏感性；
 - 临界比范围 (0.1956, 0.4852)，补货量最小 15.716 kg，全部品类期望
   利润为正；
-- 7 天合计：补货总量 2372.16 kg，期望总利润 4811.60 元。
+- 7 天合计：补货总量 2607.89 kg，期望总利润 5305.19 元。
 
 输出文件：
 
@@ -287,48 +286,19 @@ D:\Python3.13.12\python.exe code\question2\q2_plot.py
 | q2_replenishment.csv | 每日批发价、最优售价、加价率、期望需求、临界比、补货量与期望利润 |
 | q2_summary.csv | 7 天总补货量与总期望利润 |
 | q2_scatter.csv | 正销量日的 ln 价格/ln 销量（画图用） |
-| q2_elasticity_fit.pdf 等 4 图 | 弹性拟合、预测、利润-价格曲线、补货量（Python 版） |
+| q2_backtest.csv | 后 28 天滚动回测 MAPE 与样本量 |
+| q2_elasticity_fit.pdf 等 4 图 | 弹性拟合、预测、利润-价格曲线、补货量（q2.py 内直接生成） |
 
-与 Q2-modeling.md 的差异说明：C++ 环境无 Prophet，预测步骤采用
+与 Q2-modeling.md 的差异说明：预测步骤采用
 "ln 价格回归 + 季节/趋势"的线性等价实现；报童分位数统一为对数正态口径
-（问题一结论），正态与经验分位数作为后续对照。
+（问题一结论），正态与经验分位数作为后续对照。nv.cpp 仅提供报童数值原语
+（对数正态分位/期望截断），其余统计与画图全部由 Python 完成；
 
-### 问题二扩展：品类相关联合优化
-
-方法（对应 draft/question2/question2.md 第 9 节）：
-
-- 6 品类联立需求系统（含全部交叉价格项 + 星期/月份/趋势控制），
-  OLS 估计交叉弹性矩阵；
-- 独立定价用历史价格区间网格搜索，联合定价用差分进化（6 维，
-  pop=60、gen=300）；
-- 残差秩相关矩阵 + Gaussian copula + lognormal 边际分布抽样 2 万组
-  联合需求；联合补货在均值-标准差目标（lambda=0.1）下用 SAA 优化，
-  与独立报童解对比。
-
-关键数值：
-
-- 自有价格弹性：花叶类 -0.84、花菜类 -0.55、水生根茎类 -0.35、
-  茄类 -0.36、辣椒类 -0.53、食用菌 -0.65；
-- 残差 Spearman 相关较强组合：花叶类-食用菌 0.655、花叶类-辣椒类 0.610、
-  辣椒类-食用菌 0.569；
-- 定价口径总利润：独立约 2174 元/日，联合约 2517 元/日（提升约 16%）；
-- 补货口径期望总利润：独立约 1923 元/日，联合约 1920 元/日（几乎持平，
-  联合以极小均值损失换取风险下降，利润方差约 7.3e5）；
-- 约束校验：临界比均位于 (0.1396, 0.7752)，补货量非负，价格在历史区间内，
-  无亏损品类。
-
-输出文件（results/ 与 figures/）：
-
-| 文件 | 说明 |
-| --- | --- |
-| q2_joint_elasticity.csv | 6x6 弹性矩阵、样本量、R2 |
-| q2_joint_pricing.csv | 独立/联合最优价与期望利润 |
-| q2_joint_replenishment.csv | 独立/联合补货量与期望利润 |
-| q2_joint_compare.pdf | 补货量与期望利润对比图（Python 版生成） |
-| code/question2/outputs/joint.log | 运行日志 |
-
-双版本一致性：三张 CSV 最大偏差 弹性 0.006、定价 0.62 元、补货 2.34 kg，
-由 OLS 求解器与随机数实现差异引起，量级不影响结论。
+2026-08-16 严谨性修正：t 值改为自有价格列的 t 统计量（此前误取首列）；
+弹性拟合图改用"去日历效应偏残差图"（纵轴为剔除趋势/星期/月份后的
+ln 销量），散点云以弹性直线为中心，避免月份/星期效应造成视觉偏离；
+利润-价格图增加历史价格区间阴影；新增后 28 天回测 MAPE 输出；
+水生根茎类弹性不显著，其定价结论应降级为"价格弹性证据不足"。
 
 ## 问题二结果
 
