@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import statsmodels.api as sm
+from scipy.optimize import differential_evolution
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -134,25 +135,63 @@ def ols(q, p, cats, idx):
 
 
 def mk(st, B):
-  # 最优加价率, 解析解或网格搜索, 价格夹逼
+  # 最优加价率: 题面成本加成口径, 网格按夹逼后价格评估
   cp = st["W"] / (1 - st["L"])
   mo = []
   an = []
   for i, c in enumerate(st.index):
     E = abs(B[i, i])
     if E > 1:
-      m = E / ((E - 1) * (1 - st.loc[c, "L"])) - 1
+      p = E / (E - 1) * cp.loc[c]
       a = 1
     else:
-      g = np.linspace(st.loc[c, "m5"], st.loc[c, "m95"], 101)
-      p = (1 + g) * st.loc[c, "W"]
-      prof = (p - cp.loc[c]) * st.loc[c, "mu"] * (p / st.loc[c, "pbar"]) ** B[i, i]
-      m = g[np.argmax(prof)]
+      g = np.linspace(st.loc[c, "m5"], st.loc[c, "m95"], 201)
+      best = g[0]
+      bv = -1e100
+      for mg in g:
+        pg = np.clip((1 + mg) * st.loc[c, "W"],
+                     st.loc[c, "p5"], st.loc[c, "p95"])
+        v = (pg - cp.loc[c]) * st.loc[c, "mu"] * \
+            (pg / st.loc[c, "pbar"]) ** B[i, i]
+        if v > bv:
+          bv = v
+          best = mg
+      p = np.clip((1 + best) * st.loc[c, "W"],
+                  st.loc[c, "p5"], st.loc[c, "p95"])
       a = 0
-    pst = np.clip((1 + m) * st.loc[c, "W"], st.loc[c, "p5"], st.loc[c, "p95"])
-    mo.append(pst / st.loc[c, "W"] - 1)
+    p = np.clip(p, st.loc[c, "p5"], st.loc[c, "p95"])
+    mo.append(p / st.loc[c, "W"] - 1)
     an.append(a)
   return np.array(mo), np.array(an)
+
+
+def jp(st, B):
+  # 联合定价: 交叉弹性 + 差分进化, 独立基准用同一价格可行域
+  cp = st["W"].values / (1 - st["L"].values)
+  pbar = st["pbar"].values
+  mu = st["mu"].values
+  n = len(mu)
+  lo = st["p5"].values
+  hi = st["p95"].values
+
+  def prof(p):
+    s = 0.0
+    for i in range(n):
+      s += (p[i] - cp[i]) * mu[i] * np.prod((p / pbar) ** B[i])
+    return -s
+
+  res = differential_evolution(prof, list(zip(lo, hi)), seed=7, tol=1e-8)
+  pj = res.x
+  pib = np.zeros(n)
+  pi_i = np.zeros(n)
+  for i in range(n):
+    g = np.linspace(lo[i], hi[i], 201)
+    v = (g - cp[i]) * mu[i] * (g / pbar[i]) ** B[i, i]
+    pib[i] = g[np.argmax(v)]
+    pi_i[i] = v.max()
+  pi_j = np.array([(pj[i] - cp[i]) * mu[i] * np.prod((pj / pbar) ** B[i])
+                   for i in range(n)])
+  return pj, pib, pi_i, pi_j
 
 
 def fc(el, st, cats):
@@ -273,6 +312,7 @@ def main():
   FQ, FS = fc(el, st, cats)
   cp = st["W"].values / (1 - st["L"].values)
   pst = (1 + mo) * st["W"].values
+  pj, pib, pi_i, pi_j = jp(st, B)
   sca = (pst / st["pbar"].values) ** np.diag(B)
   mu = FQ * sca[:, None]
   sg = FS * sca[:, None]
@@ -316,6 +356,13 @@ def main():
                 "7天总补货量": R.sum(axis=1), "7天总期望利润": ep.sum(axis=1)}
                ).to_csv(OUT / "q2_summary.csv", index=False,
                         encoding="utf-8-sig")
+  pd.DataFrame({"分类编码": cats, "分类名称": [names[c] for c in cats],
+                "独立最优价": np.round(pib, 3),
+                "联合最优价": np.round(pj, 3),
+                "独立利润": np.round(pi_i, 2),
+                "联合利润": np.round(pi_j, 2)}
+               ).to_csv(OUT / "q2_joint_pricing.csv", index=False,
+                        encoding="utf-8-sig")
   sc.to_csv(OUT / "q2_scatter.csv", index=False, encoding="utf-8-sig")
   back.reset_index().rename(columns={"c": "分类编码"}).to_csv(
     OUT / "q2_backtest.csv", index=False, encoding="utf-8-sig")
@@ -327,10 +374,12 @@ def main():
     print("[debug] 弹性:", np.round(np.diag(B), 4))
     print("[debug] t值:", el["t"].round(2).to_dict())
     print("[debug] MAPE:", back["mape"].round(1).to_dict())
+    print("[debug] 独立定价总利润: %.2f 联合定价总利润: %.2f 提升: %.1f%%"
+          % (pi_i.sum(), pi_j.sum(), (pi_j.sum() / pi_i.sum() - 1) * 100))
     print("[debug] 总补货: %.2f 总利润: %.2f" % (R.sum(), ep.sum()))
   print("[save] q2_elasticity.csv / q2_forecast.csv / "
         "q2_replenishment.csv / q2_summary.csv / q2_scatter.csv / "
-        "q2_backtest.csv")
+        "q2_backtest.csv / q2_joint_pricing.csv")
   print("[save] q2_elasticity_fit.pdf / q2_forecast.pdf / "
         "q2_price_curve.pdf / q2_replenishment.pdf")
 
