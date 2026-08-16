@@ -18,7 +18,7 @@ LOG_DIR = Path(__file__).resolve().parent / "outputs"
 OUT.mkdir(parents=True, exist_ok=True)
 FIG.mkdir(parents=True, exist_ok=True)
 LOG_DIR.mkdir(parents=True, exist_ok=True)
-t = 1096
+t = 1095
 n_day_min = 60
 dists = {"lognorm": stats.lognorm, "gamma": stats.gamma}
 k = {"lognorm": 2, "gamma": 2}
