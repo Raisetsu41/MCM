@@ -224,18 +224,22 @@ $E[\sum_c\pi_c]=\sum_c E[\pi_c]$；又因每个 $f_c$ 只含自己的决策 $R_c
 集可分，最大化的"和"可逐项分解：
 
 $$\max_{R\in X}\sum_{c=1}^{6}f_c(R_c)=\sum_{c=1}^{6}\max_{R_c\in X_c}f_c(R_c).$$
+该分解性是多品无约束报童问题的标准结论：无容量约束时，多品报童退化为相互独立的单品问题 [1][22]。
 
 **命题 2（最优订货只依赖边际分布）**：报童最优条件 $F_c(y^*_c)=\kappa_c$
 只含品类 $c$ 的边际 CDF。品类间相关性刻画的是联合分布结构，不改变任何一
 个边际分布 $F_c$，故不改变任一品类的最优订货量 $y^*_c$ 与补货量 $R^*_c$。
+（最优条件只依赖边际分布，是单周期报童模型的基本性质 [6][7][8]。）
 
 **推论**：在风险中性（题面"收益最大"的标准读法，即最大化期望收益）下，逐
 品类独立优化与整体联合优化的最优决策相同。相关性只进入总收益的方差分解
+换言之，协方差矩阵既不进入临界比条件（6.1），也不进入最优价公式（4.2），最优补货量与最优售价 $R^*$、$P^*$ 与品类间相关性完全无关。
 
 $$\mathrm{Var}\left(\sum_c\pi_c\right)=\sum_c\mathrm{Var}(\pi_c)
 +2\sum_{c<c'}\mathrm{Cov}(\pi_c,\pi_{c'}),$$
 
 正相关通过协方差项放大总收益波动，但不改变期望收益。
+（期望收益与相关结构无关、相关性只进入方差，是组合理论的基本结论 [19]。）
 
 **结论成立的三项条件**（缺一即失效，论文需写明）：
 
@@ -244,7 +248,9 @@ $$\mathrm{Var}\left(\sum_c\pi_c\right)=\sum_c\mathrm{Var}(\pi_c)
 3. 边际分布外生：品类 $c$ 的需求边际分布不受其他品类定价决策的影响。
 
 **失效情形与本文定位**：若 ① 商超风险厌恶或存在联合风险约束（资金预算、
-亏损概率上限），收益联动会改变最优决策；② 存在共享容量约束，需联合优化；
+亏损概率上限），收益联动会改变最优决策（风险厌恶会使报童订货偏离风险中性
+分位数 [20]，CVaR 等风险度量同样改变最优订货 [21]）；② 存在共享容量约束，
+需联合优化（共享预算/容量约束是使多品报童耦合的经典来源 [22][23]）；
 ③ 需求存在替代/互补（涨价导致跨品类转移），独立定价不是真实意义上的全局
 最优。其中 ③ 最贴近本题现实：问题一的相关性分析只能识别"销量同步变动"，
 不能识别因果替代结构，交叉价格弹性建模留待问题四的数据扩展。
@@ -291,6 +297,10 @@ $P^*_{c,t}$、每日补货总量 $R_{c,t}$（kg）、预期收益；并附确定
 | 需求分布口径：沿用问题一拟合分布，经验分位数兜底 | [18] | 零售需求宜用离散/偏态分布（非正态）并处理不可观测损失销售 |
 | 伪回归防护与内生性稳健性 | [15] | 价格与需求联合决定，需滞后价格/IV 检验 |
 | 价格口径（固定权重指数） | [16] | 价格指数与聚合理论：加权口径影响弹性估计 |
+| 多品无约束报童的可分解性 | [22] | 无容量约束时多品报童退化为独立单品问题 |
+| 相关性只进入方差、不进期望 | [19] | 组合期望收益与相关结构无关，相关仅影响组合方差 |
+| 风险偏好改变订货量（风险中性为基准） | [20][21] | 风险厌恶/CVaR 报童订货偏离风险中性分位数 |
+| 共享约束是品类耦合的来源 | [22][23] | 预算/容量约束使多品报童必须联合求解 |
 
 ## 九、参考文献（编号沿用主参考文献表，仅列本文引用条目）
 
@@ -356,3 +366,12 @@ Cambridge University Press, 1980.
 inventory management with unobservable lost sales[J]. Naval Research
 Logistics, 1996, 43(6): 839-861.
 doi:10.1002/(SICI)1520-6750(199609)43:6<839::AID-NAV5>3.0.CO;2-V
+[19] Markowitz H. Portfolio selection[J]. The Journal of Finance, 1952, 7(1): 77-91. doi:10.2307/2975974
+
+[20] Eeckhoudt L, Gollier C, Schlesinger H. The risk-averse (and prudent) newsboy[J]. Management Science, 1995, 41(5): 786-794. doi:10.1287/mnsc.41.5.786
+
+[21] Chen Y F, Xu M, Zhang Z G. Technical note—A risk-averse newsvendor model under the CVaR criterion[J]. Operations Research, 2009, 57(4): 1040-1044. doi:10.1287/opre.1080.0603
+
+[22] Erlebacher S J. Optimal and heuristic solutions for the multi-item newsvendor problem with a single capacity constraint[J]. Production and Operations Management, 2000, 9(3): 303-318. doi:10.1111/j.1937-5956.2000.tb00139.x
+
+[23] Abdel-Malek L, Montanari R, Morales L C. Exact, approximate, and generic iterative models for the multi-product newsboy problem with budget constraint[J]. International Journal of Production Economics, 2004, 91(2): 189-198. doi:10.1016/j.ijpe.2003.09.004
