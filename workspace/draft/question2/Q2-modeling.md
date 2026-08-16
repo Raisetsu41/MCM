@@ -1,0 +1,286 @@
+# 问题二：品类级补货总量与定价策略
+
+## 一、建模思路
+
+问题二要求：(a) 分析各蔬菜品类销售总量与成本加成定价的关系；(b) 给出未来
+一周（2023-07-01 至 07-07）各品类的日补货总量与定价策略，使商超收益最大。
+
+本部分按"关系分析 → 最优定价 → 需求预测 → 报童补货"四步建模：
+
+1. **需求-价格关系**：对每个品类建立 Log-Log 双对数回归
+   $\ln Q_{c,t} \sim \ln P_{c,t}$，估计品类价格弹性 $\beta_c$，作为"销售总量
+   与成本加成定价关系"的定量刻画；
+2. **最优定价**：在常弹性需求假设下对利润函数求导，得到最优售价与加价率
+   的解析解；定价策略以**品类加价率**形式输出；
+3. **基准需求预测**：先用弹性把历史销量折算到参考价下的"去价格需求序列"，
+   再交给 Prophet 预测未来一周基准需求，避免价格效应被双重计入；
+4. **报童补货**：在预测均值与标准差基础上用临界比确定安全库存，得到每日
+   品类补货总量，并给出确定性无风险补货量作对比基准。
+
+与题面约束的对应：蔬菜进货在凌晨 3:00-4:00 且当日具体批发价未知，而最优
+加价率 $m_c^*$ 只依赖品类弹性与损耗率、与批发价 $W$ 无关，因此商超可提前
+确定"加价率策略"，到货后按实际批发价套用售价；补货量依赖批发价的预测值，
+通过近一周均价估计并配合 $\pm 10\%$ 灵敏度覆盖风险。
+
+核心假设（沿用冲突裁决，仅列问题二所需）：
+
+- 单周期零库存：当日未售罄部分全额损耗、不结转次日，每日可独立决策
+  [1][6][7]；
+- 需求价格独立：短期定价调整不影响长期忠诚度，单日需求仅由当期价格决定；
+- 损耗率稳定：附件 4 近期损耗率在预测期内保持恒定 [9][10]；
+- 批发价可观测：预测期批发价采用 2023-06-24 至 06-30 最近可得均价
+  $\bar W_c$，并以 $\pm 10\%$ 扰动做灵敏度检验；
+- 需求独立且无跨期转移：当日未满足需求不顺延至次日 [7]。
+
+## 二、数据与统计口径（建模相关）
+
+| 量 | 口径 | 来源 |
+| --- | --- | --- |
+| $Q_{c,t}$ 品类日净销量 | 附件 2 按单品-品类映射聚合，退货按负销量并入当日净销量 | 附件 2 |
+| $W_{c,t}$ 品类批发价 | 附件 3 单品批发价按固定基期销量份额加权 | 附件 3 |
+| $L_c$ 品类损耗率 | 附件 4 单品损耗率按固定销量份额加权：$L_c=\sum_i w_i L_i$ | 附件 4 |
+| $P_{c,t}$ 品类售价 | 单品售价按**固定基期销量权重**加权（Laspeyres 型价格指数） | 附件 2 |
+
+价格口径是本部分最关键的统计口径：若用当期销量加权平均价，则"高价单品
+销量低"会机械压低加权均价，造成虚假的负相关并高估弹性 [16]。故主口径采用
+固定基期权重 $P_{c,t}=\sum_i w_i\,p_{i,t}$（$w_i$ 取 2022-07 至 2023-06 的
+相对销量份额）；稳健性口径取中位价与当期销售额加权，见灵敏度第 3 条。
+品类单品进出会导致指数口径不连续，作为局限写入论文。
+
+回归样本：2020-07-01 至 2023-06-30 共 1096 天；预测窗口 2023-07-01 至
+07-07。
+
+## 三、需求-价格关系：品类 Log-Log 弹性回归
+
+### 3.1 模型设定
+
+对品类 $c$ 建立双对数回归（常弹性需求模型）[2][3]：
+
+$$\ln Q_{c,t}=\alpha_c+\beta_c\ln P_{c,t}+\delta_c\,t
++\sum_{k=1}^{6}\gamma_{c,k}\,\mathbb{1}_{\{\mathrm{weekday}=k\}}
++\sum_{m=1}^{11}\eta_{c,m}\,\mathbb{1}_{\{\mathrm{month}=m\}}
++\varepsilon_{c,t}$$
+
+其中 $\beta_c$ 为价格弹性（预期为负），$t$ 为线性趋势项（防伪回归），星期与
+月份哑变量刻画周期结构。双对数形式的优点：弹性为常数、可直接外推出"销量-
+价格"反事实，是销量-价格实证研究的标准形式 [2]。
+
+### 3.2 估计与诊断
+
+- 每品类独立 OLS 估计，报告弹性 $\hat\beta_c$、$t$ 值（显著性）、$R^2$、
+  样本量与残差平稳性（DW/ADF），防止伪回归与无效拟合 [15]。
+- **内生性处理**：价格与当期需求同时决定，OLS 可能有偏。稳健性做法：用
+  滞后一期价格 $\ln P_{c,t-1}$ 替代当期价格重新估计，或采用工具变量；
+  论文报告两种估计的差异 [15]。
+- **关系输出**：品类弹性表（$\hat\beta_c$、显著性、$R^2$），并给出反事实
+  示例："加价率从 30% 提至 50%，品类销量预计下降约
+  $\left(1.5/1.3\right)^{\hat\beta_c}-1$"，直接回答"销售总量与成本加成定价
+  的关系"。
+
+## 四、最优定价策略：成本加成加价率解析解
+
+### 4.1 有效进货成本
+
+损耗率 $L_c$ 表示进货量中最终损耗的比例，售出 1 kg 需进货 $1/(1-L_c)$ kg，
+故单位售出成本为 [9][10][11][12]
+
+$$c'_{c,t}=\frac{W_{c,t}}{1-L_c}.$$
+
+### 4.2 常弹性最优加价率
+
+在参考点 $(\bar Q,\bar P)$ 处把需求近似为常弹性函数
+$Q(P)=\bar Q(P/\bar P)^{\beta_c}$，单日利润为 [8]
+
+$$\pi(P)=\left(P-c'_{c,t}\right)\bar Q\left(\frac{P}{\bar P}\right)^{\beta_c}.$$
+
+对 $P$ 求导并令导数为零（$E_c=|\beta_c|>1$ 时为极大值）：
+
+$$\frac{d\pi}{dP}=\bar Q\left(\frac{P}{\bar P}\right)^{\beta_c}
+\left[1+\beta_c\frac{P-c'_{c,t}}{P}\right]=0
+\quad\Longrightarrow\quad
+P^*_{c,t}=\frac{E_c}{E_c-1}\,c'_{c,t}
+=\frac{E_c}{E_c-1}\cdot\frac{W_{c,t}}{1-L_c}.$$
+
+对应批发价加价率（即"成本加成"倍率）为
+
+$$m^*_c=\frac{P^*_{c,t}}{W_{c,t}}-1
+=\frac{E_c}{(E_c-1)(1-L_c)}-1.$$
+
+该式等价于垄断加价率规则 $(P^*-c')/P^*=1/E_c$ [4][5]，且最优价处报童临界比
+恰为 $\kappa^*=(P^*-c')/P^*=1/E_c$，与第六节衔接。
+
+**关键性质与决策规则**：$m^*_c$ 只依赖弹性与损耗率、与 $W_{c,t}$ 无关。
+因此商超可在凌晨未知当日批发价时预先确定品类加价率策略，到货后按实际
+批发价套用 $P^*_{c,t}=(1+m^*_c)W_{c,t}$——这既对应题面"成本加成定价"，
+也化解了"凌晨 3:00-4:00 不知具体进货价"的时序约束。
+
+### 4.3 边界与兜底
+
+1. 若历史估计 $E_c\le 1$（无弹性或弱弹性），解析解不存在或无最大值，改在
+   历史加价率百分位区间 $[m_{5\%},m_{95\%}]$ 内数值搜寻最优加价率 [2]；
+2. 若解析解 $P^*$ 超出历史价格/加价率区间，说明常弹性外推越界，截断到
+   区间端点或改用数值搜索 [2][5]；
+3. 输出中标注各品类弹性 $E_c$、加价率 $m^*_c$ 及是否命中解析解，保证可追溯。
+
+## 五、基准需求预测：去价格序列 + Prophet
+
+### 5.1 去价格变换
+
+先用第三节估计的弹性 $\hat\beta_c$ 把历史销量折算到统一参考价
+$\bar P_c$（取历史加权均价）下的"无价格效应需求"：
+
+$$Q^0_{c,t}=Q_{c,t}\left(\frac{\bar P_c}{P_{c,t}}\right)^{\hat\beta_c}.$$
+
+因 $\hat\beta_c<0$，历史价高于参考价的日子需求被上调、低于参考价的日子被
+下调，序列 $Q^0$ 保留趋势/星期/季节结构但剔除价格影响。**若不先剔除价格
+效应就直接预测原始销量、再乘价格比，价格效应会被重复计入** [13][17]。
+
+### 5.2 Prophet 预测
+
+对 $Q^0_{c,t}$ 用 Prophet 建模（7 天与 365 天季节性，可选节假日项），得到
+未来一周参考价下的基准需求 $\bar Q_{c,t}$ 与残差标准差 $\sigma_{c,t}$
+[13]。Prophet 亦支持把 $\ln P$ 作为额外回归项直接纳入，两种实现等价，代码
+采用其一 [13][17]。
+
+### 5.3 提价后的需求分布（乘性缩放）
+
+在最优售价 $P^*$ 下，需求按弹性整体缩放（乘性需求假设，是定价-报童联合
+问题的标准设定 [8]）：
+
+$$\mu_{c,t}(P^*)=\bar Q_{c,t}\left(\frac{P^*_{c,t}}{\bar P_c}\right)^{\hat\beta_c},
+\qquad
+\sigma_{c,t}(P^*)=\sigma_{c,t}\left(\frac{P^*_{c,t}}{\bar P_c}\right)^{\hat\beta_c}.$$
+
+假设含义：价格只改变需求水平、不改变变异系数，分布形态随价格同比例缩放；
+此假设须在论文中写明 [8]。
+
+## 六、报童补货模型
+
+### 6.1 临界比与最优补货量
+
+设进货可售量 $y=(1-L_c)R$，需求 $D\sim(\mu,\sigma)$（价格为 $P^*$），单位
+售出成本 $c'=W/(1-L_c)$，残值为 0。报童模型的期望利润为 [1][6][7][8]
+
+$$E\pi=P^*\cdot E[\min(D,y)]-c'\cdot y.$$
+
+最优条件 $F(y^*)=\kappa$，临界比为
+
+$$\kappa_{c,t}=\frac{P^*_{c,t}-c'_{c,t}}{P^*_{c,t}}
+=\frac{P^*_{c,t}-W_{c,t}/(1-L_c)}{P^*_{c,t}},$$
+
+在最优价处恰有 $\kappa^*=1/E_c$。正态假设下 $y^*=\mu+\Phi^{-1}(\kappa)\sigma$，
+故每日品类补货总量为
+
+$$R_{c,t}=\frac{\mu_{c,t}(P^*)+\Phi^{-1}(\kappa_{c,t})\,\sigma_{c,t}(P^*)}{1-L_c}.$$
+
+说明：
+
+- 除以 $(1-L_c)$ 是把可售量折算回进货量，补偿损耗 [9][10]；
+- $\Phi^{-1}(\kappa)<0$（即 $\kappa<0.5$，对应高毛利高弹性）表示"负安全
+  库存"、进货量低于预测均值，属正常最优行为，论文需解释，避免误读；
+- 正态假设仅为计算便利，稳健性做法是用历史残差的经验分位数
+  $\hat F^{-1}(\kappa)$ 替代 $\Phi^{-1}(\kappa)$ [18]。
+
+### 6.2 确定性对比基准
+
+无风险（不设安全库存）补货量为 $R^0_{c,t}=\mu_{c,t}(P^*)/(1-L_c)$，与
+$R_{c,t}$ 对比可量化安全库存对缺货率与期望收益的贡献 [1]。
+
+### 6.3 输出
+
+未来一周 $6\times 7$ 决策表：品类加价率 $m^*_c$（周内固定）、每日售价
+$P^*_{c,t}$、每日补货总量 $R_{c,t}$（kg）、预期收益；并附确定性基准与
+两种口径对比。数值由求解脚本回填并核验非负、价格落在区间内。
+
+## 七、灵敏度分析与模型检验
+
+1. **批发价 $\pm 10\%$ 扰动**：对应"凌晨未知当日进货价"，观察补货量与
+   收益变化（加价率不变，验证定价策略稳健）；
+2. **弹性 $\pm 20\%$ 扰动**：验证最优价与收益对弹性估计的敏感性；
+3. **价格口径切换**：固定权重 / 当期销售额加权 / 中位价三种口径下的弹性
+   与最优价差异，回应"伪弹性"担忧 [16]；
+4. **报童 vs 确定性**：期末缺货率与期望收益对比 [1][7]；
+5. **损耗率替换**：用附件 4 分类级损耗率替换单品聚合值，观察补货量差异；
+6. **同期回测**：以 2022-07 同期数据回测，报告 MAPE 与收益偏差 [17]。
+
+## 八、文献依据
+
+| 推论/方法 | 文献 | 具体支撑点 |
+| --- | --- | --- |
+| 品类日销量分布作为报童输入、单周期库存模型 | [1] | 库存需求常用连续分布刻画，单周期订货以需求分布为输入 |
+| Log-Log 常弹性需求模型估计品类价格弹性 | [2] | 双对数模型是销量-价格实证标准形式；荟萃分析显示选择性需求平均弹性约 $-1.7$ |
+| 门店/品类层面的价格弹性异质性 | [3] | 支持品类聚合层面估计弹性，弹性随品类显著不同 |
+| 垄断加价率解析解 $(P^*-c')/P^*=1/E$ | [4][5] | 加价率公式的理论来源；价格与库存联合决策的形式化 |
+| 报童模型与临界比 | [6][7] | 报童源头；单周期库存综述含临界比与安全库存 |
+| 定价-报童分解与乘性需求 | [8] | 支持先定价后补货的分解框架；乘性需求是标准设定 |
+| 损耗率进入有效成本与补货放缩 | [9][10] | 易腐品库存综述；常数比例损耗是标准假设 |
+| 生鲜短保、当日不结转 | [11][12] | 生鲜价值随保鲜期快速衰减；生鲜定价与库存联合决策 |
+| 去价格后 Prophet 预测（避免双重计入） | [13][17] | Prophet 支持回归项/季节项；动态回归两阶段预测 |
+| 正态假设的稳健性：经验分位数 | [18] | 零售需求宜用离散分布并处理不可观测损失销售 |
+| 伪回归防护与内生性稳健性 | [15] | 价格与需求联合决定，需滞后价格/IV 检验 |
+| 价格口径（固定权重指数） | [16] | 价格指数与聚合理论：加权口径影响弹性估计 |
+
+## 九、参考文献（编号沿用主参考文献表，仅列本文引用条目）
+
+[1] Silver E A, Pyke D F, Thomas D J. Inventory and Production Management in
+Supply Chains[M]. 4th ed. Boca Raton: CRC Press, 2016.
+
+[2] Tellis G J. The price elasticity of selective demand: a meta-analysis of
+econometric models of sales[J]. Journal of Marketing Research, 1988, 25(4):
+331-341. doi:10.1177/002224378802500401
+
+[3] Hoch S J, Kim B D, Montgomery A L, et al. Determinants of store-level
+price elasticity[J]. Journal of Marketing Research, 1995, 32(1): 17-29.
+doi:10.1177/002224379503200104
+
+[4] Mas-Colell A, Whinston M D, Green J R. Microeconomic Theory[M]. New York:
+Oxford University Press, 1995.
+
+[5] Whitin T M. Inventory control and price theory[J]. Management Science,
+1955, 2(1): 61-68. doi:10.1287/mnsc.2.1.61
+
+[6] Arrow K J, Harris T, Marschak J. Optimal inventory policy[J].
+Econometrica, 1951, 19(3): 250-298. doi:10.2307/1906813
+
+[7] Khouja M. The single-period (news-vendor) problem: literature review and
+suggestions for future research[J]. Omega, 1999, 27(5): 537-553.
+doi:10.1016/S0305-0483(99)00017-1
+
+[8] Petruzzi N C, Dada M. Pricing and the newsvendor problem: a review with
+extensions[J]. Operations Research, 1999, 47(2): 183-194.
+doi:10.1287/opre.47.2.183
+
+[9] Nahmias S. Perishable inventory theory: a review[J]. Operations Research,
+1982, 30(4): 680-708. doi:10.1287/opre.30.4.680
+
+[10] Bakker M, Riezebos J, Teunter R H. Review of inventory systems with
+deterioration since 2001[J]. European Journal of Operational Research, 2012,
+221(2): 275-284. doi:10.1016/j.ejor.2012.03.004
+
+[11] Blackburn J, Scudder G. Supply chain strategies for perishable products:
+the case of fresh produce[J]. Production and Operations Management, 2009,
+18(2): 129-137. doi:10.1111/j.1937-5956.2009.01016.x
+
+[12] 唐跃武, 范体军, 刘莎. 考虑策略性消费者的生鲜农产品定价和库存决策[J].
+中国管理科学, 2018, 26(11). doi:10.16381/j.cnki.issn1003-207x.2018.11.011
+
+[13] Taylor S J, Letham B. Forecasting at scale[J]. The American Statistician,
+2018, 72(1): 37-45. doi:10.1080/00031305.2017.1380080
+
+[14] Cleveland R B, Cleveland W S, McRae J E, et al. STL: a seasonal-trend
+decomposition procedure based on loess[J]. Journal of Official Statistics,
+1990, 6(1): 3-73.
+
+[15] Wooldridge J M. Econometric Analysis of Cross Section and Panel Data[M].
+2nd ed. Cambridge, MA: MIT Press, 2010.
+
+[16] Deaton A, Muellbauer J. Economics and Consumer Behavior[M]. Cambridge:
+Cambridge University Press, 1980.
+
+[17] Hyndman R J, Athanasopoulos G. Forecasting: Principles and Practice[M].
+2nd ed. Melbourne: OTexts, 2018.
+
+[18] Agrawal N, Smith S A. Estimating negative binomial demand for retail
+inventory management with unobservable lost sales[J]. Naval Research
+Logistics, 1996, 43(6): 839-861.
+doi:10.1002/(SICI)1520-6750(199609)43:6<839::AID-NAV5>3.0.CO;2-V
