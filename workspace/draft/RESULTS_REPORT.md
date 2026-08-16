@@ -165,6 +165,8 @@ D:\Python3.13.12\python.exe code\question1\D.py
 - 分解表无缺失值，行数 6 x 1095 = 6,570 与完整日历一致；
 - 强度与比值独立重算一致（偏差由数值舍入引起）；
 - 结论：旺季假设仅对花叶类、花菜类、茄类成立。
+- 2026-08-16 图表可读性修复：q1_stl.pdf 日期刻度改为半年间隔，
+  避免月份标签拥挤。
 
 ### 任务 C：去季节相关性与协同变动网络
 
@@ -196,10 +198,14 @@ D:\Python3.13.12\python.exe code\question1\D.py
 | q1_network_top.csv | 51 | 稳健网络节点中心度与正/负边数 |
 | q1_corr_threshold.csv | 3 | 阈值敏感性：0.3/0.4/0.5 边数与稳健边数 |
 | q1_corr_heatmap_cat.pdf | - | 品类级 6x6 相关热图 |
-| q1_corr_network.pdf | - | 单品级协同变动网络（红正蓝负） |
+| q1_corr_network.pdf | - | 单品级协同变动网络（15 个代表性节点，兼顾正负相关，亮色按品类着色） |
 | code/question1/outputs/C.log | - | 运行日志 |
 
 校验：全部输出无缺失值；抽样重算与阈值表核对一致。
+- 2026-08-16 图表可读性修复：q1_corr_network.pdf 改用 kamada-kawai
+  布局、按品类着色并添加正/负相关与品类图例，降低边透明度与线宽；
+  同日进一步收敛为 15 个代表性单品子图（兼顾负相关边覆盖），
+  节点改用亮色系。
 
 ### 任务 D：单品时序特征层次聚类
 
@@ -233,6 +239,8 @@ D:\Python3.13.12\python.exe code\question1\D.py
 | code/question1/outputs/D.log | - | 运行日志 |
 
 校验：全部输出无缺失值；标签与特征独立重算一致。
+- 2026-08-16 图表可读性修复：q1_dendrogram.pdf 叶子按簇着色并添加
+  簇标签与命名图例。
 
 ## 问题二结果
 

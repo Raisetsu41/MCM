@@ -5,6 +5,7 @@ from datetime import datetime
 from pathlib import Path
 import time
 
+import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -75,6 +76,10 @@ def fig_stl(full, rows, dec):
             f"{info['分类名称']}  F_s={info['季节强度']:.2f} "
             f"F_t={info['趋势强度']:.2f}",
             transform=ax.transAxes, va="top", fontsize=8)
+    # 日期刻度按半年间隔, 避免月份挤在一起
+    ax.xaxis.set_major_locator(mdates.MonthLocator(interval=6))
+    ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y-%m"))
+    ax.tick_params(axis="x", labelsize=7, rotation=20)
     ax.set_xlabel("日期", fontsize=8)
     ax.set_ylabel("销量(千克)", fontsize=8)
   handles, labels = axs.ravel()[0].get_legend_handles_labels()

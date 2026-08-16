@@ -9,6 +9,8 @@ import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
 import pandas as pd
+from matplotlib.lines import Line2D
+from matplotlib.patches import Patch
 from scipy import stats
 
 
@@ -114,21 +116,55 @@ def fig_net(sub, info):
   for _, r in sub.iterrows():
     g.add_edge(int(r["单品A编码"]), int(r["单品B编码"]),
                sign=np.sign(r["相关系数"]))
-  fig, ax = plt.subplots(figsize=(12, 9))
-  pos = nx.spring_layout(g, k=0.5, seed=1, weight=None)
+  deg = dict(g.degree())
+  negd = {}
+  for u, v, d in g.edges(data=True):
+    if d["sign"] < 0:
+      negd[u] = negd.get(u, 0) + 1
+      negd[v] = negd.get(v, 0) + 1
+  # 按度中心度取 15 个代表单品, 不足时用负相关节点替换, 保证正负边都可见
+  topn = sorted(deg, key=deg.get, reverse=True)[:15]
+  for n in sorted(negd, key=negd.get, reverse=True):
+    if n in topn:
+      continue
+    cand = [x for x in topn if negd.get(x, 0) == 0]
+    if not cand:
+      break
+    topn.remove(cand[-1])
+    topn.append(n)
+  g = g.subgraph(topn)
+  if DEBUG:
+    print("[debug] network nodes shown:", len(g))
+    print("[debug] negative edges shown:",
+          sum(1 for _, _, d in g.edges(data=True) if d["sign"] < 0))
+  fig, ax = plt.subplots(figsize=(13, 10))
+  # kamada-kawai 布局比力导向更舒展, 降低边交叉
+  pos = nx.kamada_kawai_layout(g)
   pe = [(u, v) for u, v, d in g.edges(data=True) if d["sign"] > 0]
   ne = [(u, v) for u, v, d in g.edges(data=True) if d["sign"] < 0]
   nx.draw_networkx_edges(g, pos, edgelist=pe, edge_color="#D62728",
-                         alpha=0.5, ax=ax)
+                         alpha=0.4, width=1.2, ax=ax)
   nx.draw_networkx_edges(g, pos, edgelist=ne, edge_color="#4C72B0",
-                         alpha=0.5, ax=ax)
-  deg = dict(g.degree())
-  sizes = [100 + 30 * deg[n] for n in g.nodes()]
-  nx.draw_networkx_nodes(g, pos, node_size=sizes, node_color="#C9D6E8",
-                         edgecolors="gray", ax=ax)
-  top = sorted(deg, key=deg.get, reverse=True)[:10]
-  labels = {n: info.loc[n, "单品名称"] for n in top if n in info.index}
-  nx.draw_networkx_labels(g, pos, labels, font_size=7, ax=ax)
+                         alpha=0.4, width=1.2, style="dashed", ax=ax)
+  cats = sorted(info["分类名称"].unique())
+  bright = ["#FFB300", "#FF6F61", "#00C2C7", "#845EC2", "#FFE119", "#32CD32"]
+  ccolor = {c: bright[i % len(bright)] for i, c in enumerate(cats)}
+  # 按品类用亮色着色, 图例给出品类与正负边含义
+  for c in cats:
+    nodes = [n for n in g.nodes() if info.loc[n, "分类名称"] == c]
+    sizes = [300 + 150 * deg[n] for n in nodes]
+    nx.draw_networkx_nodes(g, pos, nodelist=nodes, node_size=sizes,
+                           node_color=[ccolor[c]] * len(nodes),
+                           edgecolors="white", linewidths=0.5, ax=ax)
+  labels = {n: info.loc[n, "单品名称"] for n in g.nodes() if n in info.index}
+  nx.draw_networkx_labels(g, pos, labels, font_size=8, ax=ax)
+  handles = [Patch(color=ccolor[c], label=c) for c in cats]
+  handles += [Line2D([0], [0], color="#D62728", lw=1.5, label="正相关"),
+              Line2D([0], [0], color="#4C72B0", lw=1.5, ls="--",
+                     label="负相关")]
+  ax.legend(handles=handles, loc="upper left", fontsize=8, framealpha=0.9)
+  ax.text(0.01, 0.01, "展示 15 个代表性单品及相互连接",
+          transform=ax.transAxes, fontsize=8, va="bottom")
   ax.axis("off")
   fig.tight_layout()
   fig.savefig(FIG / "q1_corr_network.pdf")
