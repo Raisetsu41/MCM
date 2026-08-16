@@ -13,6 +13,7 @@ from scipy.cluster import hierarchy
 from scipy.stats import zscore
 from sklearn.cluster import AgglomerativeClustering
 from sklearn.metrics import adjusted_rand_score, silhouette_score
+from matplotlib.patches import Patch
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -116,9 +117,18 @@ def name_cluster(fm):
   return "中频均衡型"
 
 
-def fig_dend(lnk):
+def fig_dend(lnk, lab, names):
   fig, ax = plt.subplots(figsize=(10, 6))
-  hierarchy.dendrogram(lnk, ax=ax, no_labels=True)
+  d = hierarchy.dendrogram(lnk, ax=ax, no_labels=True)
+  # 叶子按簇着色, 图例给出簇标签与命名
+  leaves = np.array(d["leaves"])
+  ks = np.unique(lab)
+  cmap = plt.get_cmap("tab10")
+  colors = {k: cmap(i % 10) for i, k in enumerate(ks)}
+  ax.scatter(np.arange(len(leaves)), np.zeros(len(leaves)), s=18,
+             c=[colors[lab[i]] for i in leaves], zorder=3)
+  handles = [Patch(color=colors[k], label=f"簇{k} {names[k]}") for k in ks]
+  ax.legend(handles=handles, fontsize=8, loc="upper right")
   ax.set_xlabel("单品", fontsize=9)
   ax.set_ylabel("距离", fontsize=9)
   fig.tight_layout()
@@ -187,9 +197,10 @@ def main():
   k_df["稳定性ARI"] = np.nan
   k_df.loc[k_df["候选k"] == best, "稳定性ARI"] = round(ari, 4)
   k_df.to_csv(OUT / "q1_cluster_k.csv", index=False, encoding="utf-8-sig")
-  fig_dend(lnk)
+  names = dict(zip(prof_df["簇标签"], prof_df["建议命名"]))
+  fig_dend(lnk, lab, names)
   fig_sil(rows, best)
-  fig_profile(z, lab, dict(zip(prof_df["簇标签"], prof_df["建议命名"])))
+  fig_profile(z, lab, names)
   if DEBUG:
     print("[debug] items:", len(f))
     print("[debug] chosen k:", best, "silhouette:",

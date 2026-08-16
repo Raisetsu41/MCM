@@ -30,7 +30,7 @@ $$\mathrm{售出天数占比}\quad p_i=\frac{n_i}{T}$$
 $$\mathrm{有售日均销量}\quad \mu_i=\frac{1}{n_i}\sum_{q_{it}>0}q_{it}$$
 
 $$\mathrm{有售日变异系数}\quad \mathrm{CV}_i=\frac{1}{\mu_i}
-\sqrt{\frac{1}{n_i-1}\sum_{q_{it}>0}(q_{it}-\mu_i)^2}$$
+\sqrt{\frac{1}{n_i}\sum_{q_{it}>0}(q_{it}-\mu_i)^2}$$
 
 $$\mathrm{周末偏置}\quad w_i=\frac{\bar q_{i,\mathrm{weekend}}}
 {\bar q_{i,\mathrm{weekday}}}-1$$
