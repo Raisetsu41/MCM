@@ -2,7 +2,8 @@
 
 > 当前完成：数据读取与预处理（任务 1）、问题一分布拟合（任务 A）、
 > 问题一季节分解（任务 B）、问题一协同变动网络（任务 C）、
-> 问题一时序特征聚类（任务 D）。
+> 问题一时序特征聚类（任务 D）、问题二主模型、问题二品类相关联合优化
+> （扩展）。
 
 ## 运行环境
 
@@ -25,6 +26,11 @@
   matplotlib、chinese-calendar
 - 脚本：`code/question1/D.py`，运行命令
   `D:\Python3.13.12\python.exe code\question1\D.py`
+- 问题二联合优化：Python 3.13.12（numpy/pandas/scipy/matplotlib）与
+  g++ 9.3（MinGW，-std=c++17）
+- 脚本：`code/question2/joint_opt.py` 与 `code/question2/joint_opt.cpp`
+- 问题二主模型：C++ 计算（q2.cpp，只输出 CSV）+ Python 画图
+  （q2_plot.py，只读 C++ 结果）
 
 ## 数据读取与预处理
 
@@ -78,6 +84,11 @@ D:\Python3.13.12\python.exe code\question1\A.py
 D:\Python3.13.12\python.exe code\question1\B.py
 D:\Python3.13.12\python.exe code\question1\C.py
 D:\Python3.13.12\python.exe code\question1\D.py
+D:\Python3.13.12\python.exe code\question2\joint_opt.py
+cd code\question2 && g++ -O2 -std=c++17 -o joint_opt.exe joint_opt.cpp
+cd code\question2 && joint_opt.exe
+cd code\question2 && g++ -O2 -std=c++17 -o q2.exe q2.cpp && q2.exe
+D:\Python3.13.12\python.exe code\question2\q2_plot.py
 ```
 
 清洗脚本自动从 `../Problem/` 读取附件，输出写入 `results/`；任务 A 脚本
@@ -241,6 +252,83 @@ D:\Python3.13.12\python.exe code\question1\D.py
 校验：全部输出无缺失值；标签与特征独立重算一致。
 - 2026-08-16 图表可读性修复：q1_dendrogram.pdf 叶子按簇着色并添加
   簇标签与命名图例。
+
+### 问题二主模型（C++ 计算 + Python 绘图）
+
+方法（对应 draft/question2/Q2-modeling.md）：
+
+- 固定基期价格指数：单品权重取 2022-07 至 2023-06 品类内销量份额，
+  逐日加权平均单品均价/批发价；
+- 品类 Log-Log 弹性回归（含趋势、星期、月份虚拟变量），输出弹性、t 值、
+  R2、截距；
+- 最优加价率：弹性绝对值大于 1 时用解析解，否则在历史加价率
+  [P5,P95] 网格搜索；售价夹逼到历史价格区间；
+- 未来一周基准需求：以"ln 价格回归 + 趋势/星期/月份"在参考价处外推
+  7 天（Q2-modeling.md 中 Prophet 的线性等价实现），smearing 修正后
+  作为基准需求，残差 MSE 换算需求标准差；
+- 报童补货：临界比 kappa=(P*-c')/P*，分位数采用对数正态口径（与问题一
+  一致），补货量 R=y*/(1-L)，并输出确定性基准 R0 与期望利润。
+
+关键数值（C++ 输出）：
+
+- 价格弹性：花叶类 -0.594、花菜类 -0.515、水生根茎类 -0.044、茄类
+  -0.259、辣椒类 -0.124、食用菌 -0.363，均小于 1，最优加价率由网格
+  搜索给出（0.440~1.140）；
+- 临界比范围 (0.1956, 0.4852)，补货量最小 15.716 kg，全部品类期望
+  利润为正；
+- 7 天合计：补货总量 2372.16 kg，期望总利润 4811.60 元。
+
+输出文件：
+
+| 文件 | 说明 |
+| --- | --- |
+| q2_elasticity.csv | 弹性、t 值、R2、截距、参考价/需求、成本、加价率分位与最优值 |
+| q2_forecast.csv | 7/1-7/7 每品类基准需求与标准差 |
+| q2_replenishment.csv | 每日批发价、最优售价、加价率、期望需求、临界比、补货量与期望利润 |
+| q2_summary.csv | 7 天总补货量与总期望利润 |
+| q2_scatter.csv | 正销量日的 ln 价格/ln 销量（画图用） |
+| q2_elasticity_fit.pdf 等 4 图 | 弹性拟合、预测、利润-价格曲线、补货量（Python 版） |
+
+与 Q2-modeling.md 的差异说明：C++ 环境无 Prophet，预测步骤采用
+"ln 价格回归 + 季节/趋势"的线性等价实现；报童分位数统一为对数正态口径
+（问题一结论），正态与经验分位数作为后续对照。
+
+### 问题二扩展：品类相关联合优化
+
+方法（对应 draft/question2/question2.md 第 9 节）：
+
+- 6 品类联立需求系统（含全部交叉价格项 + 星期/月份/趋势控制），
+  OLS 估计交叉弹性矩阵；
+- 独立定价用历史价格区间网格搜索，联合定价用差分进化（6 维，
+  pop=60、gen=300）；
+- 残差秩相关矩阵 + Gaussian copula + lognormal 边际分布抽样 2 万组
+  联合需求；联合补货在均值-标准差目标（lambda=0.1）下用 SAA 优化，
+  与独立报童解对比。
+
+关键数值：
+
+- 自有价格弹性：花叶类 -0.84、花菜类 -0.55、水生根茎类 -0.35、
+  茄类 -0.36、辣椒类 -0.53、食用菌 -0.65；
+- 残差 Spearman 相关较强组合：花叶类-食用菌 0.655、花叶类-辣椒类 0.610、
+  辣椒类-食用菌 0.569；
+- 定价口径总利润：独立约 2174 元/日，联合约 2517 元/日（提升约 16%）；
+- 补货口径期望总利润：独立约 1923 元/日，联合约 1920 元/日（几乎持平，
+  联合以极小均值损失换取风险下降，利润方差约 7.3e5）；
+- 约束校验：临界比均位于 (0.1396, 0.7752)，补货量非负，价格在历史区间内，
+  无亏损品类。
+
+输出文件（results/ 与 figures/）：
+
+| 文件 | 说明 |
+| --- | --- |
+| q2_joint_elasticity.csv | 6x6 弹性矩阵、样本量、R2 |
+| q2_joint_pricing.csv | 独立/联合最优价与期望利润 |
+| q2_joint_replenishment.csv | 独立/联合补货量与期望利润 |
+| q2_joint_compare.pdf | 补货量与期望利润对比图（Python 版生成） |
+| code/question2/outputs/joint.log | 运行日志 |
+
+双版本一致性：三张 CSV 最大偏差 弹性 0.006、定价 0.62 元、补货 2.34 kg，
+由 OLS 求解器与随机数实现差异引起，量级不影响结论。
 
 ## 问题二结果
 
