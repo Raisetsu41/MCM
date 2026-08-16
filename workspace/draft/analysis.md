@@ -193,3 +193,4 @@ $$\mathrm{MAPE}=\frac{100\%}{n}\sum_{t}\frac{\left|\hat Q_t-Q_t\right|}{Q_t},$$
 [40] Efron B, Tibshirani R J. An Introduction to the Bootstrap[M]. New York: Chapman & Hall/CRC, 1993. doi:10.1007/978-1-4899-4541-9 
 
 [41] Han J, Hu M, Shen G. Deep neural newsvendor[J]. Management Science, 2026. doi:10.1287/mnsc.2023.03157
+ 
