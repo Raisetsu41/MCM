@@ -42,7 +42,6 @@
    ```
 
    或使用 `latexmk -xelatex main.tex`。
-
 3. 按 [COLLABORATION.md](COLLABORATION.md) 分工，编辑 `workspace/sections/` 下的章节文件。
 
 ## 协作

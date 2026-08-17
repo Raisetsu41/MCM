@@ -1,37 +1,43 @@
 % 模型假设与符号说明
 \section{模型假设}
+
 为简化问题，本文做出以下假设：
+
 \begin{itemize}[itemindent=2em]
-  \item 假设1：单周期零库存假设。每日凌晨到货的蔬菜品质一致，当日未售罄部分全额损耗，不结转次日（支撑独立报童模型）。
-  \item 假设2：需求价格独立假设。短期内定价调整不影响顾客对商超的长期忠诚度，即单日需求仅由当期价格决定。
-  \item 假设3：损耗率稳定假设。附件4提供的近期损耗率在预测期（2023年7月1-7日）内保持恒定。
-  \item 假设4：批发价可观测假设。未来一周批发价采用最近可得均价（2023-06-24至06-30）作为已知常数。
-  \item 假设5：需求独立与无后向转移假设。各日期的市场需求相互独立，当日因缺货未被满足的消费者需求不会顺延至次日（即不存在需求积压或跨期替代），因此每日可独立使用报童模型求解。
+  \item \textbf{假设1：单周期零库存假设。} 每日凌晨到货的蔬菜品质一致，当日未售罄部分全额损耗，不结转次日。
+  \item \textbf{假设2：需求价格独立假设。} 短期内定价调整不影响顾客对商超的长期忠诚度，即单日需求仅由当期价格决定。
+  \item \textbf{假设3：损耗率稳定假设。} 附件4提供的近期损耗率在预测期（2023年7月1-7日）内保持恒定。
+  \item \textbf{假设4：批发价可观测假设。} 未来一周批发价采用最近可得均价（2023-06-24至06-30）作为已知常数，并以$\pm10\%$扰动做灵敏度检验。
+  \item \textbf{假设5：需求独立与无后向转移假设。} 各日期的市场需求相互独立，当日因缺货未被满足的消费者需求不会顺延至次日。
+  \item \textbf{假设6：无日内清仓假设。} 不考虑日内打折清仓，未售罄部分残值为零。
 \end{itemize}
 
 \section{符号说明}
 \begin{table}[H]
-  \centering
-  \begin{tabularx}{\textwidth}{
-    >{\centering\arraybackslash}p{0.12\textwidth}
-    >{\raggedright\arraybackslash}X
-    >{\centering\arraybackslash}p{0.12\textwidth}
-  }
-    \toprule
-    符号 & 含义 & 单位 \\
-    \midrule
-    $i,c,t$ & 单品索引、品类索引、日期 & --- \\
-    $Q_{c,t},\,Q_{i,t}$ & 品类/单品的日净销量 & $\mathrm{kg}$ \\
-    $P_{c,t},\,W_{c,t}$ & 品类加权售价、加权批发价 & 元/$\mathrm{kg}$ \\
-    $L_{i},\,L_{c}$ & 单品/品类损耗率 & --- \\
-    $\beta_{c},\,\hat{\beta}_{i}$ & 品类价格弹性、Shrinkage 修正后的单品弹性 & --- \\
-    $E_{c}$ & 品类价格弹性的绝对值，$E_{c}=|\beta_{c}|$，用于定价公式（$E_{c}>1$时成立） & --- \\
-    $R_{c,t},\,q_{i}$ & 品类补货总量、单品补货量 & $\mathrm{kg}$ \\
-    $y_{i},\,p_{i}$ & 0‑1上架决策变量、单品定价 & ---，元/$\mathrm{kg}$ \\
-    $\gamma$ & 缺货惩罚系数（取值建议为历史毛利的80\%） & 元/$\mathrm{kg}$ \\
-    $\Phi(\cdot)$ & 标准正态分布累积分布函数 & --- \\
-    \bottomrule
-  \end{tabularx}
-  \caption{符号说明}
-  \label{tab:符号说明}
+\centering
+\small
+\setlength{\tabcolsep}{3pt}
+\caption{符号说明}
+\label{tab:符号说明}
+\begin{tabularx}{\textwidth}{c X c c X c}
+\toprule
+\multicolumn{3}{c}{\bfseries 符号说明} & \multicolumn{3}{c}{\bfseries 符号说明} \\
+\cmidrule(r){1-3}\cmidrule(l){4-6}
+符号 & 含义 & 单位 & 符号 & 含义 & 单位 \\
+\midrule
+$i,c,t$ & 品类/单品/日期索引 & --- & $Q_{c,t},Q_{i,t}$ & 品类/单品日净销量 & kg \\
+$P_{c,t},W_{c,t}$ & 品类加权售价/批发价 & 元/kg & $L_i,L_c$ & 单品/品类损耗率 & --- \\
+$\beta_c$ & 品类价格弹性 & --- & $\hat\beta_i$ & Shrinkage修正后单品弹性 & --- \\
+$E_c$ & $|\beta_c|$，定价用 & --- & $R_{c,t}$ & 品类日补货总量 & kg \\
+$q_i$ & 单品订购量 & kg & $y_i$ & 0-1上架决策变量 & --- \\
+$S$ & 候选单品集 & --- & $p_{i,k}$ & 第$k$档候选价 & 元/kg \\
+$x_{i,k}$ & 是否选第$k$档价 & --- & $s_i$ & 单品实际销量 & kg \\
+$u_i$ & 单品缺货量 & kg & $z_{i,k}$ & 线性化辅助变量 & kg \\
+$D_{i,k}$ & 第$k$档需求点估计 & kg & $d_i$ & 基准日需求 & kg \\
+$p_i^0$ & 参考价 & 元/kg & $\gamma_i$ & 单品缺货惩罚 & 元/kg \\
+$\gamma$ & 缺货惩罚系数 & 元/kg & $\rho$ & 惩罚调节系数 & --- \\
+$M_i$ & 订购量上界 & kg & $\mathcal{C}_c$ & 品类$c$单品集合 & --- \\
+$\mathrm{FR}$ & 需求满足率 & --- & $\Phi(\cdot)$ & 标准正态CDF & --- \\
+\bottomrule
+\end{tabularx}
 \end{table}
