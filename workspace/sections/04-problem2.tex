@@ -36,7 +36,7 @@ $P_{c,t}$ 品类售价 & 单品售价按\textbf{固定基期销量权重}加权�
 \begin{equation}
 \ln Q_{c,t}=\alpha_c+\beta_c\ln P_{c,t}+\delta_c\,t+\sum_{k=1}^{6}\delta_{c,k}\,\mathbb{1}_{\{\mathrm{weekday}=k\}}+\sum_{m=1}^{11}\eta_{c,m}\,\mathbb{1}_{\{\mathrm{month}=m\}}+\varepsilon_{c,t},
 \end{equation}
-其中 $\beta_c$ 为价格弹性（预期为负），$t$ 为线性趋势项（防止伪回归），星期虚拟变量（基准周一）与月份虚拟变量（基准 1 月）刻画周期结构，$\delta_{c,k}$、$\eta_{c,m}$ 分别为星期与月份虚拟变量系数，记号与问题一残差回归（$\delta_k$、$\eta_m$）一致。双对数形式的优点在于弹性为常数，可直接外推“销量—价格”反事实，是销量—价格实证研究的标准形式 \cite{tellis1988,hoch1995}。
+其中 $\beta_c$ 为价格弹性（预期为负），$t$ 为线性趋势项（防止伪回归），星期虚拟变量（基准周一）与月份虚拟变量（基准 1 月）刻画周期结构，$\delta_{c,k}$、$\eta_{c,m}$ 分别为星期与月份虚拟变量系数，记号与问题一残差回归（$\delta_k$、$\eta_m$）一致。双对数形式的优点在于弹性为常数，可直接外推“销量—价格”反事实，是销量—价格实证研究的标准形式 \cite{tellis1988}。
 
 每个品类独立做 OLS 估计，报告弹性 $\hat\beta_c$、$t$ 值（显著性）、$R^2$ 与样本量，并做残差平稳性（DW/ADF）检验防止伪回归 \cite{wooldridge2010}。内生性处理上，价格与当期需求同时决定，OLS 可能有偏，稳健性做法是用滞后一期价格 $\ln P_{c,t-1}$ 替代当期价格重新估计，或采用工具变量，论文报告两种估计的差异作为稳健性证据 \cite{wooldridge2010}。销量截断方面，缺货日的销量低估真实需求，若缺货与价格相关（如低价日需求更高、更易缺货），弹性估计会受截断影响，作为局限写入小结。
 
@@ -44,7 +44,7 @@ $P_{c,t}$ 品类售价 & 单品售价按\textbf{固定基期销量权重}加权�
 
 \subsubsection{最优定价：成本加成加价率解析解}
 
-\textbf{有效进货成本}。损耗率 $L_c$ 表示进货量中最终损耗的比例，售出 1 kg 需进货 $1/(1-L_c)$ kg，故单位售出成本为 \cite{nahmias1982,bakker2012,blackburn2009,tang2018}
+\textbf{有效进货成本}。损耗率 $L_c$ 表示进货量中最终损耗的比例，售出 1 kg 需进货 $1/(1-L_c)$ kg，故单位售出成本为 \cite{nahmias1982,blackburn2009,tang2018}
 \begin{equation}
 c'_{c,t}=\frac{W_{c,t}}{1-L_c}.
 \end{equation}
@@ -62,7 +62,7 @@ c'_{c,t}=\frac{W_{c,t}}{1-L_c}.
 \begin{equation}
 m^*_c=\frac{P^*_{c,t}}{W_{c,t}}-1=\frac{E_c}{(E_c-1)(1-L_c)}-1.
 \end{equation}
-该式等价于垄断定价的逆弹性规则（Lerner 条件）$(P^*-c')/P^*=1/E_c$ \cite{mascolel1995,whitin1955}，且解析最优价处报童临界比恰为 $\kappa^*=(P^*-c')/P^*=1/E_c$，与 \ref{sec:newsvendor} 节衔接。
+该式等价于垄断定价的逆弹性规则（Lerner 条件）$(P^*-c')/P^*=1/E_c$ \cite{mascolel1995}，且解析最优价处报童临界比恰为 $\kappa^*=(P^*-c')/P^*=1/E_c$，与 \ref{sec:newsvendor} 节衔接。
 
 需说明：$\kappa^*=1/E_c$ 仅在解析最优解处成立；本问各品类弹性均小于 1、落入数值求解分支（\ref{sec:result}节），临界比一律按定义 $\kappa=(P^*-c')/P^*$ 直接计算（表 \ref{tab:q2_pricing}），不直接使用该关系。
 
@@ -98,7 +98,7 @@ Q^0_{c,t}=Q_{c,t}\left(\frac{\bar P_c}{P_{c,t}}\right)^{\hat\beta_c}.
 \subsubsection{报童补货模型}
 \label{sec:newsvendor}
 
-设进货可售量 $y=(1-L_c)R$，需求分布为 $F$（均值为 $\mu$、标准差为 $\sigma$、价格为 $P^*$），单位售出成本 $c'=W/(1-L_c)$，残值为 0。报童模型的最优条件对任意需求分布成立 \cite{silver2016,arrow1951,khouja1999,petruzzi1999}：
+设进货可售量 $y=(1-L_c)R$，需求分布为 $F$（均值为 $\mu$、标准差为 $\sigma$、价格为 $P^*$），单位售出成本 $c'=W/(1-L_c)$，残值为 0。报童模型的最优条件对任意需求分布成立 \cite{silver2016,khouja1999,petruzzi1999}：
 \begin{equation}
 E\pi=P^*\cdot E[\min(D,y)]-c'\cdot y.
 \end{equation}
@@ -120,7 +120,7 @@ R_{c,t}=\frac{y^*_{c,t}}{1-L_c}=\frac{\mu_{c,t}(P^*)+\sigma_{c,t}(P^*)\,z_c(\kap
 \begin{itemize}
 \item 正态分布只是 $z_c(\kappa)=\Phi^{-1}(\kappa)$ 的特例；右偏分布下同一 $\kappa$ 的分位数与正态明显不同（如 $\kappa=0.5$ 时正态给均值、lognormal 给中位数），故统一采用对数正态矩匹配分位数，正态仅作近似对比 \cite{agrawal1996}；
 \item $z_c(\kappa)<0$ 表示“负安全库存”，即可售量 $y^*$ 低于需求均值 $\mu(P^*)$。对右偏分布均值高于中位数，$z_c(\kappa)<0$ 的临界 $\kappa$ 大于 0.5；本问 6 品类临界比均小于 0.5，均处于“负安全库存”区域——需求波动大且超量损耗成本高时，以适度缺货风险换取更低的超量损耗成本，属报童最优条件的正常结果；
-\item 除以 $(1-L_c)$ 是把可售量折算回进货量，补偿损耗 \cite{nahmias1982,bakker2012}；
+\item 除以 $(1-L_c)$ 是把可售量折算回进货量，补偿损耗 \cite{nahmias1982}；
 \item 口径局限：问题一拟合的是已售销量而非真实需求，缺货日销量低估需求，报童补货量可能系统性偏低。
 \end{itemize}
 
@@ -134,9 +134,9 @@ R_{c,t}=\frac{y^*_{c,t}}{1-L_c}=\frac{\mu_{c,t}(P^*)+\sigma_{c,t}(P^*)\,z_c(\kap
 \begin{equation}
 \max_{R\in X}\sum_{c=1}^{6}f_c(R_c)=\sum_{c=1}^{6}\max_{R_c\in X_c}f_c(R_c).
 \end{equation}
-该分解性是多品无约束报童问题的标准结论：无容量约束时，多品报童退化为相互独立的单品问题 \cite{silver2016,erlebacher2000}。
+该分解性是多品无约束报童问题的标准结论：无容量约束时，多品报童退化为相互独立的单品问题 \cite{silver2016}。
 
-\textbf{命题 2（最优订货只依赖边际分布）}：报童最优条件 $F_c(y^*_c)=\kappa_c$ 只含品类 $c$ 的边际 CDF。品类间相关性刻画的是联合分布结构，不改变任何一个边际分布 $F_c$，故不改变任一品类的最优订货量 $y^*_c$ 与补货量 $R^*_c$（单周期报童模型的基本性质 \cite{arrow1951,khouja1999,petruzzi1999}）。
+\textbf{命题 2（最优订货只依赖边际分布）}：报童最优条件 $F_c(y^*_c)=\kappa_c$ 只含品类 $c$ 的边际 CDF。品类间相关性刻画的是联合分布结构，不改变任何一个边际分布 $F_c$，故不改变任一品类的最优订货量 $y^*_c$ 与补货量 $R^*_c$（单周期报童模型的基本性质 \cite{khouja1999,petruzzi1999}）。
 
 \textbf{推论}：在风险中性假设下（题面“收益最大”即指最大化期望利润），逐品类独立优化与整体联合优化的最优决策相同。协方差矩阵既不进入临界比条件（\ref{sec:newsvendor}节），也不进入最优价公式（\ref{sec:q2_model}节），最优补货量与最优售价均与品类间相关性无关；相关性只进入总利润的方差分解：
 \begin{equation}
@@ -151,7 +151,7 @@ R_{c,t}=\frac{y^*_{c,t}}{1-L_c}=\frac{\mu_{c,t}(P^*)+\sigma_{c,t}(P^*)\,z_c(\kap
 \item 边际分布外生：品类 $c$ 的需求边际分布不受其他品类定价决策的影响。
 \end{enumerate}
 
-\textbf{失效情形与本文定位}：若商超风险厌恶或存在联合风险约束（资金预算、亏损概率上限），利润联动会改变最优决策 \cite{eeckhoudt1995,chen2009}；存在共享容量约束，需联合优化 \cite{erlebacher2000,abdelmalek2004}；需求存在替代/互补（涨价导致跨品类转移），独立定价不是真实意义上的全局最优。其中 ③ 最贴近本题现实：问题一的相关性分析只能识别“销量同步变动”，不能识别因果替代结构，交叉价格弹性建模留待问题四的数据扩展；本文在 \ref{stability_q2} 节用交叉价格弹性联合定价模拟作为稳健性对照。
+\textbf{失效情形与本文定位}：若商超风险厌恶或存在联合风险约束（资金预算、亏损概率上限），利润联动会改变最优决策 \cite{chen2009}；存在共享容量约束，需联合优化 \cite{abdelmalek2004}；需求存在替代/互补（涨价导致跨品类转移），独立定价不是真实意义上的全局最优。其中 ③ 最贴近本题现实：问题一的相关性分析只能识别“销量同步变动”，不能识别因果替代结构，交叉价格弹性建模留待问题四的数据扩展；本文在 \ref{stability_q2} 节用交叉价格弹性联合定价模拟作为稳健性对照。
 
 
 \subsection{模型求解与结果分析}
@@ -194,13 +194,10 @@ R_{c,t}=\frac{y^*_{c,t}}{1-L_c}=\frac{\mu_{c,t}(P^*)+\sigma_{c,t}(P^*)\,z_c(\kap
 \caption{品类需求—价格弹性拟合（散点为去日历效应后的 $\ln$ 销量与 $\ln$ 价格，红色直线为弹性拟合线，标注 $\beta$、$t$ 与 $R^2$）}
 \label{fig:q2_elasticity}
 \end{figure}
-
 由图 \ref{fig:q2_elasticity} 可见，各品类需求—价格散点整体呈负向倾斜，其中水生根茎类斜率较平缓（对应弹性 -0.07）；各面板标注的 $\beta$、$t$、$R^2$ 与表 \ref{tab:q2_elasticity} 一一对应，水生根茎类拟合线接近水平、散点分散，直观反映其弹性不显著。
-
 \subsubsection{最优定价策略}
 
 基于表 \ref{tab:q2_elasticity} 的弹性与加价率，代入最近一周批发价后得到未来一周固定的定价策略，如表 \ref{tab:q2_pricing} 所示（批发价取 2023-06-24 至 06-30 最近均价；参考价 $\bar P_c$ 为历史加权均价，供 \ref{sec:q2_model} 节乘性缩放 $P^*/\bar P_c$ 对照；加价率与临界比在周内保持不变）。
-
 \begin{table}[H]
 \centering
 \caption{品类最优定价策略（未来一周）}
@@ -274,7 +271,7 @@ R_{c,t}=\frac{y^*_{c,t}}{1-L_c}=\frac{\mu_{c,t}(P^*)+\sigma_{c,t}(P^*)\,z_c(\kap
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{../figures/q2_replenishment.pdf}
+\includegraphics[width=0.8\textwidth]{../figures/q2_replenishment.pdf}
 \caption{未来 7 天每日补货量（柱状图，左轴）与最优售价水平线（红色折线，右轴）}
 \label{fig:q2_replenishment}
 \end{figure}

@@ -9,7 +9,7 @@
 
 \subsubsection{单品级需求模型：幂律需求与 Shrinkage 弹性}
 
-模型设定上，延续问题二的常弹性（幂律）需求结构 \cite{tellis1988,hoch1995}，单品 $i$ 在售价 $p$ 下的日需求为
+模型设定上，延续问题二的常弹性（幂律）需求结构 \cite{tellis1988}，单品 $i$ 在售价 $p$ 下的日需求为
 \begin{equation}
 D_i(p)=d_i\left(\frac{p}{p_i^0}\right)^{\hat\beta_i},
 \end{equation}
@@ -19,7 +19,7 @@ D_i(p)=d_i\left(\frac{p}{p_i^0}\right)^{\hat\beta_i},
 \begin{equation}
 \ln Q_{i,t}=\alpha_i+\beta_{\mathrm{raw},i}\ln p_{i,t}+\delta_i\,t+\sum_{k=1}^{6}\delta_{i,k}\mathbb{1}_{\{\mathrm{weekday}=k\}}+\sum_{m=1}^{11}\eta_{i,m}\mathbb{1}_{\{\mathrm{month}=m\}}+\varepsilon_{i,t},
 \end{equation}
-其中 $\beta_{\mathrm{raw},i}$ 为原始弹性。采用经验贝叶斯收缩 \cite{efron1977,james1961,montgomery1997}：
+其中 $\beta_{\mathrm{raw},i}$ 为原始弹性。采用经验贝叶斯收缩 \cite{james1961,montgomery1997}：
 \begin{equation}
 \hat\beta_i = w_i\beta_{\mathrm{raw},i}+(1-w_i)\beta_{c(i)},\qquad w_i=\frac{N_i}{N_i+M_0},
 \end{equation}
@@ -53,7 +53,6 @@ D_i(p)=d_i\left(\frac{p}{p_i^0}\right)^{\hat\beta_i},
 $\rho$ 基准取 1.0，灵敏度分析见第九章。
 
 \subsubsection{约束条件}
-
 \begin{align}
 & 27\le \sum_{i\in S}y_i\le 33, \tag{1} \\
 & 2.5\,y_i\le q_i\le M_i\,y_i,\quad \forall i\in S, \tag{2} \\
@@ -81,27 +80,7 @@ M_i=\max\left(3\cdot\max_{t}Q_{i,t}^{\mathrm{hist}},\ 2.5,\ 1.05\,D_{i,1}\right)
 
 \subsubsection{候选集与单品弹性估计结果}
 
-候选集构成与品类弹性见表\ref{tab:q3_candidates}。单品弹性诊断：45 个候选的有效样本量 $N_i$ 为 28~559；13 个单品原始弹性为正，其中 12 个借用品类弹性；选中单品收缩弹性区间 $[-2.52,-0.03]$，均值 -0.44。
-
-\begin{table}[H]
-\centering
-\caption{候选集构成与品类弹性}
-\label{tab:q3_candidates}
-\begin{tabular}{l r r r}
-\toprule
-品类 & 候选单品数 & 品类弹性 $\beta_c$ & 弹性绝对值 $\lvert\beta_c\rvert$ \\
-\midrule
-花叶类 & 16 & -0.45 & 0.45 \\
-花菜类 & 2 & -0.50 & 0.50 \\
-水生根茎类 & 6 & -0.07 & 0.07 \\
-茄类 & 4 & -0.26 & 0.26 \\
-辣椒类 & 9 & -0.13 & 0.13 \\
-食用菌 & 8 & -0.31 & 0.31 \\
-合计 & 45 & --- & --- \\
-\bottomrule
-\end{tabular}
-\end{table}
-
+候选集共45个，各品类候选数及弹性（$\beta_c$）为：花叶类16（-0.45）、花菜类2（-0.50）、水生根茎类6（-0.07）、茄类4（-0.26）、辣椒类9（-0.13）、食用菌8（-0.31）。单品弹性诊断：45个候选的有效样本量$N_i$为28~559；13个单品原始弹性为正，其中12个借用品类弹性；选中单品收缩弹性区间$[-2.52,-0.03]$，均值$-0.44$。
 
 \subsubsection{组合优化求解与决策结果}
 
@@ -128,7 +107,7 @@ MIP 一次求解即达最优，约束校验全部通过。问题三总体求解�
 候选与选中单品分品类构成见图\ref{fig:q3_selection}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\linewidth]{figures/q3_selection.pdf}
+\includegraphics[width=0.7\linewidth]{figures/q3_selection.pdf}
 \caption{候选与选中单品的分品类构成（柱状图，浅色为候选、深色为选中）}
 \label{fig:q3_selection}
 \end{figure}
@@ -156,17 +135,8 @@ MIP 一次求解即达最优，约束校验全部通过。问题三总体求解�
 
 主要结果解读：最优解取到选品数上界33个，6个品类全部覆盖；总体与各品类满足率均为1.00；利润来源方面，辣椒类（220.56元）与花叶类（201.99元）合计占62\%，小米椒(份)单品毛利109.49元；定价行为上，弱弹性单品售价落在网格上界附近，弹性充分单品（西峡花菇，$-2.52$）取参考档24.00元/kg。
 
-\ref{fig:q3_price_qty} 展示售价—订购量散点。
-
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=0.8\linewidth]{figures/q3_price_qty.pdf}
-\caption{选中单品售价—订购量散点（按品类着色）}
-\label{fig:q3_price_qty}
-\end{figure}
-
 \subsubsection{小结}
 
 问题三建立了单品级选品、定价与补货联合优化框架。以 45 个候选单品，在选品数 27--33、最小陈列量 2.5 kg 约束下，最优方案上架 33 个单品，总利润 682.08 元，满足率 1.00。灵敏度分析详见第九章，结论稳健；与问题二交叉核对通过。操作层面应优先保障小米椒(份)、西兰花等高毛利单品备货。
 
-\textbf{局限与展望：}单品需求独立假设忽略了替代效应\cite{kok2007,vanryzin1999}；确定性需求可升级为单品级报童\cite{federgruen1999,petruzzi1999}；净销量低估真实需求\cite{agrawal1996}；未按周末偏置上调基准需求，结果偏保守；满足率为软惩罚，可改为硬约束或鲁棒选品\cite{vanryzin1999,rusmevichientong2012}；未考虑动态折扣\cite{elmaghraby2003}与品类角色差异\cite{dhar2001}。
+\textbf{局限与展望：}单品需求独立假设忽略了替代效应\cite{kok2007,vanryzin1999}；确定性需求可升级为单品级报童\cite{federgruen1999,petruzzi1999}；净销量低估真实需求\cite{agrawal1996}；未按周末偏置上调基准需求，结果偏保守；满足率为软惩罚，可改为硬约束或鲁棒选品\cite{vanryzin1999,rusmevichientong2012}；未考虑动态折扣与品类角色差异。
