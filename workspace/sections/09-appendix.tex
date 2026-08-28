@@ -1,5 +1,26 @@
 \begin{appendices}
 
+\section{支撑材料文件清单}
+
+\begin{table}[htbp]
+  \centering
+  \caption{支撑材料文件清单}
+  \begin{tabular}{c l}
+    \toprule
+    目录 & 文件说明 \\
+    \midrule
+    \texttt{code/} & 全部Python源代码 \\
+    \texttt{code/question1/} & 问题一代码（A.py, B.py, C.py, D.py） \\
+    \texttt{code/question2/} & 问题二代码（q2.py, q2\_sensitivity.py, nv.cpp/nv.dll） \\
+    \texttt{code/question3/} & 问题三代码（q3.py） \\
+    \texttt{figures/} & 全部图表（PDF格式） \\
+    \texttt{results/} & 全部输出数据（CSV格式） \\
+    AI 工具使用详情.pdf & AI 工具使用详情说明（按《人工智能工具使用规定》要求） \\
+    \bottomrule
+  \end{tabular}
+  \label{tab:C1}
+\end{table}
+
 \section{图表说明}
 
 \subsection{问题一图表}
@@ -10,97 +31,13 @@
     \toprule
     图表编号 & 内容说明 \\
     \midrule
-    表A1 & 各品类最优分布拟合结果（AIC/BIC选型，6个品类） \\
-    图A1 & 各品类最优分布QQ图（q1\_dist\_cat\_qq.pdf） \\
-    图A2 & 代表性单品分布拟合对比（q1\_dist\_item\_sample.pdf） \\
-    表A2 & 相关系数阈值敏感性（0.3/0.4/0.5） \\
-    图A3 & 品类级Spearman相关热力图（q1\_corr\_heatmap\_cat.pdf） \\
-    图A4 & 单品协同变动网络（q1\_corr\_network.pdf） \\
-    表A3 & silhouette系数与簇数（k=3~10，最优k=5） \\
     图A5 & 层次聚类树状图（q1\_dendrogram.pdf） \\
     图A6 & 各簇标准化特征均值曲线（q1\_cluster\_profile.pdf） \\
-    图A7 & silhouette曲线（q1\_silhouette.pdf） \\
     \bottomrule
   \end{tabularx}
   \caption{问题一图表清单}
   \label{tab:q1_appendix}
 \end{table}
-
-\begin{table}[H]
-  \centering
-  \caption{各品类最优分布拟合结果}
-  \begin{tabular}{c c c}
-    \toprule
-    品类 & 最优分布 & AIC \\
-    \midrule
-    花叶类 & gamma & 12444.912 \\
-    花菜类 & gamma & 9548.503 \\
-    水生根茎类 & gamma & 9898.119 \\
-    茄类 & gamma & 8059.611 \\
-    辣椒类 & lognorm & 11037.887 \\
-    食用菌 & lognorm & 10841.520 \\
-    \bottomrule
-  \end{tabular}
-  \label{tab:A1}
-\end{table}
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.8\textwidth]{figures/q1_dist_cat_qq.pdf}
-  \caption{各品类最优分布QQ图}
-  \label{fig:A1}
-\end{figure}
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.8\textwidth]{figures/q1_dist_item_sample.pdf}
-  \caption{代表性单品分布拟合对比}
-  \label{fig:A2}
-\end{figure}
-
-\begin{table}[H]
-  \centering
-  \caption{相关系数阈值敏感性}
-  \begin{tabular}{c c c c c}
-    \toprule
-    阈值 & 主边数 & 正边数 & 负边数 & 稳健边数 \\
-    \midrule
-    0.3 & 1848 & 1289 & 559 & 249 \\
-    0.4 & 1062 & 820 & 242 & 154 \\
-    0.5 & 523 & 456 & 67 & 81 \\
-    \bottomrule
-  \end{tabular}
-  \label{tab:A2}
-\end{table}
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.7\textwidth]{figures/q1_corr_heatmap_cat.pdf}
-  \caption{品类级Spearman相关热力图}
-  \label{fig:A3}
-\end{figure}
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.85\textwidth]{figures/q1_corr_network.pdf}
-  \caption{单品协同变动网络}
-  \label{fig:A4}
-\end{figure}
-
-\begin{table}[H]
-  \centering
-  \caption{silhouette系数与簇数}
-  \begin{tabular}{c c c c c c c c c}
-    \toprule
-    候选$k$ & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
-    \midrule
-    silhouette & 0.2083 & 0.2429 & 0.2583 & 0.2579 & 0.2192 & 0.2257 & 0.2269 & 0.2058 \\
-    稳定性ARI & --- & --- & 0.4567 & --- & --- & --- & --- & --- \\
-    \bottomrule
-  \end{tabular}
-  \label{tab:A3}
-\end{table}
-
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.85\textwidth]{figures/q1_dendrogram.pdf}
@@ -114,215 +51,6 @@
   \caption{各簇标准化特征均值曲线}
   \label{fig:A6}
 \end{figure}
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.7\textwidth]{figures/q1_silhouette.pdf}
-  \caption{silhouette曲线}
-  \label{fig:A7}
-\end{figure}
-
-
-\subsection{问题二图表}
-
-\begin{table}[H]
-  \centering
-  \begin{tabularx}{\textwidth}{l l}
-    \toprule
-    图表编号 & 内容说明 \\
-    \midrule
-    表A4 & 各品类弹性拟合结果 \\
-    图A8 & 各品类弹性拟合散点图（q2\_elasticity\_fit.pdf） \\
-    图A9 & 未来一周批发价格预测（q2\_forecast.pdf） \\
-    图A10 & 价格-销量关系曲线（q2\_price\_curve.pdf） \\
-    图A11 & 各品类补货总量与定价策略（q2\_replenishment.pdf） \\
-    表A5 & 灵敏度分析结果（基准2607.89kg/5305.19元） \\
-    图A12 & 灵敏度分析对比图（q2\_sensitivity.pdf） \\
-    表A6 & 预测回测MAPE（\%） \\
-    表A7 & 报童模型与确定性订货对比 \\
-    \bottomrule
-  \end{tabularx}
-  \caption{问题二图表清单}
-  \label{tab:q2_appendix}
-\end{table}
-
-\begin{table}[H]
-  \centering
-  \caption{各品类弹性拟合结果}
-  \begin{tabular}{c c c c}
-    \toprule
-    品类 & 价格弹性 & 截距 & $R^2$ \\
-    \midrule
-    花叶类 & -- & -- & -- \\
-    花菜类 & -- & -- & -- \\
-    水生根茎类 & -- & -- & -- \\
-    茄类 & -- & -- & -- \\
-    辣椒类 & -- & -- & -- \\
-    食用菌 & -- & -- & -- \\
-    \bottomrule
-  \end{tabular}
-  \label{tab:A4}
-\end{table}
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.8\textwidth]{figures/q2_elasticity_fit.pdf}
-  \caption{各品类弹性拟合散点图}
-  \label{fig:A8}
-\end{figure}
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.8\textwidth]{figures/q2_forecast.pdf}
-  \caption{未来一周批发价格预测}
-  \label{fig:A9}
-\end{figure}
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.8\textwidth]{figures/q2_price_curve.pdf}
-  \caption{价格-销量关系曲线}
-  \label{fig:A10}
-\end{figure}
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.8\textwidth]{figures/q2_replenishment.pdf}
-  \caption{各品类补货总量与定价策略}
-  \label{fig:A11}
-\end{figure}
-
-\begin{table}[H]
-  \centering
-  \caption{问题二灵敏度分析}
-  \begin{tabular}{c c c c}
-    \toprule
-    情景 & 7天总补货量（kg） & 7天总利润（元） & 利润变化 \\
-    \midrule
-    基准 & 2607.89 & 5305.19 & --- \\
-    批发价$+10\%$ & 2490.69 & 5322.36 & $+0.3\%$ \\
-    批发价$-10\%$ & 2733.33 & 5270.62 & $-0.7\%$ \\
-    弹性$+20\%$ & 2608.90 & 5282.80 & $-0.4\%$ \\
-    弹性$-20\%$ & 2608.79 & 5330.49 & $+0.5\%$ \\
-    损耗率=单品销量加权 & 2582.87 & 5705.22 & $+7.5\%$ \\
-    价格口径=当期销售额加权 & 2536.22 & 6722.15 & $+26.7\%$ \\
-    价格口径=中位价 & 2801.29 & 9165.93 & $+72.8\%$ \\
-    \bottomrule
-  \end{tabular}
-  \label{tab:A5}
-\end{table}
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.8\textwidth]{figures/q2_sensitivity.pdf}
-  \caption{各灵敏度情景下总期望利润对比}
-  \label{fig:A12}
-\end{figure}
-
-\begin{table}[H]
-  \centering
-  \caption{预测回测MAPE（\%）}
-  \begin{tabular}{c c c}
-    \toprule
-    品类 & 后28天MAPE & 2022-07同期MAPE \\
-    \midrule
-    花叶类 & 24.1 & 29.9 \\
-    花菜类 & 37.2 & 46.5 \\
-    水生根茎类 & 20.6 & 60.3 \\
-    茄类 & 30.3 & 66.4 \\
-    辣椒类 & 27.4 & 23.9 \\
-    食用菌 & 23.5 & 43.1 \\
-    \bottomrule
-  \end{tabular}
-  \label{tab:A6}
-\end{table}
-
-\begin{table}[H]
-  \centering
-  \caption{报童与确定性订货对比（未来一周）}
-  \begin{tabular}{c c c c c c c}
-    \toprule
-    品类 & 报童补货（kg） & 确定性补货（kg） & 补货降幅 & 报童利润（元） & 确定性利润（元） & 日均缺货率（报童/确定性） \\
-    \midrule
-    花叶类 & 1182.61 & 1338.92 & 11.7\% & 2517.33 & 2447.20 & 0.57/0.43 \\
-    花菜类 & 133.07 & 200.86 & 33.7\% & 355.93 & 230.06 & 0.69/0.39 \\
-    水生根茎类 & 175.91 & 332.03 & 47.0\% & 360.99 & -112.79 & 0.80/0.39 \\
-    茄类 & 157.01 & 188.19 & 16.6\% & 365.76 & 347.50 & 0.56/0.41 \\
-    辣椒类 & 540.64 & 595.51 & 9.2\% & 1209.04 & 1192.69 & 0.51/0.42 \\
-    食用菌 & 418.66 & 535.04 & 21.8\% & 496.14 & 445.79 & 0.61/0.41 \\
-    \midrule
-    合计 & 2607.89 & 3190.54 & 18.3\% & 5305.19 & 4550.45 & --- \\
-    \bottomrule
-  \end{tabular}
-  \label{tab:A7}
-\end{table}
-
-
-\subsection{问题三图表}
-
-\begin{table}[H]
-  \centering
-  \begin{tabularx}{\textwidth}{l l}
-    \toprule
-    图表编号 & 内容说明 \\
-    \midrule
-    表A8 & 灵敏度分析结果（基准682.08元/满足率1.00/选中33个） \\
-    图A13 & 收益与满足率权衡曲线（q3\_fr\_tradeoff.pdf） \\
-    图A14 & 各单品补货量与定价策略（q3\_price\_qty.pdf） \\
-    图A15 & 单品选择结果（q3\_selection.pdf） \\
-    \bottomrule
-  \end{tabularx}
-  \caption{问题三图表清单}
-  \label{tab:q3_appendix}
-\end{table}
-
-\begin{table}[H]
-  \centering
-  \caption{问题三灵敏度分析}
-  \begin{tabular}{c c c c}
-    \toprule
-    情景 & 总利润（元） & 满足率 & 选中数 \\
-    \midrule
-    $\rho=0.5$ & 682.08 & 1.00 & 33 \\
-    $\rho=1.0$（基准） & 682.08 & 1.00 & 33 \\
-    $\rho=1.5$ & 682.08 & 1.00 & 33 \\
-    选品数=27 & 657.54 & 1.00 & 27 \\
-    选品数=30 & 673.60 & 1.00 & 30 \\
-    选品数=33 & 682.08 & 1.00 & 33 \\
-    弹性$\times 1.2$ & 670.92 & 1.00 & 33 \\
-    弹性$\times 0.8$ & 693.75 & 1.00 & 33 \\
-    批发价$\times 1.1$ & 561.98 & 1.00 & 32 \\
-    批发价$\times 0.9$ & 805.49 & 1.00 & 33 \\
-    损耗率=分类级 & 657.44 & 1.00 & 33 \\
-    网格$K=7$ & 656.78 & 1.00 & 33 \\
-    网格=分位数取点 & 712.69 & 1.00 & 33 \\
-    大$M\times 1.5$ & 682.08 & 1.00 & 33 \\
-    \bottomrule
-  \end{tabular}
-  \label{tab:A8}
-\end{table}
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.8\textwidth]{figures/q3_fr_tradeoff.pdf}
-  \caption{收益与满足率权衡曲线}
-  \label{fig:A13}
-\end{figure}
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.8\textwidth]{figures/q3_price_qty.pdf}
-  \caption{各单品补货量与定价策略}
-  \label{fig:A14}
-\end{figure}
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.8\textwidth]{figures/q3_selection.pdf}
-  \caption{单品选择结果}
-  \label{fig:A15}
-\end{figure}
-
 \subsection{模型检验与灵敏度分析补充图表}
 \begin{table}[H]
 \centering
@@ -339,20 +67,7 @@
 \end{tabular}
 \end{table}
 
-\begin{table}[H]
-\centering
-\caption{层次聚类候选 $k$ 的 silhouette 系数（数据文件：\texttt{q1\_cluster\_k.csv}）}
-\label{tab:silhouette}
-\begin{tabular}{c c c c c c c c c}
-\toprule
-候选 $k$ & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
-\midrule
-silhouette & 0.2083 & 0.2429 & \textbf{0.2583} & 0.2579 & 0.2192 & 0.2257 & 0.2269 & 0.2058 \\
-稳定性 ARI & --- & --- & 0.4567 & --- & --- & --- & --- & --- \\
-\bottomrule
-\end{tabular}
-\par\medskip\footnotesize 注：$k=5$ 与 $k=6$ 的 silhouette 接近（0.2583 与 0.2579），结合稳定性 ARI 与簇的可解释性取 $k=5$。
-\end{table}
+
 
 \begin{table}[H]
 \centering
@@ -447,56 +162,14 @@ $\rho=1.5$   & 682.08 & 1.00 & 33 \\
 
 \section{程序代码}
 
-本附录给出全部建模代码，运行环境为Python 3.13，依赖库包括numpy、pandas、scipy、statsmodels、matplotlib、networkx、sklearn。
+以下代码仅保留各脚本的\textbf{核心计算部分}（绘图代码略），完整代码见
+\texttt{code/} 目录（支撑材料）。每段标注\textbf{对应题目}与\textbf{用途}。
 
-\subsection{数据预处理}
+\subsection{数据预处理（clean\_data.py，对应题目：全部问题共用；用途：退货并入净销量、单品/品类日聚合、批发价前向填充）}
 \label{clean_data}
+
 \begin{lstlisting}[language=Python, basicstyle=\small\ttfamily, breaklines=true]
-# clean_data.py
-"""清洗并聚合 2023 国赛 C 题原始数据.
-输入: ../Problem 下的附件 1-4, 输出: results/ 下汇总表.
-运行: python code/clean_data.py
-"""
-
-import json
-import sys
-from pathlib import Path
-
-import numpy as np
-import pandas as pd
-
-
-ROOT = Path(__file__).resolve().parents[1]
-DATA = ROOT.parent / "Problem"
-OUT = ROOT / "results"
-OUT.mkdir(parents=True, exist_ok=True)
-
-
-def save(df, name):
-  """保存为 utf-8-sig CSV."""
-  df.to_csv(OUT / name, index=False, encoding="utf-8-sig")
-  print(f"[save] {name}: {len(df)} 行")
-
-
-def load_info():
-  """读取附件 1 商品信息."""
-  df = pd.read_excel(DATA / "附件1.xlsx")
-  return df[["单品编码", "单品名称", "分类编码", "分类名称"]]
-
-
-def load_loss():
-  """读取附件 4 单品损耗率和分类平均损耗率."""
-  it = pd.read_excel(DATA / "附件4.xlsx", sheet_name="Sheet1")
-  it = it[["单品编码", "损耗率(%)"]].rename(columns={"损耗率(%)": "损耗率"})
-  ct = pd.read_excel(DATA / "附件4.xlsx",
-                     sheet_name="平均损耗率(%)_小分类编码_不同值")
-  ct = ct.rename(columns={"小分类编码": "分类编码",
-                          "平均损耗率(%)_小分类编码_不同值": "平均损耗率"})
-  return it, ct[["分类编码", "平均损耗率"]]
-
-
 def load_sales():
-  """读取附件 2 销售流水, 构造净销量和打折拆分."""
   df = pd.read_excel(DATA / "附件2.xlsx")
   df = df.rename(columns={"销量(千克)": "销量", "销售单价(元/千克)": "销售单价"})
   df["销售日期"] = pd.to_datetime(df["销售日期"])
@@ -504,13 +177,9 @@ def load_sales():
   df["净销量"] = np.where(ok, df["销量"], -df["销量"])
   df["售出量"] = np.where(ok, df["销量"], 0.0)
   df["销售额"] = np.where(ok, df["销量"] * df["销售单价"], 0.0)
-  df["打折销量"] = np.where(ok & (df["是否打折销售"] == "是"), df["销量"], 0.0)
-  df["正常销量"] = np.where(ok & (df["是否打折销售"] == "否"), df["销量"], 0.0)
   return df
 
-
 def daily_item(s):
-  """按单品-日聚合销量."""
   agg = s.groupby(["销售日期", "单品编码"], as_index=False).agg(
     净销量=("净销量", "sum"), 售出量=("售出量", "sum"), 销售额=("销售额", "sum"),
     打折销量=("打折销量", "sum"), 正常销量=("正常销量", "sum"),
@@ -518,22 +187,7 @@ def daily_item(s):
   agg["均价"] = np.where(agg["售出量"] > 0, agg["销售额"] / agg["售出量"], np.nan)
   return agg
 
-
-def daily_cat(s, info):
-  """按品类-日聚合销量."""
-  df = s.merge(info[["单品编码", "分类编码", "分类名称"]],
-               on="单品编码", how="left")
-  agg = df.groupby(["销售日期", "分类编码", "分类名称"], as_index=False).agg(
-    净销量=("净销量", "sum"), 售出量=("售出量", "sum"), 销售额=("销售额", "sum"),
-    打折销量=("打折销量", "sum"), 正常销量=("正常销量", "sum"),
-    售出记录数=("售出量", "count"), 退货记录数=("净销量", lambda x: (x < 0).sum()),
-    在售单品数=("单品编码", "nunique"))
-  agg["均价"] = np.where(agg["售出量"] > 0, agg["销售额"] / agg["售出量"], np.nan)
-  return agg
-
-
 def daily_ws(w):
-  """补全单品-日批发价, 先按单品前向填充再用单品均值补齐."""
   mean = w.groupby("单品编码")["批发价"].mean()
   codes = w["单品编码"].drop_duplicates()
   dates = pd.date_range(w["销售日期"].min(), w["销售日期"].max(), freq="D")
@@ -542,144 +196,16 @@ def daily_ws(w):
   full = grid.merge(w, on=["单品编码", "销售日期"], how="left")
   full = full.sort_values(["单品编码", "销售日期"])
   full["批发价"] = full.groupby("单品编码")["批发价"].ffill()
-  full["价格来源"] = np.where(full["批发价"].isna(), "缺失", "前向")
   bad = full["批发价"].isna()
   full.loc[bad, "批发价"] = full.loc[bad, "单品编码"].map(mean)
-  full.loc[bad, "价格来源"] = "单品均值"
   return full
-
-
-def daily_cat_ws(ws, item, info):
-  """按品类-日聚合批发价, 输出均值与销量加权."""
-  df = ws.merge(info[["单品编码", "分类编码", "分类名称"]], on="单品编码")
-  df = df.merge(item[["销售日期", "单品编码", "售出量"]],
-                on=["销售日期", "单品编码"], how="left")
-  df["售出量"] = df["售出量"].fillna(0.0)
-  agg = df.groupby(["销售日期", "分类编码", "分类名称"], as_index=False).agg(
-    批发价均值=("批发价", "mean"), 覆盖单品数=("单品编码", "nunique"),
-    售出量=("售出量", "sum"))
-  df["加权值"] = df["批发价"] * df["售出量"]
-  w = df.groupby(["销售日期", "分类编码"])[["加权值", "售出量"]].sum()
-  w = w.reset_index()
-  w["批发价加权"] = np.where(w["售出量"] > 0, w["加权值"] / w["售出量"], np.nan)
-  agg = agg.merge(w[["销售日期", "分类编码", "批发价加权"]],
-                  on=["销售日期", "分类编码"])
-  agg["批发价加权"] = agg["批发价加权"].fillna(agg["批发价均值"])
-  return agg
-
-
-def profile(info, s, w, item, cat, ws):
-  """输出数据质量与口径校验摘要."""
-  sold = s.loc[s["销售类型"] == "销售", "销量"].sum()
-  back = s.loc[s["销售类型"] == "退货", "销量"].sum()
-  return {
-    "商品数": int(len(info)),
-    "品类数": int(info["分类编码"].nunique()),
-    "流水行数": int(len(s)),
-    "退货行数": int((s["销售类型"] == "退货").sum()),
-    "售出总量_kg": round(float(sold), 3),
-    "退货总量_kg": round(float(back), 3),
-    "流水日期范围": [str(s["销售日期"].min().date()),
-                    str(s["销售日期"].max().date())],
-    "有销售商品数": int(s["单品编码"].nunique()),
-    "批发价行数": int(len(w)),
-    "批发价日期范围": [str(w["销售日期"].min().date()),
-                    str(w["销售日期"].max().date())],
-    "有价商品数": int(w["单品编码"].nunique()),
-    "损耗率商品数": int(info["损耗率"].notna().sum()),
-    "损耗率均值_%": round(float(info["损耗率"].mean()), 4),
-    "单品日表行数": int(len(item)),
-    "品类日表行数": int(len(cat)),
-    "批发价日表行数": int(len(ws)),
-    "均值补齐行数": int((ws["价格来源"] == "单品均值").sum()),
-    "均值补齐占比_%": round(100 * (ws["价格来源"] == "单品均值").mean(), 4),
-  }
-
-
-def main():
-  """执行完整清洗流程."""
-  print("=" * 60)
-  print("任务 1: 数据清洗与聚合")
-  print("=" * 60)
-
-  info = load_info()
-  loss, loss_c = load_loss()
-  info = info.merge(loss, on="单品编码").merge(loss_c, on="分类编码")
-  save(info, "item_info.csv")
-
-  s = load_sales()
-  item = daily_item(s).merge(info, on="单品编码", how="left")
-  save(item, "item_daily_sales.csv")
-
-  cat = daily_cat(s, info).merge(loss_c, on="分类编码", how="left")
-  save(cat, "category_daily_sales.csv")
-
-  w = pd.read_excel(DATA / "附件3.xlsx").rename(columns={"日期": "销售日期",
-                                                       "批发价格(元/千克)": "批发价"})
-  w["销售日期"] = pd.to_datetime(w["销售日期"])
-  ws = daily_ws(w)
-  save(ws, "item_daily_wholesale.csv")
-
-  cat_ws = daily_cat_ws(ws, item, info)
-  save(cat_ws, "category_daily_wholesale.csv")
-
-  full = item.merge(ws[["销售日期", "单品编码", "批发价"]],
-                    on=["销售日期", "单品编码"], how="left")
-  full["加价率"] = full["均价"] / full["批发价"] - 1
-  save(full, "item_daily_full.csv")
-
-  cat_full = cat.merge(cat_ws[["销售日期", "分类编码", "批发价均值", "批发价加权"]],
-                       on=["销售日期", "分类编码"], how="left")
-  cat_full["加价率"] = cat_full["均价"] / cat_full["批发价加权"] - 1
-  save(cat_full, "category_daily_full.csv")
-
-  pro = profile(info, s, w, item, cat, ws)
-  with (OUT / "data_profile.json").open("w", encoding="utf-8") as f:
-    json.dump(pro, f, ensure_ascii=False, indent=2)
-  print("\n[校验]")
-  print(json.dumps(pro, ensure_ascii=False, indent=2))
-  print("\n任务 1 完成: 结果已写入 results/")
-
-
-if __name__ == "__main__":
-  sys.exit(main())
-
 \end{lstlisting}
 
 \subsection{问题一代码}
 
+\subsubsection{A.py：品类与单品销量分布拟合（用途：lognorm/gamma 拟合与 AIC/BIC 选型，输出分布参数与经验分位数）}
+
 \begin{lstlisting}[language=Python, basicstyle=\small\ttfamily, breaklines=true]
-# question1/A.py
-  # 任务A: 品类/单品销量分布拟合
-# 输入 results/ 日销量表, 输出 results/ 拟合表与 figures/ 图
-
-from datetime import datetime
-from pathlib import Path
-import time
-
-import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
-from scipy import stats
-
-
-ROOT = Path(__file__).resolve().parents[2]
-OUT = ROOT / "results"
-FIG = ROOT / "figures"
-LOG_DIR = Path(__file__).resolve().parent / "outputs"
-OUT.mkdir(parents=True, exist_ok=True)
-FIG.mkdir(parents=True, exist_ok=True)
-LOG_DIR.mkdir(parents=True, exist_ok=True)
-t = 1095
-n_day_min = 60
-dists = {"lognorm": stats.lognorm, "gamma": stats.gamma}
-k = {"lognorm": 2, "gamma": 2}
-DEBUG = True
-
-plt.rcParams["font.sans-serif"] = ["Microsoft YaHei", "SimHei"]
-plt.rcParams["axes.unicode_minus"] = False
-
-
 def fit(x, name):
   d = dists[name]
   par = d.fit(x, floc=0)
@@ -687,13 +213,6 @@ def fit(x, name):
   aic = 2 * k[name] - 2 * llf
   bic = k[name] * np.log(len(x)) - 2 * llf
   return par, llf, aic, bic
-
-
-def par_str(name, par):
-  if name == "lognorm":
-    return f"s={par[0]:.4f}, loc={par[1]:.4f}, scale={par[2]:.4f}"
-  return f"a={par[0]:.4f}, loc={par[1]:.4f}, scale={par[2]:.4f}"
-
 
 def best_fit(x):
   best = None
@@ -703,40 +222,26 @@ def best_fit(x):
       best = (name, par, aic)
   return best
 
-
 def dist_cat():
   df = pd.read_csv(OUT / "category_daily_sales.csv", encoding="utf-8-sig")
   rows = []
   for c, g in df.groupby("分类编码"):
     x = g["净销量"].values
     x = x[x > 0]
-    if DEBUG:
-      print("[debug] cat", c, "positive days:", len(x))
-    res = []
-    for name in dists:
-      par, llf, aic, bic = fit(x, name)
-      res.append((name, par, llf, aic, bic))
+    res = [(name,) + fit(x, name) for name in dists]
     best = min(res, key=lambda r: r[3])
     for name, par, llf, aic, bic in res:
       rows.append({"分类编码": c, "分类名称": g["分类名称"].iloc[0],
-                   "分布": name, "参数": par_str(name, par),
-                   "负对数似然": round(-llf, 3), "AIC": round(aic, 3),
-                   "BIC": round(bic, 3),
+                   "分布": name, "AIC": round(aic, 3), "BIC": round(bic, 3),
                    "是否最优": "是" if name == best[0] else "否"})
-  out = pd.DataFrame(rows)
-  out.to_csv(OUT / "q1_dist_cat.csv", index=False, encoding="utf-8-sig")
-
+  pd.DataFrame(rows).to_csv(OUT / "q1_dist_cat.csv", index=False,
+                            encoding="utf-8-sig")
 
 def dist_item():
   df = pd.read_csv(OUT / "item_daily_sales.csv", encoding="utf-8-sig")
   df = df[df["净销量"] > 0]
   n = df.groupby("单品编码").agg(n=("净销量", "size"),
-                                  name=("单品名称", "first"),
-                                  cat=("分类名称", "first"))
-  if DEBUG:
-    print("[debug] items:", len(n))
-    print("[debug] sale-day min/med/max:", n["n"].min(), n["n"].median(),
-          n["n"].max())
+                                  name=("单品名称", "first"))
   rows, qs = [], []
   for code, r in n.iterrows():
     x = df.loc[df["单品编码"] == code, "净销量"].values
@@ -749,141 +254,18 @@ def dist_item():
     if nd < n_day_min:
       continue
     name, par, aic = best_fit(x)
-    rows.append({"单品编码": code, "单品名称": r["name"], "分类名称": r["cat"],
-                 "有效销售天数": nd, "售出概率": round(nd / t, 4),
-                 "分布": name, "参数": par_str(name, par),
+    rows.append({"单品编码": code, "单品名称": r["name"], "有效销售天数": nd,
+                 "售出概率": round(nd / t, 4), "分布": name,
                  "AIC": round(aic, 3), "是否最优": "是"})
   pd.DataFrame(qs).to_csv(OUT / "q1_item_quantiles.csv", index=False,
                           encoding="utf-8-sig")
   pd.DataFrame(rows).to_csv(OUT / "q1_dist_item.csv", index=False,
                             encoding="utf-8-sig")
-  if DEBUG:
-    print("[debug] fitted:", len(rows), "sparse:", len(qs) - len(rows))
-  return df
+\end{lstlisting}
 
+\subsubsection{B.py：品类日销量 STL 季节分解（用途：周季节分解与季节/趋势强度、旺季比值）}
 
-def sample_codes(df):
-  n = df.groupby("单品编码")["净销量"].size()
-  hi = n.nlargest(2).index.tolist()
-  mid = n.iloc[(n - n.median()).abs().argsort()[:2]].index.tolist()
-  sp = n[n < n_day_min].nlargest(2).index.tolist()
-  return hi + mid + sp
-
-
-def qq_cat():
-  df = pd.read_csv(OUT / "category_daily_sales.csv", encoding="utf-8-sig")
-  fig, axs = plt.subplots(2, 3, figsize=(12, 8))
-  for ax, (c, g) in zip(axs.ravel(), df.groupby("分类编码")):
-    x = g["净销量"].values
-    x = x[x > 0]
-    name, par, aic = best_fit(x)
-    stats.probplot(x, dist=dists[name], sparams=par, plot=ax)
-    ax.set_xlabel("理论分位数", fontsize=9)
-    ax.set_ylabel("样本分位数", fontsize=9)
-    ax.text(0.04, 0.96, f"{g['分类名称'].iloc[0]}  {name} AIC={aic:.1f}",
-            transform=ax.transAxes, va="top", fontsize=8)
-  fig.tight_layout()
-  fig.savefig(FIG / "q1_dist_cat_qq.pdf")
-  plt.close(fig)
-
-
-def fig_item(df):
-  codes = sample_codes(df)
-  fig, axs = plt.subplots(2, 3, figsize=(14, 8))
-  for ax, code in zip(axs.ravel(), codes):
-    g = df[df["单品编码"] == code]
-    x = g["净销量"].values
-    nd = len(x)
-    ax.hist(x, bins=30, density=True, alpha=0.6, color="#4C72B0",
-            label=f"{g['单品名称'].iloc[0]}  n={nd}")
-    if nd >= n_day_min:
-      name, par, aic = best_fit(x)
-      xs = np.linspace(x.min(), x.max(), 200)
-      ax.plot(xs, dists[name].pdf(xs, *par), color="C3", lw=1.5,
-              label=f"{name} AIC={aic:.1f}")
-    ax.set_xlabel("日净销量(千克)", fontsize=9)
-    ax.set_ylabel("密度", fontsize=9)
-    ax.legend(fontsize=8)
-  fig.tight_layout()
-  fig.savefig(FIG / "q1_dist_item_sample.pdf")
-  plt.close(fig)
-
-
-def main():
-  t0 = time.time()
-  dist_cat()
-  df = dist_item()
-  qq_cat()
-  fig_item(df)
-  c = pd.read_csv(OUT / "q1_dist_cat.csv", encoding="utf-8-sig")
-  it = pd.read_csv(OUT / "q1_dist_item.csv", encoding="utf-8-sig")
-  qt = pd.read_csv(OUT / "q1_item_quantiles.csv", encoding="utf-8-sig")
-  if DEBUG:
-    print("[debug] cat rows:", len(c))
-    print("[debug] winners:", c.loc[c["是否最优"] == "是", "分布"].tolist())
-    print("[debug] item fitted:", len(it), "sparse:",
-          len(qt) - len(it), "no-sale:", 251 - len(qt))
-    print("[debug] nd range:", it["有效销售天数"].min(),
-          it["有效销售天数"].max())
-    print("[debug] nan total:", int(c.isna().sum().sum()
-                                    + it.isna().sum().sum()
-                                    + qt.isna().sum().sum()))
-    print("[debug] elapsed: %.1fs" % (time.time() - t0))
-  lines = [
-    f"run_time={datetime.now().isoformat(timespec='seconds')}",
-    f"cat_winner={c.loc[c['是否最优']=='是', '分布'].tolist()}",
-    f"item_fitted={len(it)} "
-    f"gamma={len(it[it['分布']=='gamma'])} "
-    f"lognorm={len(it[it['分布']=='lognorm'])}",
-    f"item_quantiles={len(qt)}",
-  ]
-  (LOG_DIR / "A.log").write_text("\n".join(lines) + "\n", encoding="utf-8")
-  print("[save] q1_dist_cat.csv / q1_dist_item.csv / q1_item_quantiles.csv")
-  print("[save] q1_dist_cat_qq.pdf / q1_dist_item_sample.pdf")
-  print("[save] outputs/A.log")
-
-
-if __name__ == "__main__":
-  main()
-
-# question1/B.py
-# 任务B: 品类日销量 STL 季节分解
-# 输入 results/category_daily_sales.csv, 输出分解表与两张图
-
-from datetime import datetime
-from pathlib import Path
-import time
-
-import matplotlib.dates as mdates
-import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
-from statsmodels.tsa.seasonal import STL
-
-
-ROOT = Path(__file__).resolve().parents[2]
-OUT = ROOT / "results"
-FIG = ROOT / "figures"
-LOG_DIR = Path(__file__).resolve().parent / "outputs"
-OUT.mkdir(parents=True, exist_ok=True)
-FIG.mkdir(parents=True, exist_ok=True)
-LOG_DIR.mkdir(parents=True, exist_ok=True)
-PERIOD = 7
-DATE0 = "2020-07-01"
-DATE1 = "2023-06-30"
-PEAK = [4, 5, 6, 7, 8, 9, 10]
-DEBUG = True
-
-plt.rcParams["font.sans-serif"] = ["Microsoft YaHei", "SimHei"]
-plt.rcParams["axes.unicode_minus"] = False
-
-
-def load():
-  df = pd.read_csv(OUT / "category_daily_sales.csv", encoding="utf-8-sig")
-  df["销售日期"] = pd.to_datetime(df["销售日期"])
-  return df
-
-
+\begin{lstlisting}[language=Python, basicstyle=\small\ttfamily, breaklines=true]
 def full_daily(df):
   idx = pd.date_range(DATE0, DATE1, freq="D")
   out = []
@@ -895,201 +277,40 @@ def full_daily(df):
     out.append(d)
   return pd.concat(out, ignore_index=True)
 
-
 def decomp(s):
   res = STL(s, period=PERIOD, robust=True).fit()
   return res.trend, res.seasonal, res.resid
-
 
 def strength(t, s, r):
   fs = max(0.0, 1 - np.var(r) / np.var(s + r))
   ft = max(0.0, 1 - np.var(r) / np.var(t + r))
   return fs, ft
 
-
 def monthly(g):
   m = g.assign(月份=g["销售日期"].dt.month)
   return m.groupby("月份")["净销量"].mean()
 
+for c, g in full.groupby("分类编码"):
+  s = g["净销量"].reset_index(drop=True)
+  t, se, r = decomp(s)
+  fs, ft = strength(t, se, r)
+  mm = monthly(g)
+  peak = mm[mm.index.isin(PEAK)].mean()
+  off = mm[~mm.index.isin(PEAK)].mean()
+  ratio = peak / off
+\end{lstlisting}
 
-def fig_stl(full, rows, dec):
-  fig, axs = plt.subplots(2, 3, figsize=(15, 8), sharex=True)
-  for ax, (c, g) in zip(axs.ravel(), full.groupby("分类编码")):
-    d = g["销售日期"]
-    t, se, r = dec[c]
-    ax.plot(d, t, color="C0", lw=1.2, label="趋势")
-    ax.plot(d, se, color="C1", lw=1.0, label="季节")
-    ax.plot(d, r, color="C2", lw=0.7, alpha=0.7, label="残差")
-    info = rows.loc[rows["分类编码"] == c].iloc[0]
-    ax.text(0.03, 0.96,
-            f"{info['分类名称']}  F_s={info['季节强度']:.2f} "
-            f"F_t={info['趋势强度']:.2f}",
-            transform=ax.transAxes, va="top", fontsize=8)
-    # 日期刻度按半年间隔, 避免月份挤在一起
-    ax.xaxis.set_major_locator(mdates.MonthLocator(interval=6))
-    ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y-%m"))
-    ax.tick_params(axis="x", labelsize=7, rotation=20)
-    ax.set_xlabel("日期", fontsize=8)
-    ax.set_ylabel("销量(千克)", fontsize=8)
-  handles, labels = axs.ravel()[0].get_legend_handles_labels()
-  fig.legend(handles, labels, loc="lower center", ncol=3, fontsize=9)
-  fig.tight_layout(rect=[0, 0.04, 1, 1])
-  fig.savefig(FIG / "q1_stl.pdf")
-  plt.close(fig)
+\subsubsection{C.py：去季节协同网络（用途：去日历 Spearman 相关、BH-FDR 校正、前后半样本稳健边）}
 
-
-def fig_month(full):
-  fig, axs = plt.subplots(2, 3, figsize=(14, 8))
-  for ax, (c, g) in zip(axs.ravel(), full.groupby("分类编码")):
-    mm = monthly(g)
-    colors = ["#D62728" if i in PEAK else "#4C72B0" for i in mm.index]
-    ax.bar(mm.index, mm.values, color=colors, alpha=0.85)
-    ax.set_xticks(range(1, 13))
-    ax.set_xlabel("月份", fontsize=9)
-    ax.set_ylabel("平均日销量(千克)", fontsize=9)
-    ax.text(0.03, 0.96, g["分类名称"].iloc[0],
-            transform=ax.transAxes, va="top", fontsize=8)
-  fig.tight_layout()
-  fig.savefig(FIG / "q1_monthly_mean.pdf")
-  plt.close(fig)
-
-
-def main():
-  t0 = time.time()
-  df = load()
-  full = full_daily(df)
-  missing = len(full) - len(df)
-  if DEBUG:
-    print("[debug] total missing days:", missing)
-  dec = {}
-  stl_rows, str_rows, m_rows = [], [], []
-  for c, g in full.groupby("分类编码"):
-    s = g["净销量"].reset_index(drop=True)
-    t, se, r = decomp(s)
-    dec[c] = (t, se, r)
-    fs, ft = strength(t, se, r)
-    miss_c = 1095 - len(df[df["分类编码"] == c])
-    d = g[["销售日期", "分类编码", "分类名称"]].reset_index(drop=True)
-    d["净销量"] = s.values
-    d["趋势"] = t.values
-    d["季节"] = se.values
-    d["残差"] = r.values
-    stl_rows.append(d)
-    mm = monthly(g)
-    peak = mm[mm.index.isin(PEAK)].mean()
-    off = mm[~mm.index.isin(PEAK)].mean()
-    ratio = peak / off
-    if DEBUG:
-      print("[debug]", g["分类名称"].iloc[0],
-            "missing:", miss_c,
-            "F_s=%.4f F_t=%.4f ratio=%.4f" % (fs, ft, ratio))
-    str_rows.append({"分类编码": c, "分类名称": g["分类名称"].iloc[0],
-                     "季节强度": round(fs, 4), "趋势强度": round(ft, 4),
-                     "旺季平均日销量": round(peak, 3),
-                     "淡季平均日销量": round(off, 3),
-                     "旺季比值": round(ratio, 4)})
-    for mo, v in mm.items():
-      m_rows.append({"分类编码": c, "分类名称": g["分类名称"].iloc[0],
-                     "月份": int(mo), "平均日销量": round(v, 3)})
-  stl = pd.concat(stl_rows, ignore_index=True)
-  stl[["净销量", "趋势", "季节", "残差"]] = \
-    stl[["净销量", "趋势", "季节", "残差"]].round(3)
-  strength_df = pd.DataFrame(str_rows)
-  month_df = pd.DataFrame(m_rows)
-  stl.to_csv(OUT / "q1_stl_fit.csv", index=False, encoding="utf-8-sig")
-  strength_df.to_csv(OUT / "q1_seasonal_strength.csv", index=False,
-                     encoding="utf-8-sig")
-  month_df.to_csv(OUT / "q1_monthly_mean.csv", index=False,
-                  encoding="utf-8-sig")
-  fig_stl(full, strength_df, dec)
-  fig_month(full)
-  if DEBUG:
-    print("[debug] stl rows:", len(stl),
-          "nan:", int(stl.isna().sum().sum()))
-    print("[debug] F_s range:", strength_df["季节强度"].min(),
-          strength_df["季节强度"].max())
-    print("[debug] F_t range:", strength_df["趋势强度"].min(),
-          strength_df["趋势强度"].max())
-    print("[debug] monthly rows:", len(month_df))
-    print("[debug] elapsed: %.1fs" % (time.time() - t0))
-  lines = [
-    f"run_time={datetime.now().isoformat(timespec='seconds')}",
-    f"missing_days={missing}",
-    f"seasonal_strength={strength_df['季节强度'].tolist()}",
-    f"trend_strength={strength_df['趋势强度'].tolist()}",
-    f"peak_ratio={strength_df['旺季比值'].tolist()}",
-    f"monthly_rows={len(month_df)}",
-  ]
-  (LOG_DIR / "B.log").write_text("\n".join(lines) + "\n", encoding="utf-8")
-  print("[save] q1_stl_fit.csv / q1_seasonal_strength.csv / "
-        "q1_monthly_mean.csv")
-  print("[save] q1_stl.pdf / q1_monthly_mean.pdf")
-  print("[save] outputs/B.log")
-
-
-if __name__ == "__main__":
-  main()
-
-# question1/C.py
-# 任务C: 去季节相关性与协同变动网络
-# 输入 results/item_daily_sales.csv, 输出相关表/网络表与两张图
-
-import time
-from datetime import datetime
-from pathlib import Path
-
-import matplotlib.pyplot as plt
-import networkx as nx
-import numpy as np
-import pandas as pd
-from matplotlib.lines import Line2D
-from matplotlib.patches import Patch
-from scipy import stats
-
-
-ROOT = Path(__file__).resolve().parents[2]
-OUT = ROOT / "results"
-FIG = ROOT / "figures"
-LOG_DIR = Path(__file__).resolve().parent / "outputs"
-OUT.mkdir(parents=True, exist_ok=True)
-FIG.mkdir(parents=True, exist_ok=True)
-LOG_DIR.mkdir(parents=True, exist_ok=True)
-DATE0 = "2020-07-01"
-DATE1 = "2023-06-30"
-n_day_min = 60
-r_th = 0.4
-fdr_q = 0.05
-ths = [0.3, 0.4, 0.5]
-DEBUG = True
-
-plt.rcParams["font.sans-serif"] = ["Microsoft YaHei", "SimHei"]
-plt.rcParams["axes.unicode_minus"] = False
-
-
-def load():
-  df = pd.read_csv(OUT / "item_daily_sales.csv", encoding="utf-8-sig")
-  df["销售日期"] = pd.to_datetime(df["销售日期"])
-  return df
-
-
-def wide(df):
-  idx = pd.date_range(DATE0, DATE1, freq="D")
-  q = df.pivot(index="销售日期", columns="单品编码",
-               values="净销量").reindex(idx).fillna(0.0)
-  info = df.drop_duplicates("单品编码").set_index("单品编码")[
-    ["单品名称", "分类编码", "分类名称"]]
-  return q, info
-
-
+\begin{lstlisting}[language=Python, basicstyle=\small\ttfamily, breaklines=true]
 def design(d):
   wd = d["销售日期"].dt.weekday
   mo = d["销售日期"].dt.month
   x = pd.get_dummies(wd, prefix="w", drop_first=True).astype(float)
   x = pd.concat([x, pd.get_dummies(mo, prefix="m",
-                                    drop_first=True).astype(float)], axis=1)
+                                   drop_first=True).astype(float)], axis=1)
   x["c"] = 1.0
   return x.values
-
 
 def resid(q, x):
   r = np.empty_like(q, dtype=float)
@@ -1098,18 +319,15 @@ def resid(q, x):
     r[:, i] = q[:, i] - x @ b
   return r
 
-
 def sp(r):
   rank = np.apply_along_axis(stats.rankdata, 0, r)
-  with np.errstate(invalid="ignore", divide="ignore"):
-    rho = np.corrcoef(rank, rowvar=False)
+  rho = np.corrcoef(rank, rowvar=False)
   n = r.shape[0]
   with np.errstate(divide="ignore", invalid="ignore"):
     t = rho * np.sqrt((n - 2) / (1 - rho ** 2))
-  p = 2 * stats.t.sf(np.abs(t), n - 2)
+    p = 2 * stats.t.sf(np.abs(t), n - 2)
   np.fill_diagonal(p, 1.0)
   return rho, p
-
 
 def bh(p):
   m = len(p)
@@ -1119,258 +337,25 @@ def bh(p):
   q = np.minimum.accumulate(q[::-1])[::-1]
   return q
 
+stable = ((np.sign(rf) == np.sign(r1f)) & (np.sign(rf) == np.sign(r2f))
+          & (p1f < 0.05) & (p2f < 0.05))
+main = (np.abs(rf) >= r_th) & (qf < fdr_q)
+\end{lstlisting}
 
-def cat_heat():
-  df = pd.read_csv(OUT / "category_daily_sales.csv", encoding="utf-8-sig")
-  df["销售日期"] = pd.to_datetime(df["销售日期"])
-  q = df.pivot(index="销售日期", columns="分类名称",
-               values="净销量").reindex(pd.date_range(DATE0, DATE1),
-                                        ).fillna(0.0)
-  d = pd.DataFrame({"销售日期": q.index})
-  rho, _ = sp(resid(q.values, design(d)))
-  fig, ax = plt.subplots(figsize=(7, 6))
-  im = ax.imshow(rho, cmap="RdBu_r", vmin=-1, vmax=1)
-  ax.set_xticks(range(6))
-  ax.set_yticks(range(6))
-  ax.set_xticklabels(q.columns, fontsize=8, rotation=45, ha="right")
-  ax.set_yticklabels(q.columns, fontsize=8)
-  for i in range(6):
-    for j in range(6):
-      ax.text(j, i, f"{rho[i, j]:.2f}", ha="center", va="center", fontsize=7)
-  fig.colorbar(im, ax=ax, label="相关系数")
-  fig.tight_layout()
-  fig.savefig(FIG / "q1_corr_heatmap_cat.pdf")
-  plt.close(fig)
-  return rho
+\subsubsection{D.py：单品时序特征聚类（用途：六维特征提取、Ward 层次聚类、silhouette 选 k 与抽样 ARI 稳定性）}
 
-
-def fig_net(sub, info):
-  g = nx.Graph()
-  for _, r in sub.iterrows():
-    g.add_edge(int(r["单品A编码"]), int(r["单品B编码"]),
-               sign=np.sign(r["相关系数"]))
-  deg = dict(g.degree())
-  negd = {}
-  for u, v, d in g.edges(data=True):
-    if d["sign"] < 0:
-      negd[u] = negd.get(u, 0) + 1
-      negd[v] = negd.get(v, 0) + 1
-  # 按度中心度取 15 个代表单品, 不足时用负相关节点替换, 保证正负边都可见
-  topn = sorted(deg, key=deg.get, reverse=True)[:15]
-  for n in sorted(negd, key=negd.get, reverse=True):
-    if n in topn:
-      continue
-    cand = [x for x in topn if negd.get(x, 0) == 0]
-    if not cand:
-      break
-    topn.remove(cand[-1])
-    topn.append(n)
-  g = g.subgraph(topn)
-  if DEBUG:
-    print("[debug] network nodes shown:", len(g))
-    print("[debug] negative edges shown:",
-          sum(1 for _, _, d in g.edges(data=True) if d["sign"] < 0))
-  fig, ax = plt.subplots(figsize=(13, 10))
-  # kamada-kawai 布局比力导向更舒展, 降低边交叉
-  pos = nx.kamada_kawai_layout(g)
-  pe = [(u, v) for u, v, d in g.edges(data=True) if d["sign"] > 0]
-  ne = [(u, v) for u, v, d in g.edges(data=True) if d["sign"] < 0]
-  nx.draw_networkx_edges(g, pos, edgelist=pe, edge_color="#D62728",
-                         alpha=0.4, width=1.2, ax=ax)
-  nx.draw_networkx_edges(g, pos, edgelist=ne, edge_color="#4C72B0",
-                         alpha=0.4, width=1.2, style="dashed", ax=ax)
-  cats = sorted(info["分类名称"].unique())
-  bright = ["#FFB300", "#FF6F61", "#00C2C7", "#845EC2", "#FFE119", "#32CD32"]
-  ccolor = {c: bright[i % len(bright)] for i, c in enumerate(cats)}
-  # 按品类用亮色着色, 图例给出品类与正负边含义
-  for c in cats:
-    nodes = [n for n in g.nodes() if info.loc[n, "分类名称"] == c]
-    sizes = [300 + 150 * deg[n] for n in nodes]
-    nx.draw_networkx_nodes(g, pos, nodelist=nodes, node_size=sizes,
-                           node_color=[ccolor[c]] * len(nodes),
-                           edgecolors="white", linewidths=0.5, ax=ax)
-  labels = {n: info.loc[n, "单品名称"] for n in g.nodes() if n in info.index}
-  nx.draw_networkx_labels(g, pos, labels, font_size=8, ax=ax)
-  handles = [Patch(color=ccolor[c], label=c) for c in cats]
-  handles += [Line2D([0], [0], color="#D62728", lw=1.5, label="正相关"),
-              Line2D([0], [0], color="#4C72B0", lw=1.5, ls="--",
-                     label="负相关")]
-  ax.legend(handles=handles, loc="upper left", fontsize=8, framealpha=0.9)
-  ax.text(0.01, 0.01, "展示 15 个代表性单品及相互连接",
-          transform=ax.transAxes, fontsize=8, va="bottom")
-  ax.axis("off")
-  fig.tight_layout()
-  fig.savefig(FIG / "q1_corr_network.pdf")
-  plt.close(fig)
-
-
-def main():
-  t0 = time.time()
-  df = load()
-  q, info = wide(df)
-  n_day = (q > 0).sum()
-  cols = n_day[n_day >= n_day_min].index
-  q = q[cols]
-  info = info.loc[cols]
-  d = pd.DataFrame({"销售日期": q.index})
-  x = design(d)
-  rho, p = sp(resid(q.values, x))
-  iu = np.triu_indices(rho.shape[0], 1)
-  rf, pf = rho[iu], p[iu]
-  qf = bh(pf)
-  h1 = q.index <= "2021-12-31"
-  h2 = ~h1
-  rho1, p1 = sp(resid(q[h1].values, design(d.loc[h1])))
-  rho2, p2 = sp(resid(q[h2].values, design(d.loc[h2])))
-  r1f, r2f = rho1[iu], rho2[iu]
-  p1f, p2f = p1[iu], p2[iu]
-  stable = ((np.sign(rf) == np.sign(r1f)) & (np.sign(rf) == np.sign(r2f))
-            & (p1f < 0.05) & (p2f < 0.05))
-  main = (np.abs(rf) >= r_th) & (qf < fdr_q)
-  edges = pd.DataFrame({
-    "单品A编码": q.columns[iu[0][main]],
-    "单品A名称": info.loc[q.columns[iu[0][main]], "单品名称"].values,
-    "单品B编码": q.columns[iu[1][main]],
-    "单品B名称": info.loc[q.columns[iu[1][main]], "单品名称"].values,
-    "相关系数": np.round(rf[main], 4),
-    "p值": np.round(pf[main], 6),
-    "FDR_q值": np.round(qf[main], 6),
-    "符号": np.where(rf[main] > 0, "正", "负"),
-    "是否稳健边": np.where(stable[main], "是", "否"),
-  })
-  edges.to_csv(OUT / "q1_corr_edges.csv", index=False, encoding="utf-8-sig")
-  thr_rows = []
-  for th in ths:
-    m1 = np.abs(rf) >= th
-    thr_rows.append({"阈值": th, "边数": int(m1.sum()),
-                     "正边数": int((m1 & (rf > 0)).sum()),
-                     "负边数": int((m1 & (rf < 0)).sum()),
-                     "稳健边数": int((m1 & stable).sum())})
-  thr = pd.DataFrame(thr_rows)
-  thr.to_csv(OUT / "q1_corr_threshold.csv", index=False,
-             encoding="utf-8-sig")
-  sub = edges[edges["是否稳健边"] == "是"]
-  if len(sub):
-    g = nx.Graph()
-    for _, r in sub.iterrows():
-      g.add_edge(int(r["单品A编码"]), int(r["单品B编码"]),
-                 sign=np.sign(r["相关系数"]))
-    deg = nx.degree_centrality(g)
-    bc = nx.betweenness_centrality(g)
-    pos_cnt = {}
-    neg_cnt = {}
-    for _, r in sub.iterrows():
-      for node in (int(r["单品A编码"]), int(r["单品B编码"])):
-        if r["符号"] == "正":
-          pos_cnt[node] = pos_cnt.get(node, 0) + 1
-        else:
-          neg_cnt[node] = neg_cnt.get(node, 0) + 1
-    top = pd.DataFrame({
-      "单品编码": list(deg.keys()),
-      "单品名称": [info.loc[n, "单品名称"] for n in deg],
-      "度中心度": np.round(list(deg.values()), 4),
-      "介数中心度": np.round([bc[n] for n in deg], 6),
-      "正边数": [pos_cnt.get(n, 0) for n in deg],
-      "负边数": [neg_cnt.get(n, 0) for n in deg],
-    }).sort_values("度中心度", ascending=False)
-    top.to_csv(OUT / "q1_network_top.csv", index=False, encoding="utf-8-sig")
-    fig_net(sub, info)
-  else:
-    pd.DataFrame(columns=["单品编码", "单品名称", "度中心度", "介数中心度",
-                          "正边数", "负边数"]).to_csv(
-      OUT / "q1_network_top.csv", index=False, encoding="utf-8-sig")
-  rho_cat = cat_heat()
-  if DEBUG:
-    print("[debug] items kept:", len(cols))
-    print("[debug] pairs tested:", len(rf))
-    print("[debug] main edges:", len(edges),
-          "stable:", int(stable.sum()))
-    print("[debug] threshold table:\n", thr.to_string(index=False))
-    print("[debug] cat corr:\n",
-          np.round(rho_cat, 3))
-    print("[debug] nan total:", int(edges.isna().sum().sum()
-                                    + thr.isna().sum().sum()))
-    print("[debug] elapsed: %.1fs" % (time.time() - t0))
-  lines = [
-    f"run_time={datetime.now().isoformat(timespec='seconds')}",
-    f"items={len(cols)} pairs={len(rf)}",
-    f"main_edges={len(edges)} stable={int(stable.sum())}",
-    f"edges_by_threshold={thr['边数'].tolist()}",
-    f"stable_by_threshold={thr['稳健边数'].tolist()}",
-  ]
-  (LOG_DIR / "C.log").write_text("\n".join(lines) + "\n", encoding="utf-8")
-  print("[save] q1_corr_edges.csv / q1_network_top.csv / "
-        "q1_corr_threshold.csv")
-  print("[save] q1_corr_heatmap_cat.pdf / q1_corr_network.pdf")
-  print("[save] outputs/C.log")
-
-
-if __name__ == "__main__":
-  main()
-
-# question1/D.py
-# 任务D: 单品时序特征层次聚类
-# 输入 results/item_daily_sales.csv, 输出特征/簇表与三张图
-
-import time
-from datetime import datetime
-from pathlib import Path
-
-import chinese_calendar as cc
-import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
-from scipy.cluster import hierarchy
-from scipy.stats import zscore
-from sklearn.cluster import AgglomerativeClustering
-from sklearn.metrics import adjusted_rand_score, silhouette_score
-from matplotlib.patches import Patch
-
-
-ROOT = Path(__file__).resolve().parents[2]
-OUT = ROOT / "results"
-FIG = ROOT / "figures"
-LOG_DIR = Path(__file__).resolve().parent / "outputs"
-OUT.mkdir(parents=True, exist_ok=True)
-FIG.mkdir(parents=True, exist_ok=True)
-LOG_DIR.mkdir(parents=True, exist_ok=True)
-DATE0 = "2020-07-01"
-DATE1 = "2023-06-30"
-n_day_min = 60
-k_lo, k_hi = 3, 10
-sil_min = 0.15
-n_boot = 50
-boot_frac = 0.8
-DEBUG = True
-
-plt.rcParams["font.sans-serif"] = ["Microsoft YaHei", "SimHei"]
-plt.rcParams["axes.unicode_minus"] = False
-
-FEATS = ["售出天数占比", "有售日均销量", "有售日变异系数", "周末偏置",
-         "节假日脉冲", "总销量占比"]
-
-
-def load():
-  df = pd.read_csv(OUT / "item_daily_sales.csv", encoding="utf-8-sig")
-  df["销售日期"] = pd.to_datetime(df["销售日期"])
-  return df
-
-
+\begin{lstlisting}[language=Python, basicstyle=\small\ttfamily, breaklines=true]
 def feats(df):
   idx = pd.date_range(DATE0, DATE1, freq="D")
   q = df.pivot(index="销售日期", columns="单品编码",
                values="净销量").reindex(idx).fillna(0.0)
-  info = df.drop_duplicates("单品编码").set_index("单品编码")[
-    ["单品名称", "分类编码", "分类名称"]]
   n_day = (q > 0).sum()
   cols = n_day[n_day >= n_day_min].index
   q = q[cols]
   n = q.shape[1]
-  mu = np.zeros(n)
-  cv = np.zeros(n)
+  mu, cv = np.zeros(n), np.zeros(n)
   for i, c in enumerate(cols):
-    x = q[c].values
-    xp = x[x > 0]
+    xp = q[c].values[q[c].values > 0]
     mu[i] = xp.mean()
     cv[i] = xp.std() / mu[i] if mu[i] > 0 else 0.0
   wd = (q.index.weekday >= 5)
@@ -1378,16 +363,11 @@ def feats(df):
   wk = (q[wd].mean() / q[~wd].mean() - 1).values
   hl = (q[hd].mean() / q[~hd].mean() - 1).values
   sh = q.sum().values / q.sum().sum()
-  f = pd.DataFrame({
+  return pd.DataFrame({
     "售出天数占比": (n_day[cols] / len(idx)).values,
-    "有售日均销量": mu,
-    "有售日变异系数": cv,
-    "周末偏置": wk,
-    "节假日脉冲": hl,
-    "总销量占比": sh,
+    "有售日均销量": mu, "有售日变异系数": cv,
+    "周末偏置": wk, "节假日脉冲": hl, "总销量占比": sh,
   }, index=cols)
-  return f, info.loc[cols]
-
 
 def pick_k(z):
   lnk = hierarchy.linkage(z, method="ward")
@@ -1395,7 +375,6 @@ def pick_k(z):
     lnk, t=k, criterion="maxclust"))) for k in range(k_lo, k_hi + 1)]
   best = max(rows, key=lambda r: r[1])[0]
   return lnk, rows, best
-
 
 def stability(z, best, seed=7):
   rng = np.random.default_rng(seed)
@@ -1408,255 +387,27 @@ def stability(z, best, seed=7):
                                   linkage="ward").fit_predict(z[idx])
     ari.append(adjusted_rand_score(full[idx], sub))
   return np.mean(ari)
-
-
-def name_cluster(fm):
-  p, cv, wk, mu = (fm["售出天数占比"], fm["有售日变异系数"],
-                   fm["周末偏置"], fm["有售日均销量"])
-  if p >= 0.6 and cv <= 0.8:
-    return "高频平稳型"
-  if p < 0.3:
-    if wk >= 0.35:
-      return "低频脉冲型"
-    return "低频稀疏型"
-  if cv >= 1.2:
-    return "高波动型"
-  if wk >= 0.15:
-    if mu >= 15:
-      return "高量周末脉冲型"
-    return "周末脉冲型"
-  return "中频均衡型"
-
-
-def fig_dend(lnk, lab, names):
-  fig, ax = plt.subplots(figsize=(10, 6))
-  d = hierarchy.dendrogram(lnk, ax=ax, no_labels=True)
-  # 叶子按簇着色, 图例给出簇标签与命名
-  leaves = np.array(d["leaves"])
-  ks = np.unique(lab)
-  cmap = plt.get_cmap("tab10")
-  colors = {k: cmap(i % 10) for i, k in enumerate(ks)}
-  ax.scatter(np.arange(len(leaves)), np.zeros(len(leaves)), s=18,
-             c=[colors[lab[i]] for i in leaves], zorder=3)
-  handles = [Patch(color=colors[k], label=f"簇{k} {names[k]}") for k in ks]
-  ax.legend(handles=handles, fontsize=8, loc="upper right")
-  ax.set_xlabel("单品", fontsize=9)
-  ax.set_ylabel("距离", fontsize=9)
-  fig.tight_layout()
-  fig.savefig(FIG / "q1_dendrogram.pdf")
-  plt.close(fig)
-
-
-def fig_sil(rows, best):
-  ks = [r[0] for r in rows]
-  ss = [r[1] for r in rows]
-  fig, ax = plt.subplots(figsize=(8, 5))
-  ax.plot(ks, ss, "o-", color="#4C72B0")
-  ax.axvline(best, color="#D62728", ls="--", lw=1)
-  ax.set_xlabel("簇数 k", fontsize=9)
-  ax.set_ylabel("silhouette", fontsize=9)
-  fig.tight_layout()
-  fig.savefig(FIG / "q1_silhouette.pdf")
-  plt.close(fig)
-
-
-def fig_profile(z, lab, names):
-  fig, ax = plt.subplots(figsize=(9, 6))
-  x = np.arange(len(FEATS))
-  for k in np.unique(lab):
-    m = z[lab == k].mean(axis=0)
-    ax.plot(x, m, "o-", label=f"簇{k} {names[k]}")
-  ax.set_xticks(x)
-  ax.set_xticklabels(FEATS, fontsize=8, rotation=20, ha="right")
-  ax.set_ylabel("特征 z 均值", fontsize=9)
-  ax.legend(fontsize=8)
-  fig.tight_layout()
-  fig.savefig(FIG / "q1_cluster_profile.pdf")
-  plt.close(fig)
-
-
-def main():
-  t0 = time.time()
-  df = load()
-  f, info = feats(df)
-  z = zscore(f.values)
-  lnk, rows, best = pick_k(z)
-  lab = hierarchy.fcluster(lnk, t=best, criterion="maxclust")
-  ari = stability(z, best)
-  out = f.reset_index().rename(columns={"index": "单品编码"})
-  out["单品名称"] = info["单品名称"].values
-  out["分类编码"] = info["分类编码"].values
-  out["分类名称"] = info["分类名称"].values
-  out["簇标签"] = lab
-  out = out[["单品编码", "单品名称", "分类编码", "分类名称"] + FEATS
-            + ["簇标签"]]
-  out.to_csv(OUT / "q1_item_cluster.csv", index=False, encoding="utf-8-sig")
-  prof = []
-  for k in np.unique(lab):
-    sub = out[out["簇标签"] == k]
-    fm = sub[FEATS].mean()
-    top = sub.sort_values("总销量占比", ascending=False).head(3)[
-      "单品名称"].tolist()
-    prof.append({"簇标签": int(k), "单品数": len(sub),
-                 **{c: round(v, 4) for c, v in fm.items()},
-                 "典型单品名称": "/".join(top),
-                 "建议命名": name_cluster(fm)})
-  prof_df = pd.DataFrame(prof)
-  prof_df.to_csv(OUT / "q1_cluster_profile.csv", index=False,
-                 encoding="utf-8-sig")
-  k_df = pd.DataFrame(rows, columns=["候选k", "silhouette值"])
-  k_df["稳定性ARI"] = np.nan
-  k_df.loc[k_df["候选k"] == best, "稳定性ARI"] = round(ari, 4)
-  k_df.to_csv(OUT / "q1_cluster_k.csv", index=False, encoding="utf-8-sig")
-  names = dict(zip(prof_df["簇标签"], prof_df["建议命名"]))
-  fig_dend(lnk, lab, names)
-  fig_sil(rows, best)
-  fig_profile(z, lab, names)
-  if DEBUG:
-    print("[debug] items:", len(f))
-    print("[debug] chosen k:", best, "silhouette:",
-          round([s for k, s in rows if k == best][0], 4), "ARI:", round(ari, 4))
-    print("[debug] cluster sizes:", np.bincount(lab)[1:].tolist())
-    print("[debug] nan total:", int(out.isna().sum().sum()
-                                    + prof_df.isna().sum().sum()))
-    print("[debug] elapsed: %.1fs" % (time.time() - t0))
-  lines = [
-    f"run_time={datetime.now().isoformat(timespec='seconds')}",
-    f"items={len(f)} k={best}",
-    f"silhouette={round([s for k, s in rows if k == best][0], 4)} "
-    f"ari={round(ari, 4)}",
-    f"cluster_sizes={np.bincount(lab)[1:].tolist()}",
-  ]
-  (LOG_DIR / "D.log").write_text("\n".join(lines) + "\n", encoding="utf-8")
-  print("[save] q1_item_cluster.csv / q1_cluster_profile.csv / "
-        "q1_cluster_k.csv")
-  print("[save] q1_dendrogram.pdf / q1_silhouette.pdf / "
-        "q1_cluster_profile.pdf")
-  print("[save] outputs/D.log")
-
-
-if __name__ == "__main__":
-  main()
-
 \end{lstlisting}
 
 \subsection{问题二代码}
 
+\subsubsection{q2.py：品类定价与补货主流程（用途：固定基期价格指数、Log-Log 弹性、最优加价率、去价格预测与报童补货）}
+
 \begin{lstlisting}[language=Python, basicstyle=\small\ttfamily, breaklines=true]
-# question2/q2.py
-# 问题二主流程: 数据 -> 弹性 -> 定价 -> 预测 -> 报童
-
-import ctypes
-from pathlib import Path
-
-import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
-import statsmodels.api as sm
-from scipy.optimize import differential_evolution
-
-
-ROOT = Path(__file__).resolve().parents[2]
-OUT = ROOT / "results"
-FIG = ROOT / "figures"
-FIG.mkdir(parents=True, exist_ok=True)
-DATE0 = "2020-07-01"
-DATE1 = "2023-06-30"
-DEBUG = True
-
-plt.rcParams["font.sans-serif"] = ["Microsoft YaHei", "SimHei"]
-plt.rcParams["axes.unicode_minus"] = False
-
-_lib = ctypes.CDLL(str(Path(__file__).resolve().parent / "nv.dll"))
-_f64 = np.ctypeslib.ndpointer(dtype=np.float64, ndim=1, flags="C_CONTIGUOUS")
-_lib.newsvendor_batch.restype = None
-_lib.newsvendor_batch.argtypes = [_f64] * 5 + [ctypes.c_int] + [_f64] * 5
-
-
-def nv(mu, sg, p, c, l):
-  # 批量报童补货, 返回 y/kappa/R/R0/期望利润
-  mu = np.ascontiguousarray(mu, dtype=np.float64)
-  sg = np.ascontiguousarray(sg, dtype=np.float64)
-  p = np.ascontiguousarray(p, dtype=np.float64)
-  c = np.ascontiguousarray(c, dtype=np.float64)
-  l = np.ascontiguousarray(l, dtype=np.float64)
-  n = len(mu)
-  y = np.empty(n)
-  kap = np.empty(n)
-  r = np.empty(n)
-  r0 = np.empty(n)
-  ep = np.empty(n)
-  _lib.newsvendor_batch(mu, sg, p, c, l, n, y, kap, r, r0, ep)
-  return y, kap, r, r0, ep
-
-
-def d2i(s):
-  return (pd.Timestamp(s) - pd.Timestamp(DATE0)).days
-
-
-def load():
-  df = pd.read_csv(OUT / "item_daily_full.csv", encoding="utf-8-sig")
-  df["日期"] = pd.to_datetime(df["销售日期"])
-  df["d"] = (df["日期"] - pd.Timestamp(DATE0)).dt.days
-  names = df.drop_duplicates("分类编码").set_index("分类编码")["分类名称"].to_dict()
-  return df, names
-
-
-def agg(df):
-  win = df[(df["d"] >= d2i("2022-07-01")) & (df["d"] <= d2i("2023-06-30"))]
-  iq = win.groupby("单品编码")["净销量"].sum()
-  cq = win.groupby("分类编码")["净销量"].sum()
-  cat = df.drop_duplicates("单品编码").set_index("单品编码")["分类编码"]
-  w = (iq / cat.map(cq)).fillna(0)
-
-  def one(g):
-    sw = g["w"].sum()
-    return pd.Series({
-      "Q": g["净销量"].sum(),
-      "P": (g["均价"] * g["w"]).sum() / sw if sw > 0 else np.nan,
-      "W": (g["批发价"] * g["w"]).sum() / sw if sw > 0 else np.nan,
-      "L": g["平均损耗率"].mean() / 100,
-    })
-
-  tmp = df[df["均价"] > 0].copy()
-  tmp["w"] = tmp["单品编码"].map(w)
-  tab = tmp.groupby(["d", "分类编码"]).apply(one).unstack()
-  idx = pd.date_range(DATE0, DATE1)
-  d = (idx - pd.Timestamp(DATE0)).days
-  q = df.groupby(["d", "分类编码"])["净销量"].sum().unstack().reindex(d).fillna(0)
-  p = tab["P"].reindex(d).fillna(tab["P"].mean())
-  w = tab["W"].reindex(d).fillna(tab["W"].mean())
-  l = tab["L"].mean()
-  return list(q.columns), idx, q, p, w, l
-
-
-def stat(q, p, w, l, names):
-  # 每品类均值/分位数/成本与最近一周批发价
-  rows = []
-  for c in q.columns:
-    qv = q[c].values
-    pos = qv > 0
-    qq, pp = qv[pos], p[c].values[pos]
-    wv = w[c].values[pos]
-    m = qq.mean()
-    wb = w[c].iloc[d2i("2023-06-24"):].mean()
-    wb = wb if not np.isnan(wb) else w[c].mean()
-    rows.append({
-      "c": c, "name": names[c], "mu": m, "sd": qq.std(ddof=0),
-      "pbar": pp.mean(), "p5": np.percentile(pp, 5),
-      "p95": np.percentile(pp, 95), "m5": np.percentile(pp / wv - 1, 5),
-      "m95": np.percentile(pp / wv - 1, 95), "W": wb, "L": l[c],
-    })
-  return pd.DataFrame(rows).set_index("c")
-
+def one(g):
+  sw = g["w"].sum()
+  return pd.Series({
+    "Q": g["净销量"].sum(),
+    "P": (g["均价"] * g["w"]).sum() / sw if sw > 0 else np.nan,
+    "W": (g["批发价"] * g["w"]).sum() / sw if sw > 0 else np.nan,
+    "L": g["平均损耗率"].mean() / 100,
+  })
 
 def ols(q, p, cats, idx):
-  # 品类 Log-Log 弹性回归
   wd = idx.weekday.to_numpy()
   mo = idx.month.to_numpy()
   B = np.zeros((len(cats), len(cats)))
   rows = []
-  sc = []
   for i, c in enumerate(cats):
     qv = q[c].values
     pos = qv > 0
@@ -1669,27 +420,19 @@ def ols(q, p, cats, idx):
     ])
     y = np.log(qv[pos])
     fit = sm.OLS(y, X).fit()
-    res = y - X @ fit.params
     B[i] = fit.params[:len(cats)]
     rows.append({"c": c, "beta": fit.params, "b0": fit.params[i],
                  "t": fit.tvalues[i], "r2": fit.rsquared,
-                 "mse": fit.mse_resid, "res": res})
-    sc.append(pd.DataFrame({"ln价格": np.log(p[c].values[pos]), "ln销量": y}))
-  sc = pd.concat(sc, keys=cats)
-  sc.index.names = ["分类编码", "i"]
-  return B, pd.DataFrame(rows).set_index("c"), sc.reset_index().drop(columns=["i"])
-
+                 "mse": fit.mse_resid, "res": y - X @ fit.params})
+  return B, pd.DataFrame(rows).set_index("c")
 
 def mk(st, B):
-  # 最优加价率: 题面成本加成口径, 网格按夹逼后价格评估
   cp = st["W"] / (1 - st["L"])
   mo = []
-  an = []
   for i, c in enumerate(st.index):
     E = abs(B[i, i])
     if E > 1:
       p = E / (E - 1) * cp.loc[c]
-      a = 1
     else:
       g = np.linspace(st.loc[c, "m5"], st.loc[c, "m95"], 201)
       best = g[0]
@@ -1704,49 +447,13 @@ def mk(st, B):
           best = mg
       p = np.clip((1 + best) * st.loc[c, "W"],
                   st.loc[c, "p5"], st.loc[c, "p95"])
-      a = 0
-    p = np.clip(p, st.loc[c, "p5"], st.loc[c, "p95"])
     mo.append(p / st.loc[c, "W"] - 1)
-    an.append(a)
-  return np.array(mo), np.array(an)
-
-
-def jp(st, B):
-  # 联合定价: 交叉弹性 + 差分进化, 独立基准用同一价格可行域
-  cp = st["W"].values / (1 - st["L"].values)
-  pbar = st["pbar"].values
-  mu = st["mu"].values
-  n = len(mu)
-  lo = st["p5"].values
-  hi = st["p95"].values
-
-  def prof(p):
-    s = 0.0
-    for i in range(n):
-      s += (p[i] - cp[i]) * mu[i] * np.prod((p / pbar) ** B[i])
-    return -s
-
-  res = differential_evolution(prof, list(zip(lo, hi)), seed=7, tol=1e-8)
-  pj = res.x
-  pib = np.zeros(n)
-  pi_i = np.zeros(n)
-  for i in range(n):
-    g = np.linspace(lo[i], hi[i], 201)
-    v = (g - cp[i]) * mu[i] * (g / pbar[i]) ** B[i, i]
-    pib[i] = g[np.argmax(v)]
-    pi_i[i] = v.max()
-  pi_j = np.array([(pj[i] - cp[i]) * mu[i] * np.prod((pj / pbar) ** B[i])
-                   for i in range(n)])
-  return pj, pib, pi_i, pi_j
-
+  return np.array(mo)
 
 def fc(el, st, cats):
-  # 参考价处外推未来 7 天基准需求
-  FQ = []
-  FS = []
+  FQ, FS = [], []
   for c in cats:
-    qb = []
-    sg = []
+    qb, sg = [], []
     for k in range(7):
       d = 1095 + k
       row = np.r_[np.log(st["pbar"].values), d,
@@ -1760,242 +467,17 @@ def fc(el, st, cats):
     FS.append(sg)
   return np.array(FQ), np.array(FS)
 
+y, kap, R, R0, ep = nv(
+  mu.ravel(), sg.ravel(),
+  np.broadcast_to(pst[:, None], mu.shape).ravel(),
+  np.broadcast_to(cp[:, None], mu.shape).ravel(),
+  np.broadcast_to(st["L"].values[:, None], mu.shape).ravel())
+\end{lstlisting}
 
-def bt(q, p, cats, idx):
-  # 后 28 天滚动回测, 返回每品类 MAPE
-  wd = idx.weekday.to_numpy()
-  mo = idx.month.to_numpy()
-  rows = []
-  for c in cats:
-    qv = q[c].values
-    pos = qv > 0
-    d = np.where(pos)[0]
-    X = np.column_stack([
-      np.log(p.values[d]), d,
-      (wd[d][:, None] == np.arange(1, 7)).astype(float),
-      (mo[d][:, None] == np.arange(2, 13)).astype(float),
-      np.ones(len(d)),
-    ])
-    fit = sm.OLS(np.log(qv[pos]), X).fit()
-    te = d >= d[-1] - 27
-    pred = np.exp(X[te] @ fit.params)
-    mape = np.mean(np.abs(pred - qv[d[te]]) / qv[d[te]]) * 100
-    rows.append({"c": c, "mape": mape, "n": int(te.sum())})
-  return pd.DataFrame(rows).set_index("c")
+\subsubsection{q2\_sensitivity.py：模型检验与灵敏度（用途：批发价/弹性/价格口径/损耗率扰动、报童基线、品类相关联合模拟）}
 
-
-def fig(st, el, B, sc, q, idx, FQ, FS, pst, R, ep, names, dts):
-  # 输出 4 张论文图
-  cats = list(st.index)
-  for ax, (c, r) in zip(
-      plt.subplots(2, 3, figsize=(15, 9))[1].ravel(), el.iterrows()):
-    g = sc[sc["分类编码"] == c]
-    x = g["ln价格"].values
-    yp = r["res"] + r["b0"] * x
-    ax.scatter(x, yp, s=4, alpha=0.4, color="#4C72B0")
-    xs = np.linspace(x.min(), x.max(), 50)
-    ax.plot(xs, r["b0"] * xs, color="#D62728", lw=1.5)
-    ax.text(0.04, 0.96, f"{names[c]}  beta={r['b0']:.3f} "
-            f"t={r['t']:.2f} R2={r['r2']:.3f}",
-            transform=ax.transAxes, va="top", fontsize=8)
-    ax.set_xlabel("ln价格", fontsize=8)
-    ax.set_ylabel("ln销量(去日历效应)", fontsize=8)
-  plt.tight_layout()
-  plt.savefig(FIG / "q2_elasticity_fit.pdf")
-  plt.close()
-  fig, axs = plt.subplots(2, 3, figsize=(15, 9))
-  for ax, (i, c) in zip(axs.ravel(), enumerate(cats)):
-    h = q[c].iloc[-60:]
-    ax.plot(idx[-60:], h.values, color="#4C72B0", lw=1.0, label="历史")
-    d = pd.to_datetime(dts)
-    ax.plot(d, FQ[i], "o-", color="#D62728", lw=1.2, label="预测")
-    ax.fill_between(d, FQ[i] - FS[i], FQ[i] + FS[i], color="#D62728", alpha=0.2)
-    ax.text(0.04, 0.96, names[c], transform=ax.transAxes, va="top", fontsize=8)
-    ax.set_xlabel("日期", fontsize=8)
-    ax.set_ylabel("净销量(kg)", fontsize=8)
-    ax.legend(fontsize=7)
-  plt.tight_layout()
-  plt.savefig(FIG / "q2_forecast.pdf")
-  plt.close()
-  fig, axs = plt.subplots(2, 3, figsize=(15, 9))
-  for ax, (i, c) in zip(axs.ravel(), enumerate(cats)):
-    p = np.linspace(st.loc[c, "pbar"] * 0.5, st.loc[c, "pbar"] * 2.0, 80)
-    prof = (p - st.loc[c, "W"] / (1 - st.loc[c, "L"])) * st.loc[c, "mu"] * \
-        (p / st.loc[c, "pbar"]) ** B[i, i]
-    ax.axvspan(st.loc[c, "p5"], st.loc[c, "p95"], color="#4C72B0", alpha=0.08)
-    ax.plot(p, prof, color="#4C72B0", lw=1.5)
-    ax.axvline(pst[i], color="#D62728", ls="--", lw=1.2)
-    ax.text(0.04, 0.96, f"{names[c]}  P*={pst[i]:.2f}",
-            transform=ax.transAxes, va="top", fontsize=8)
-    ax.set_xlabel("售价(元/kg)", fontsize=8)
-    ax.set_ylabel("期望利润(元)", fontsize=8)
-  plt.tight_layout()
-  plt.savefig(FIG / "q2_price_curve.pdf")
-  plt.close()
-  fig, axs = plt.subplots(2, 3, figsize=(15, 9))
-  for ax, (i, c) in zip(axs.ravel(), enumerate(cats)):
-    ax.bar(range(7), R[i], 0.6, color="#4C72B0", label="补货量")
-    ax2 = ax.twinx()
-    ax2.plot(range(7), pst[i] * np.ones(7), "o-", color="#D62728", lw=1.3,
-             label="最优售价")
-    ax2.set_ylabel("售价(元/kg)", fontsize=8)
-    ax.set_xticks(range(7))
-    ax.set_xticklabels([d[5:] for d in dts], fontsize=7, rotation=30)
-    ax.set_ylabel("补货量(kg)", fontsize=8)
-    ax.text(0.04, 0.96, names[c], transform=ax.transAxes, va="top", fontsize=8)
-  plt.tight_layout()
-  plt.savefig(FIG / "q2_replenishment.pdf")
-  plt.close()
-
-
-def main():
-  df, names = load()
-  cats, idx, q, p, w, l = agg(df)
-  st = stat(q, p, w, l, names)
-  B, el, sc = ols(q, p, cats, idx)
-  back = bt(q, p, cats, idx)
-  mo, an = mk(st, B)
-  FQ, FS = fc(el, st, cats)
-  cp = st["W"].values / (1 - st["L"].values)
-  pst = (1 + mo) * st["W"].values
-  pj, pib, pi_i, pi_j = jp(st, B)
-  sca = (pst / st["pbar"].values) ** np.diag(B)
-  mu = FQ * sca[:, None]
-  sg = FS * sca[:, None]
-  y, kap, R, R0, ep = nv(
-    mu.ravel(), sg.ravel(),
-    np.broadcast_to(pst[:, None], mu.shape).ravel(),
-    np.broadcast_to(cp[:, None], mu.shape).ravel(),
-    np.broadcast_to(st["L"].values[:, None], mu.shape).ravel())
-  y = y.reshape(mu.shape)
-  kap = kap.reshape(mu.shape)
-  R = R.reshape(mu.shape)
-  R0 = R0.reshape(mu.shape)
-  ep = ep.reshape(mu.shape)
-  dts = pd.date_range("2023-07-01", periods=7).strftime("%Y-%m-%d")
-  e1, e2, e3 = [], [], []
-  for i, c in enumerate(cats):
-    e1.append({
-      "分类编码": c, "分类名称": names[c], "价格弹性": B[i, i],
-      "t值": el.loc[c, "t"], "R2": el.loc[c, "r2"],
-      "截距": el.loc[c, "beta"][-1], "参考价": st.loc[c, "pbar"],
-      "参考需求": st.loc[c, "mu"], "有效成本": cp[i],
-      "加价率P5": st.loc[c, "m5"], "加价率P95": st.loc[c, "m95"],
-      "最优加价率": mo[i], "是否解析解": an[i],
-    })
-    for k in range(7):
-      e2.append({"分类编码": c, "分类名称": names[c], "日期": dts[k],
-                 "基准需求": FQ[i, k], "需求标准差": FS[i, k],
-                 "参考价": st.loc[c, "pbar"]})
-      e3.append({"分类编码": c, "分类名称": names[c], "日期": dts[k],
-                 "批发价": st.loc[c, "W"], "最优售价": pst[i],
-                 "最优加价率": mo[i], "期望需求": mu[i, k],
-                 "临界比": kap[i, k], "补货量": R[i, k],
-                 "确定性补货量": R0[i, k], "期望利润": ep[i, k]})
-  pd.DataFrame(e1).to_csv(OUT / "q2_elasticity.csv", index=False,
-                          encoding="utf-8-sig")
-  pd.DataFrame(e2).to_csv(OUT / "q2_forecast.csv", index=False,
-                          encoding="utf-8-sig")
-  pd.DataFrame(e3).to_csv(OUT / "q2_replenishment.csv", index=False,
-                          encoding="utf-8-sig")
-  pd.DataFrame({"分类编码": cats, "分类名称": [names[c] for c in cats],
-                "7天总补货量": R.sum(axis=1), "7天总期望利润": ep.sum(axis=1)}
-               ).to_csv(OUT / "q2_summary.csv", index=False,
-                        encoding="utf-8-sig")
-  pd.DataFrame({"分类编码": cats, "分类名称": [names[c] for c in cats],
-                "独立最优价": np.round(pib, 3),
-                "联合最优价": np.round(pj, 3),
-                "独立利润": np.round(pi_i, 2),
-                "联合利润": np.round(pi_j, 2)}
-               ).to_csv(OUT / "q2_joint_pricing.csv", index=False,
-                        encoding="utf-8-sig")
-  sc.to_csv(OUT / "q2_scatter.csv", index=False, encoding="utf-8-sig")
-  back.reset_index().rename(columns={"c": "分类编码"}).to_csv(
-    OUT / "q2_backtest.csv", index=False, encoding="utf-8-sig")
-  fig(st, el, B, sc, q, idx, FQ, FS, pst, R, ep, names, dts)
-  if DEBUG:
-    lp = np.log(p.values)
-    lp = lp[~np.isnan(lp).any(axis=1)]
-    print("[debug] cond(lnP): %.1f" % np.linalg.cond(np.corrcoef(lp.T)))
-    print("[debug] 弹性:", np.round(np.diag(B), 4))
-    print("[debug] t值:", el["t"].round(2).to_dict())
-    print("[debug] MAPE:", back["mape"].round(1).to_dict())
-    print("[debug] 独立定价总利润: %.2f 联合定价总利润: %.2f 提升: %.1f%%"
-          % (pi_i.sum(), pi_j.sum(), (pi_j.sum() / pi_i.sum() - 1) * 100))
-    print("[debug] 总补货: %.2f 总利润: %.2f" % (R.sum(), ep.sum()))
-  print("[save] q2_elasticity.csv / q2_forecast.csv / "
-        "q2_replenishment.csv / q2_summary.csv / q2_scatter.csv / "
-        "q2_backtest.csv / q2_joint_pricing.csv")
-  print("[save] q2_elasticity_fit.pdf / q2_forecast.pdf / "
-        "q2_price_curve.pdf / q2_replenishment.pdf")
-
-
-if __name__ == "__main__":
-  main()
-
-# question2/q2_sensitivity.py
-# 问题二灵敏度与模型检验: 批发价/弹性/口径/损耗率/报童基线/同期回测/相关模拟
-
-import json
-import sys
-from pathlib import Path
-
-import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
-from scipy.stats import lognorm, norm
-
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-import q2
-
-OUT = q2.OUT
-FIG = q2.FIG
-N = 20000
-SEED = 7
-
-
-def d2i(s):
-  return q2.d2i(s)
-
-
-def design(d, wd, mo, lp):
-  # 与 q2.ols 一致的回归设计矩阵
-  return np.column_stack([lp, d,
-                          (wd[d][:, None] == np.arange(1, 7)).astype(float),
-                          (mo[d][:, None] == np.arange(2, 13)).astype(float),
-                          np.ones(len(d))])
-
-
-def mk2(st, B, cp, ws):
-  # 最优加价率(可换批发价/成本口径), 与 q2.mk 同逻辑
-  mo = []
-  an = []
-  for i, c in enumerate(st.index):
-    E = abs(B[i, i])
-    if E > 1:
-      p = E / (E - 1) * cp.loc[c]
-      a = 1
-    else:
-      g = np.linspace(st.loc[c, "m5"], st.loc[c, "m95"], 201)
-      best = g[0]
-      bv = -1e100
-      for mg in g:
-        pg = np.clip((1 + mg) * ws.loc[c], st.loc[c, "p5"], st.loc[c, "p95"])
-        v = (pg - cp.loc[c]) * st.loc[c, "mu"] * \
-            (pg / st.loc[c, "pbar"]) ** B[i, i]
-        if v > bv:
-          bv = v
-          best = mg
-      p = np.clip((1 + best) * ws.loc[c], st.loc[c, "p5"], st.loc[c, "p95"])
-      a = 0
-    p = np.clip(p, st.loc[c, "p5"], st.loc[c, "p95"])
-    mo.append(p / ws.loc[c] - 1)
-    an.append(a)
-  return np.array(mo), np.array(an)
-
-
+\begin{lstlisting}[language=Python, basicstyle=\small\ttfamily, breaklines=true]
 def run(st, B, FQ, FS, cp, lv, ws):
-  # 给定成本/损耗/批发价口径跑 定价+预测+报童
   mo, an = mk2(st, B, cp, ws)
   pst = (1 + mo) * ws.values
   sca = (pst / st["pbar"].values) ** np.diag(B)
@@ -2009,64 +491,13 @@ def run(st, B, FQ, FS, cp, lv, ws):
   return (y.reshape(mu.shape), kap.reshape(mu.shape), R.reshape(mu.shape),
           R0.reshape(mu.shape), ep.reshape(mu.shape), mo, pst, mu, sg)
 
-
-def emin(mu, sg, y):
-  # lognormal E[min(D,y)]
-  s2 = np.log(1 + (sg / mu) ** 2)
-  ml = np.log(mu) - s2 / 2
-  s = np.sqrt(s2)
-  a = mu * norm.cdf((np.log(y) - ml - s * s) / s)
-  b = y * (1 - norm.cdf((np.log(y) - ml) / s))
-  return a + b
-
-
-def altP(df, cats, idx, mode):
-  # 替代价格口径: 当期销售额加权 / 中位价
-  tmp = df[df["均价"] > 0]
-  if mode == "cur":
-    g = tmp.assign(amt=tmp["均价"] * tmp["售出量"]).groupby(
-      ["d", "分类编码"]).apply(
-      lambda x: x["amt"].sum() / max(x["售出量"].sum(), 1e-9))
-  else:
-    g = tmp.groupby(["d", "分类编码"])["均价"].median()
-  g = g.unstack()
-  d = (idx - pd.Timestamp(q2.DATE0)).days
-  g = g.reindex(d)
-  for c in cats:
-    g[c] = g[c].fillna(g[c].mean())
-  return g
-
-
-def bt22(q, p, cats, idx):
-  # 2022-07 同期回测: 用 2022-06-30 前样本拟合, 预测 7/1-7/7
-  wd = idx.weekday.to_numpy()
-  mo = idx.month.to_numpy()
-  cut = d2i("2022-07-01")
-  rows = []
-  for c in cats:
-    qv = q[c].values
-    pos = qv > 0
-    d = np.where(pos)[0]
-    tr = d < cut
-    X = design(d, wd, mo, np.log(p[c].values[d]))
-    fit = np.linalg.lstsq(X[tr], np.log(qv[pos][tr]), rcond=None)[0]
-    d7 = np.arange(cut, cut + 7)
-    lp = np.log(p[c].values[d7])
-    if not np.isfinite(lp).all():
-      lp = np.where(np.isfinite(lp), lp, np.log(p[c].mean()))
-    X7 = design(d7, wd, mo, lp)
-    pred = np.exp(X7 @ fit)
-    act = qv[d7]
-    m = act > 0
-    mape = np.mean(np.abs(pred[m] - act[m]) / act[m]) * 100
-    rows.append({"c": c, "mape22": mape, "n": int(m.sum())})
-  return pd.DataFrame(rows).set_index("c")
-
+for f, nm in [(1.1, "批发价+10%"), (0.9, "批发价-10%")]:
+  ws = st["W"] * f
+  cpf = ws / (1 - st["L"])
+  r = run(st, B, FQ, FS, cpf, st["L"].values, ws)
+  rows.append({"情景": nm, "总补货": r[2].sum(), "总利润": r[4].sum()})
 
 def sim(cats, idx, q, mu, sg, pst, R, cp, lv):
-  # 品类相关联合模拟: 残差相关矩阵 + 高斯 copula
-  wd = idx.weekday.to_numpy()
-  mo = idx.month.to_numpy()
   Xc = np.column_stack([
     (wd[:, None] == np.arange(1, 7)).astype(float),
     (mo[:, None] == np.arange(2, 13)).astype(float), np.ones(len(idx))])
@@ -2078,9 +509,7 @@ def sim(cats, idx, q, mu, sg, pst, R, cp, lv):
   s2 = np.log(1 + (sg / mu) ** 2)
   ml = np.log(mu) - s2 / 2
   s = np.sqrt(s2)
-  ej = 0.0
-  vj = 0.0
-  vi = 0.0
+  ej = vj = vi = 0.0
   for k in range(7):
     z = rng.multivariate_normal(np.zeros(len(cats)), C, size=N)
     D = lognorm.ppf(norm.cdf(z), s=s[:, k], scale=np.exp(ml[:, k]))
@@ -2088,289 +517,18 @@ def sim(cats, idx, q, mu, sg, pst, R, cp, lv):
             cp[None, :] * y[:, k]).sum(axis=1)
     ej += prof.mean()
     vj += prof.var()
-    zi = rng.multivariate_normal(
-      np.zeros(len(cats)), np.eye(len(cats)), size=N)
+    zi = rng.multivariate_normal(np.zeros(len(cats)), np.eye(len(cats)), size=N)
     Di = lognorm.ppf(norm.cdf(zi), s=s[:, k], scale=np.exp(ml[:, k]))
     profi = (pst[None, :] * np.minimum(Di, y[:, k]) -
              cp[None, :] * y[:, k]).sum(axis=1)
     vi += profi.var()
   return ej, C, vj, vi
-
-
-def fig(rows):
-  # 各情景 7 天总利润对比
-  names = [r[0] for r in rows]
-  vals = [r[1] for r in rows]
-  fig, ax = plt.subplots(figsize=(9, 5))
-  x = np.arange(len(names))
-  col = ["#4C72B0"] * len(names)
-  col[0] = "#D62728"
-  ax.bar(x, vals, 0.6, color=col)
-  for i, v in enumerate(vals):
-    ax.text(i, v + 5, "%.0f" % v, ha="center", fontsize=8)
-  ax.set_xticks(x)
-  ax.set_xticklabels(names, fontsize=8, rotation=20)
-  ax.set_ylabel("7天总利润(元)")
-  fig.tight_layout()
-  fig.savefig(FIG / "q2_sensitivity.pdf")
-  plt.close(fig)
-
-
-def main():
-  df, names = q2.load()
-  cats, idx, q, p, w, l = q2.agg(df)
-  st = q2.stat(q, p, w, l, names)
-  B, el, sc = q2.ols(q, p, cats, idx)
-  back = q2.bt(q, p, cats, idx)
-  FQ, FS = q2.fc(el, st, cats)
-  cp0 = st["W"] / (1 - st["L"])
-  base = run(st, B, FQ, FS, cp0, st["L"].values, st["W"])
-  y0, kap0, R0, R00, ep0, mo0, pst0, mu0, sg0 = base
-  mo1, an1 = q2.mk(st, B)
-  assert np.allclose(mo1, mo0), "mk2 与 q2.mk 不一致"
-  rows = []
-  det = []
-
-  def add(nm, B_, mo_, pst_, R_, ep_):
-    for i, c in enumerate(cats):
-      rows.append({"情景": nm, "分类编码": c, "分类名称": names[c],
-                   "价格弹性": B_[i, i], "最优加价率": mo_[i],
-                   "最优售价": pst_[i],
-                   "7天补货量": R_[i].sum(), "7天利润": ep_[i].sum()})
-
-  add("基准", B, mo0, pst0, R0, ep0)
-  tot = pd.DataFrame(rows).groupby("情景")[["7天补货量", "7天利润"]].sum()
-  agg = [{"情景": "基准", "7天总补货量": tot.loc["基准", "7天补货量"],
-          "7天总利润": tot.loc["基准", "7天利润"], "利润变化%": 0.0}]
-
-  def scn(nm, st_, B_, FQ_, FS_, cp_, lv_, ws_):
-    r = run(st_, B_, FQ_, FS_, cp_, lv_, ws_)
-    add(nm, B_, r[5], r[6], r[2], r[4])
-    b = tot.loc["基准", "7天利润"]
-    v = r[4].sum()
-    agg.append({"情景": nm, "7天总补货量": r[2].sum(),
-                "7天总利润": v, "利润变化%": (v / b - 1) * 100})
-    return r
-
-  for f, nm in [(1.1, "批发价+10%"), (0.9, "批发价-10%")]:
-    ws = st["W"] * f
-    cpf = ws / (1 - st["L"])
-    scn(nm, st, B, FQ, FS, cpf, st["L"].values, ws)
-  for f, nm in [(1.2, "弹性+20%"), (0.8, "弹性-20%")]:
-    Bm = B.copy()
-    np.fill_diagonal(Bm, np.diag(B) * f)
-    scn(nm, st, Bm, FQ, FS, cp0, st["L"].values, st["W"])
-  win = df[(df["d"] >= d2i("2022-07-01")) & (df["d"] <= d2i("2023-06-30"))]
-  iq = win.groupby("单品编码")["净销量"].sum()
-  cq = win.groupby("分类编码")["净销量"].sum()
-  cat = df.drop_duplicates("单品编码").set_index("单品编码")["分类编码"]
-  wgt = (iq / cat.map(cq)).fillna(0)
-  li = df.drop_duplicates("单品编码").set_index("单品编码")["损耗率"] / 100
-  Li = (li * wgt).groupby(cat).sum().reindex(st.index)
-  cpL = st["W"] / (1 - Li)
-  scn("损耗率=单品加权", st, B, FQ, FS, cpL, Li.values, st["W"])
-  for mode, nm in [("cur", "价格口径=当期加权"), ("med", "价格口径=中位价")]:
-    pa = altP(df, cats, idx, mode)
-    sta = q2.stat(q, pa, w, l, names)
-    Ba, ela, sca = q2.ols(q, pa, cats, idx)
-    FQa, FSa = q2.fc(ela, sta, cats)
-    cpa = sta["W"] / (1 - sta["L"])
-    scn(nm, sta, Ba, FQa, FSa, cpa, sta["L"].values, sta["W"])
-
-  # 报童 vs 确定性
-  ydet = R00 * (1 - st["L"].values[:, None])
-  e0 = (pst0[:, None] * emin(mu0, sg0, ydet) -
-        cp0.values[:, None] * ydet)
-  sd2 = np.log(1 + (sg0 / mu0) ** 2)
-  sdl = np.sqrt(sd2)
-  mdl = np.log(mu0) - sd2 / 2
-  sr_det = 1 - lognorm.cdf(ydet, s=sdl, scale=np.exp(mdl))
-  for i, c in enumerate(cats):
-    det.append({
-      "分类编码": c, "分类名称": names[c],
-      "报童7天补货量": R0[i].sum(), "确定性7天补货量": R00[i].sum(),
-      "安全库存增量%": (R0[i].sum() / R00[i].sum() - 1) * 100,
-      "报童7天期望利润": ep0[i].sum(),
-      "确定性订货7天期望利润": e0[i].sum(),
-      "报童日均缺货率": (1 - kap0[i]).mean(),
-      "确定性日均缺货率": sr_det[i].mean(),
-    })
-
-  # 2022-07 同期回测
-  b22 = bt22(q, p, cats, idx)
-  bcmp = b22.join(back["mape"]).rename(
-    columns={"mape": "mape28"})
-
-  # 品类相关联合模拟
-  ej, C, vj, vi = sim(cats, idx, q, mu0, sg0, pst0, R0, cp0.values, st["L"].values)
-  ei = ep0.sum()
-  srow = {"独立7天期望利润": ei, "相关模拟7天期望利润": ej,
-          "期望利润差": ej - ei, "期望利润差%": (ej / ei - 1) * 100,
-          "独立方差(模拟)": vi, "相关方差(模拟)": vj,
-          "方差比": vj / vi, "样本量": N,
-          "残差相关最大非对角": np.abs(C - np.eye(len(C))).max(),
-          "残差相关最小非对角": C[np.triu_indices(len(C), 1)].min()}
-
-  pd.DataFrame(rows).to_csv(OUT / "q2_sens_detail.csv", index=False,
-                            encoding="utf-8-sig")
-  pd.DataFrame(agg).to_csv(OUT / "q2_sensitivity.csv", index=False,
-                           encoding="utf-8-sig")
-  pd.DataFrame(det).to_csv(OUT / "q2_nv_det.csv", index=False,
-                           encoding="utf-8-sig")
-  bcmp.reset_index().rename(columns={"c": "分类编码"}).to_csv(
-    OUT / "q2_backtest_2022.csv", index=False, encoding="utf-8-sig")
-  pd.DataFrame([srow]).to_csv(OUT / "q2_joint_sim.csv", index=False,
-                              encoding="utf-8-sig")
-
-  # 汇总 JSON 契约
-  b = tot.loc["基准", "7天利润"]
-  rw = {r["情景"]: r["7天总利润"] for r in agg}
-  rR = {r["情景"]: r["7天总补货量"] for r in agg}
-  summary = [
-    {"claim": "批发价±10% 内利润不剧烈恶化",
-     "sources": ["q2_sensitivity.csv", "q2_replenishment.csv"],
-     "perturbation": "W x 1.1 / x 0.9",
-     "metric": "7天总利润相对变化绝对值",
-     "threshold": 30.0,
-     "observed": max(abs((rw["批发价+10%"] / b - 1) * 100),
-                     abs((rw["批发价-10%"] / b - 1) * 100)),
-     "status": "PASS" if max(abs((rw["批发价+10%"] / b - 1) * 100),
-                             abs((rw["批发价-10%"] / b - 1) * 100)) <= 30
-               else "CONDITIONAL",
-     "limitation": "补货量用近一周均价预测, 未建模日内批发价随机性"},
-    {"claim": "弹性±20% 内最优价与利润稳定",
-     "sources": ["q2_sensitivity.csv"],
-     "perturbation": "品类弹性 x 1.2 / x 0.8",
-     "metric": "7天总利润相对变化绝对值",
-     "threshold": 30.0,
-     "observed": max(abs((rw["弹性+20%"] / b - 1) * 100),
-                     abs((rw["弹性-20%"] / b - 1) * 100)),
-     "status": "PASS" if max(abs((rw["弹性+20%"] / b - 1) * 100),
-                             abs((rw["弹性-20%"] / b - 1) * 100)) <= 30
-               else "CONDITIONAL",
-     "limitation": "仅扰动对角弹性, 交叉弹性不变"},
-    {"claim": "价格口径切换不改变弹性符号与利润量级",
-     "sources": ["q2_sensitivity.csv", "q2_sens_detail.csv"],
-     "perturbation": "固定权重 -> 当期销售额加权 / 中位价",
-     "metric": "7天总利润相对固定权重变化绝对值",
-     "threshold": 30.0,
-     "observed": max(abs((rw["价格口径=当期加权"] / b - 1) * 100),
-                     abs((rw["价格口径=中位价"] / b - 1) * 100)),
-     "status": "PASS" if max(abs((rw["价格口径=当期加权"] / b - 1) * 100),
-                             abs((rw["价格口径=中位价"] / b - 1) * 100)) <= 30
-               else "CONDITIONAL",
-     "limitation": "未对口径切换重估报童分位数分布参数"},
-    {"claim": "报童订货优于确定性订货",
-     "sources": ["q2_nv_det.csv"],
-     "perturbation": "最优分位数 y* vs 均值 y0",
-     "metric": "报童7天期望利润 >= 确定性订货期望利润",
-     "threshold": 0.0,
-     "observed": (ep0.sum() - e0.sum()),
-     "status": "PASS" if ep0.sum() >= e0.sum() - 1e-6 else "CONDITIONAL",
-     "limitation": "确定性口径按 lognormal 期望利润评估, 缺货率口径为 P(D>y)"},
-    {"claim": "损耗率替换后补货量稳定",
-     "sources": ["q2_sensitivity.csv"],
-     "perturbation": "分类级损耗率 -> 单品销量加权损耗率",
-     "metric": "7天总补货量相对变化绝对值",
-     "threshold": 20.0,
-     "observed": abs(rR["损耗率=单品加权"] / rR["基准"] - 1) * 100,
-     "status": "PASS" if abs(rR["损耗率=单品加权"] / rR["基准"] - 1) * 100 <= 20
-               else "CONDITIONAL",
-     "limitation": "损耗率口径差异来自附件4两类表, 取加权口径作对照"},
-    {"claim": "2022-07 同期回测误差与后28天同量级",
-     "sources": ["q2_backtest_2022.csv", "q2_backtest.csv"],
-     "perturbation": "样本截止 2022-06-30",
-     "metric": "2022-07 预测 MAPE <= 40%",
-     "threshold": 40.0,
-     "observed": float(b22["mape22"].max()),
-     "status": "PASS" if b22["mape22"].max() <= 40 else "CONDITIONAL",
-     "limitation": "目标周仅 7 天, 实际销量个别日为 0 时剔除"},
-    {"claim": "品类相关性与独立优化期望收益一致",
-     "sources": ["q2_joint_sim.csv"],
-     "perturbation": "残差相关矩阵 vs 单位阵(高斯 copula + lognormal 边际)",
-     "metric": "相关模拟期望利润相对独立期望利润偏差 <= 1%",
-     "threshold": 1.0,
-     "observed": abs((ej / ei - 1) * 100),
-     "status": "PASS" if abs((ej / ei - 1) * 100) <= 1 else "CONDITIONAL",
-     "limitation": "copula 相关为残差 Pearson 相关, 与 Spearman 口径略有差异"},
-  ]
-  with open(OUT / "q2_robustness_summary.json", "w", encoding="utf-8") as f:
-    json.dump(summary, f, ensure_ascii=False, indent=2)
-
-  frows = [(r["情景"], r["7天总利润"]) for r in agg]
-  fig(frows)
-  if q2.DEBUG:
-    print("[debug] 基准总利润: %.2f 总补货: %.2f" % (b, rR["基准"]))
-    for r in agg:
-      print("[debug] %s: 利润 %.2f (%+.1f%%) 补货 %.2f" %
-            (r["情景"], r["7天总利润"], r["利润变化%"], r["7天总补货量"]))
-    print("[debug] 报童-确定性利润差: %.2f" % (ep0.sum() - e0.sum()))
-    print("[debug] 2022-07 MAPE:", b22["mape22"].round(1).to_dict())
-    print("[debug] 相关模拟: 独立 %.2f vs 相关 %.2f, 方差比 %.3f" %
-          (ei, ej, vj / vi))
-    print("[debug] 残差相关矩阵:\n", np.round(C, 3))
-  print("[save] q2_sensitivity.csv / q2_sens_detail.csv / q2_nv_det.csv / "
-        "q2_backtest_2022.csv / q2_joint_sim.csv / "
-        "q2_robustness_summary.json / q2_sensitivity.pdf")
-
-
-if __name__ == "__main__":
-  main()
 \end{lstlisting}
 
-\subsection{问题三代码}
+\subsection{问题三代码（q3.py，对应题目：问题三；用途：候选集构造、单品弹性 Shrinkage 收缩、0-1 MIP 选品/定价/补货求解）}
 
 \begin{lstlisting}[language=Python, basicstyle=\small\ttfamily, breaklines=true]
-# question3/q3.py
-# 问题三主流程: 候选集 -> 弹性 -> 网格 -> MIP -> 灵敏度
-
-from pathlib import Path
-
-import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
-import statsmodels.api as sm
-from scipy.optimize import Bounds, LinearConstraint, milp
-from scipy.sparse import coo_matrix
-
-
-ROOT = Path(__file__).resolve().parents[2]
-OUT = ROOT / "results"
-FIG = ROOT / "figures"
-FIG.mkdir(parents=True, exist_ok=True)
-DATE0 = "2020-07-01"
-DATE1 = "2023-06-30"
-K = 11
-K7 = 7
-NMIN = 14
-M0 = 30
-LO = 27
-HI = 33
-MINQ = 2.5
-RHOS = [0.5, 1.0, 1.5]
-EXACT = [27, 30, 33]
-DEBUG = True
-
-plt.rcParams["font.sans-serif"] = ["Microsoft YaHei", "SimHei"]
-plt.rcParams["axes.unicode_minus"] = False
-
-
-def d2i(s):
-  return (pd.Timestamp(s) - pd.Timestamp(DATE0)).days
-
-
-def load():
-  df = pd.read_csv(OUT / "item_daily_full.csv", encoding="utf-8-sig")
-  df["日期"] = pd.to_datetime(df["销售日期"])
-  df["d"] = (df["日期"] - pd.Timestamp(DATE0)).dt.days
-  names = df.drop_duplicates("单品编码").set_index("单品编码")["单品名称"].to_dict()
-  el = pd.read_csv(OUT / "q2_elasticity.csv", encoding="utf-8-sig")
-  Bcat = dict(zip(el["分类编码"], el["价格弹性"]))
-  return df, names, Bcat
-
-
 def cand(df):
-  # 候选集与基准需求/参考价/批发价/损耗率
   w = df[(df["d"] >= d2i("2023-06-24")) & (df["d"] <= d2i("2023-06-30"))]
   g = w.groupby("单品编码").agg(
     名称=("单品名称", "first"), 品类=("分类编码", "first"),
@@ -2381,56 +539,25 @@ def cand(df):
   g["d"] = g["销量"] / 7
   g["W"] = g["批发"]
   g["L"] = g["损耗"] / 100
-  g["Lc"] = g["损耗c"] / 100
   g["low"] = g["天数"] < 3
-  amt = w.assign(amt=w["净销量"] * w["均价"])
-  p0 = amt.groupby("单品编码").apply(
-    lambda x: x["amt"].sum() / max(x["净销量"].sum(), 1e-9))
-  g["p0"] = p0
-  g["mx"] = df.groupby("单品编码")["净销量"].max()
-  w4 = df[(df["d"] >= d2i("2023-06-03")) & (df["d"] <= d2i("2023-06-30"))]
-  d4 = w4.groupby("单品编码")["净销量"].mean()
-  tmp = w4[w4["均价"] > 0]
-  pp = tmp.groupby("单品编码")["均价"].apply(
-    lambda x: pd.Series([np.percentile(x, 5), np.percentile(x, 95)])).unstack()
-  pp.columns = ["p5", "p95"]
-  g = g.join(pp)
-  g["d"] = g["d"].fillna(d4)
-  g["p0"] = g["p0"].fillna(
-    w4.assign(amt=w4["净销量"] * w4["均价"]).groupby("单品编码").apply(
-      lambda x: x["amt"].sum() / max(x["净销量"].sum(), 1e-9)))
-  g["W"] = g["W"].fillna(df.groupby("单品编码")["批发价"].mean())
-  g["p5"] = g["p5"].fillna(g["p0"])
-  g["p95"] = g["p95"].fillna(g["p0"])
-  for code in g.index[g["low"]]:
-    if code in d4.index:
-      g.loc[code, "d"] = d4[code]
   return g
 
-
 def beta(df, g, Bcat):
-  # 单品弹性回归 + Shrinkage 收缩 + 兜底
   rows = []
   for code, r in g.iterrows():
     sub = df[(df["单品编码"] == code) & (df["净销量"] > 0) &
              (df["均价"] > 0)].sort_values("d")
-    y = np.log(sub["净销量"].values)
-    p = sub["均价"].values
-    d = sub["d"].values
     wd = sub["日期"].dt.weekday.to_numpy()
     mo = sub["日期"].dt.month.to_numpy()
     X = np.column_stack([
-      np.log(p), d,
+      np.log(sub["均价"].values), sub["d"].values,
       (wd[:, None] == np.arange(1, 7)).astype(float),
       (mo[:, None] == np.arange(2, 13)).astype(float),
-      np.ones(len(d)),
+      np.ones(len(sub)),
     ])
-    try:
-      fit = sm.OLS(y, X).fit()
-      raw = float(fit.params[0])
-    except Exception:
-      raw = np.nan
-    N = int((np.diff(p) != 0).sum())
+    fit = sm.OLS(np.log(sub["净销量"].values), X).fit()
+    raw = float(fit.params[0])
+    N = int((np.diff(sub["均价"].values) != 0).sum())
     cat = Bcat[r["品类"]]
     if N < NMIN or not np.isfinite(raw):
       b, u = cat, 1
@@ -2445,376 +572,27 @@ def beta(df, g, Bcat):
                                      "有效样本量", "是否借用品类弹性",
                                      "品类弹性"]).set_index("单品编码")
 
-
-def grid(g, K=K):
-  ps = {}
-  for code, r in g.iterrows():
-    lo = min(r["p5"], r["p0"])
-    hi = max(r["p95"], r["p0"])
-    arr = np.unique(np.append(np.linspace(lo, hi, K), r["p0"]))
-    if len(arr) < K:
-      arr = np.pad(arr, (0, K - len(arr)), mode="edge")
-    else:
-      arr = arr[:K]
-    ps[code] = arr
-  return ps
-
-
-def grid_q(g, K, w4):
-  # 分位数网格: 近 4 周日售价等概率分位 + 参考价
-  ps = {}
-  for code, r in g.iterrows():
-    v = w4.loc[w4["单品编码"] == code, "均价"].values
-    v = v[v > 0]
-    if len(v) == 0:
-      arr = np.full(K, r["p0"])
-    else:
-      arr = np.unique(
-        np.append(np.quantile(v, np.linspace(0.05, 0.95, K)), r["p0"]))
-    if len(arr) < K:
-      arr = np.pad(arr, (0, K - len(arr)), mode="edge")
-    else:
-      arr = arr[:K]
-    ps[code] = arr
-  return ps
-
-
-def demand(d, p0, beta, ps, bs=1.0):
-  return d[:, None] * (ps / p0[:, None]) ** (beta[:, None] * bs)
-
-
-def mip(g, el, ps, rho, cov=True, exact_n=None, bs=1.0, ws=1.0, ms=1.0,
-        lc=False):
-  codes = list(g.index)
-  n = len(codes)
-  K = len(ps[codes[0]])
-  V = 2 + 3 * K
-  P = np.array([ps[c] for c in codes])
-  D = demand(g["d"].values, g["p0"].values, el["收缩弹性"].values, P, bs)
-  Lv = g["Lc"].values if lc else g["L"].values
-  M = np.maximum(3 * g["mx"].values, MINQ)
-  M = np.maximum(M, D[:, 0] * 1.05)
-  if ms != 1.0:
-    M = M * ms
-  cp = g["W"].values * ws / (1 - Lv)
-  gam = np.maximum(0, g["p0"].values - cp) * rho
-  nv = n * V
-  c = np.zeros(nv)
-  lb = np.zeros(nv)
-  ub = np.ones(nv)
-  integ = np.zeros(nv)
-  for i in range(n):
-    base = i * V
-    integ[base] = 1
-    integ[base + 1:base + 1 + K] = 1
-    ub[base + 1 + K] = M[i]
-    ub[base + 2 + K:base + 2 + 2 * K] = D[i].max()
-    ub[base + 2 + 2 * K:base + 1 + 3 * K] = D[i].max()
-    c[base + 1 + K] = g["W"].values[i] * ws
-    c[base + 2 + K:base + 2 + 2 * K] = -P[i]
-    c[base + 2 + 2 * K:base + 1 + 3 * K] = gam[i]
-  rows, cols, data, clb, cub = [], [], [], [], []
-  row = 0
-
-  def add(cols_, vals, lb_, ub_):
-    nonlocal row
-    for col_, val_ in zip(cols_, vals):
-      rows.append(row)
-      cols.append(col_)
-      data.append(val_)
-    clb.append(lb_)
-    cub.append(ub_)
-    row += 1
-
-  for i in range(n):
-    base = i * V
-    y, q = base, base + 1 + K
-    add([y, q], [MINQ, -1.0], -np.inf, 0)
-    add([q, y], [1.0, -M[i]], -np.inf, 0)
-    add(list(range(base + 1, base + 1 + K)) + [y], [1.0] * K + [-1.0], 0, 0)
-    zs = list(range(base + 2 + K, base + 2 + 2 * K))
-    add(zs + [q], [1.0] * K + [-(1 - Lv[i])], -np.inf, 0)
-    for j in range(K):
-      xj = base + 1 + j
-      zj = base + 2 + K + j
-      uj = base + 2 + 2 * K + j
-      add([zj, uj, xj], [1.0, 1.0, -D[i, j]], 0, 0)
-  ycols = [i * V for i in range(n)]
-  add(ycols, [-1.0] * n, -np.inf, -LO)
-  add(ycols, [1.0] * n, -np.inf, HI)
-  if exact_n is not None:
-    add(ycols, [1.0] * n, exact_n, exact_n)
-  if cov:
-    for cname in g["品类"].unique():
-      idx = [i for i, c in enumerate(codes) if g.loc[c, "品类"] == cname]
-      add([i * V for i in idx], [-1.0] * len(idx), -np.inf, -1)
-  A = coo_matrix((data, (rows, cols)), shape=(len(clb), nv)).tocsr()
-  res = milp(c, integrality=integ, bounds=Bounds(lb, ub),
-             constraints=LinearConstraint(A, np.array(clb), np.array(cub)),
-             options={"time_limit": 60})
-  x = res.x
-  y = np.array([x[i * V] for i in range(n)])
-  sel = np.where(y > 0.5)[0]
-  q = np.array([x[i * V + 1 + K] for i in range(n)])
-  sold = np.zeros(n)
-  short = np.zeros(n)
-  dem = np.zeros(n)
-  rev = np.zeros(n)
-  price = np.zeros(n)
-  for i in range(n):
-    j = int(np.argmax(x[i * V + 1:i * V + 1 + K]))
-    price[i] = P[i, j]
-    dem[i] = D[i, j] if y[i] > 0.5 else 0
-    sold[i] = x[i * V + 2 + K + j]
-    short[i] = x[i * V + 2 + 2 * K + j]
-    rev[i] = price[i] * sold[i]
-  cost = q * g["W"].values * ws
-  pen = short * gam
-  net = rev - cost - pen
-  fr = sold.sum() / max(dem.sum(), 1e-9)
-  return {"codes": codes, "sel": sel, "y": y, "q": q, "price": price,
-          "sold": sold, "short": short, "dem": dem, "rev": rev,
-          "cost": cost, "pen": pen, "net": net, "fr": fr, "M": M,
-          "D1": D[:, 0], "Lv": Lv,
-          "status": res.status, "fun": res.fun,
-          "gap": getattr(res, "mip_gap", None),
-          "nodes": getattr(res, "mip_node_count", None)}
-
-
-def solve(g, el, rho=1.0, K=K, qg=False, w4=None, cov=True, exact_n=None,
-          bs=1.0, ws=1.0, ms=1.0, lc=False):
-  # 基准 K=11; 非最优按 K=7 -> 放宽品类覆盖 顺序降级
-  ps = grid_q(g, K, w4) if qg else grid(g, K)
-  out = mip(g, el, ps, rho, cov, exact_n, bs, ws, ms, lc)
-  lvl = 0
-  if out["status"] != 0:
-    lvl = 1
-    if K != K7:
-      ps = grid(g, K7)
-      out = mip(g, el, ps, rho, cov, exact_n, bs, ws, ms, lc)
-    if out["status"] != 0:
-      lvl = 2
-      ps = grid(g, K7)
-      out = mip(g, el, ps, rho, False, exact_n, bs, ws, ms, lc)
-      if out["status"] != 0:
-        lvl = 3
-  out["lvl"] = lvl
-  out["ps"] = ps
-  return out
-
-
-def fig1(g, out):
-  # 品类选中构成
-  sel = out["sel"]
-  sub = g.iloc[sel]
-  cnt = sub["品类名"].value_counts()
-  allc = g["品类名"].value_counts()
-  fig, ax = plt.subplots(figsize=(8, 5))
-  x = np.arange(len(allc))
-  ax.bar(x - 0.2, allc.values, 0.4, color="#C9D6E8", label="候选")
-  ax.bar(x + 0.2, cnt.reindex(allc.index).fillna(0).values, 0.4,
-         color="#4C72B0", label="选中")
-  ax.set_xticks(x)
-  ax.set_xticklabels(allc.index, fontsize=9)
-  ax.set_ylabel("单品数")
-  ax.legend(fontsize=8)
-  fig.tight_layout()
-  fig.savefig(FIG / "q3_selection.pdf")
-  plt.close(fig)
-
-
-def fig2(rows):
-  # rho-利润/满足率权衡
-  fig, ax = plt.subplots(figsize=(8, 5))
-  ax.plot([r["rho"] for r in rows], [r["net"] for r in rows], "o-",
-          color="#4C72B0", label="总利润")
-  ax.set_xlabel("缺货惩罚系数 rho")
-  ax.set_ylabel("总利润(元)")
-  ax.set_xticks([r["rho"] for r in rows])
-  ax.set_ylim(670, 720)
-  ax2 = ax.twinx()
-  ax2.plot([r["rho"] for r in rows], [r["fr"] for r in rows], "s--",
-           color="#D62728", label="满足率")
-  ax2.set_ylabel("满足率")
-  ax2.set_ylim(0.94, 1.02)
-  ax.legend(fontsize=8, loc="upper left")
-  ax2.legend(fontsize=8, loc="upper right")
-  fig.tight_layout()
-  fig.savefig(FIG / "q3_fr_tradeoff.pdf")
-  plt.close(fig)
-
-
-def fig3(g, out):
-  # 选中单品价格-订购量散点
-  sel = out["sel"]
-  sub = g.iloc[sel]
-  fig, ax = plt.subplots(figsize=(9, 6))
-  cats = sorted(sub["品类名"].unique())
-  cmap = plt.get_cmap("tab10")
-  for i, c in enumerate(cats):
-    m = sub["品类名"] == c
-    ax.scatter(out["price"][sel][m.values], out["q"][sel][m.values],
-               s=40, color=cmap(i % 10), label=c)
-  ax.set_xlabel("售价(元/kg)")
-  ax.set_ylabel("订购量(kg)")
-  ax.legend(fontsize=8)
-  fig.tight_layout()
-  fig.savefig(FIG / "q3_price_qty.pdf")
-  plt.close(fig)
-
-
-def main():
-  df, names, Bcat = load()
-  g = cand(df)
-  el = beta(df, g, Bcat)
-  w4 = df[(df["d"] >= d2i("2023-06-03")) & (df["d"] <= d2i("2023-06-30"))]
-  out = solve(g, el)
-  rows = []
-  rows_rho = []
-  for rho in RHOS:
-    r = solve(g, el, rho=rho)
-    rows.append({"情景": "rho=%.1f" % rho, "总利润": r["net"].sum(),
-                 "满足率": r["fr"], "选中数": len(r["sel"]),
-                 "求解状态": r["status"]})
-    rows_rho.append({"rho": rho, "net": r["net"].sum(), "fr": r["fr"]})
-  for k in EXACT:
-    r = solve(g, el, exact_n=k)
-    rows.append({"情景": "选品数=%d" % k, "总利润": r["net"].sum(),
-                 "满足率": r["fr"], "选中数": len(r["sel"]),
-                 "求解状态": r["status"]})
-  for bs in [1.2, 0.8]:
-    r = solve(g, el, bs=bs)
-    rows.append({"情景": "弹性x%.1f" % bs, "总利润": r["net"].sum(),
-                 "满足率": r["fr"], "选中数": len(r["sel"]),
-                 "求解状态": r["status"]})
-  for ws in [1.1, 0.9]:
-    r = solve(g, el, ws=ws)
-    rows.append({"情景": "批发价x%.1f" % ws, "总利润": r["net"].sum(),
-                 "满足率": r["fr"], "选中数": len(r["sel"]),
-                 "求解状态": r["status"]})
-  for name, kw in [("损耗率=分类级", {"lc": True}), ("网格K=7", {"K": K7}),
-                   ("网格分位数", {"qg": True, "w4": w4}),
-                   ("大M放大50%", {"ms": 1.5})]:
-    r = solve(g, el, **kw)
-    rows.append({"情景": name, "总利润": r["net"].sum(),
-                 "满足率": r["fr"], "选中数": len(r["sel"]),
-                 "求解状态": r["status"]})
-  sel = out["sel"]
-  dec = pd.DataFrame({
-    "单品编码": [g.index[i] for i in sel],
-    "单品名称": [names[g.index[i]] for i in sel],
-    "分类名称": [g.iloc[i]["品类名"] for i in sel],
-    "售价": np.round(out["price"][sel], 3),
-    "订购量": np.round(out["q"][sel], 3),
-    "预计销量": np.round(out["sold"][sel], 3),
-    "缺货量": np.round(out["short"][sel], 3),
-    "需求": np.round(out["dem"][sel], 3),
-    "批发价": np.round(g["W"].values[sel], 3),
-    "损耗率": np.round(g["L"].values[sel], 4),
-    "弹性": np.round(el["收缩弹性"].values[sel], 4),
-    "参考价": np.round(g["p0"].values[sel], 3),
-    "基准需求": np.round(g["d"].values[sel], 3),
-    "低样本": [bool(g["low"].iloc[i]) for i in sel],
-    "单品毛利": np.round(out["net"][sel], 2),
-  })
-  frc = {}
-  for c in g["品类名"].unique():
-    idx = [i for i in sel if g.iloc[i]["品类名"] == c]
-    if idx:
-      s = sum(out["sold"][i] for i in idx)
-      d = sum(out["dem"][i] for i in idx)
-      frc[c] = s / d if d > 0 else 1.0
-  dec.insert(dec.columns.get_loc("单品毛利"), "品类满足率",
-             [round(frc[g.iloc[i]["品类名"]], 4) for i in sel])
-  dec.to_csv(OUT / "q3_decision.csv", index=False, encoding="utf-8-sig")
-  el.reset_index().to_csv(OUT / "q3_elasticity.csv", index=False,
-                          encoding="utf-8-sig")
-  catsel = g.iloc[sel]["品类名"].value_counts()
-  allcats = g["品类名"].value_counts()
-  over = np.maximum(0, out["q"][sel] - out["sold"][sel] /
-                    (1 - g["L"].values[sel]))
-  ck = {
-    "选品数达标": bool(LO <= len(sel) <= HI),
-    "最小陈列达标": bool((out["q"][sel] >= MINQ - 1e-6).all()),
-    "可售上限达标": bool((out["sold"][sel] <=
-                       out["q"][sel] * (1 - g["L"].values[sel]) + 1e-6).all()),
-    "价格网格内": bool(all(any(np.isclose(out["price"][i], p)
-                          for p in out["ps"][g.index[i]]) for i in sel)),
-    "品类覆盖达标": bool(len(set(g.iloc[sel]["品类"])) == len(g["品类"].unique())),
-  }
-  diag = pd.DataFrame([{
-    "候选数": len(g), "选中数": len(sel), "求解状态": out["status"],
-    "最优性gap": out["gap"], "节点数": out["nodes"], "降级层级": out["lvl"],
-    "总需求": round(out["dem"].sum(), 2), "总销量": round(out["sold"].sum(), 2),
-    "总缺货": round(out["short"].sum(), 2), "总收入": round(out["rev"].sum(), 2),
-    "总成本": round(out["cost"].sum(), 2), "缺货惩罚": round(out["pen"].sum(), 2),
-    "总利润": round(out["net"].sum(), 2), "满足率": round(out["fr"], 4),
-    "超订量": round(float(over.sum()), 3),
-    "超订成本": round(float((over * g["W"].values[sel]).sum()), 2),
-    **ck, **{f"选中_{c}": int(catsel.get(c, 0)) for c in allcats.index},
-  }])
-  diag.to_csv(OUT / "q3_diagnostics.csv", index=False, encoding="utf-8-sig")
-  pd.DataFrame(rows).to_csv(OUT / "q3_sensitivity.csv", index=False,
-                            encoding="utf-8-sig")
-  mb = pd.DataFrame({
-    "单品编码": g.index,
-    "大M": np.round(out["M"], 3),
-    "最低档需求": np.round(out["D1"], 3),
-    "可售上限需求": np.round(out["D1"] / (1 - g["L"].values), 3),
-    "余量": np.round(out["M"] - out["D1"] / (1 - g["L"].values), 3),
-  })
-  mb.to_csv(OUT / "q3_mbound.csv", index=False, encoding="utf-8-sig")
-  q2 = pd.read_csv(OUT / "q2_replenishment.csv", encoding="utf-8-sig")
-  q2d = q2[q2["日期"] == "2023-07-01"].set_index("分类编码")
-  q3v = g.iloc[sel][["品类", "品类名"]].copy()
-  q3v["订购"] = out["q"][sel]
-  q3v["可售"] = out["q"][sel] * (1 - g["L"].values[sel])
-  gq = q3v.groupby("品类").agg(名称=("品类名", "first"),
-                               订购合计=("订购", "sum"),
-                               可售合计=("可售", "sum"))
-  vs = gq.join(q2d[["补货量", "期望需求"]], how="left")
-  vs.columns = ["分类名称", "Q3订购量合计", "Q3可售量合计", "Q2订购量", "Q2可售量"]
-  vs["可售量比值"] = vs["Q3可售量合计"] / vs["Q2可售量"]
-  vs.reset_index().rename(columns={"品类": "分类编码"}).to_csv(
-    OUT / "q3_vs_q2.csv", index=False, encoding="utf-8-sig")
-  fig1(g, out)
-  fig2(rows_rho)
-  fig3(g, out)
-  if DEBUG:
-    print("[debug] 候选数:", len(g), "选中数:", len(sel))
-    print("[debug] 求解状态:", out["status"], "gap:", out["gap"],
-          "节点数:", out["nodes"], "降级层级:", out["lvl"])
-    print("[debug] 满足率: %.4f 总利润: %.2f" % (out["fr"], out["net"].sum()))
-    print("[debug] 约束检查:", ck)
-    print("[debug] 品类选中:", catsel.to_dict())
-    print("[debug] 灵敏度行数:", len(rows))
-  print("[save] q3_decision.csv / q3_elasticity.csv / q3_diagnostics.csv / "
-        "q3_sensitivity.csv / q3_mbound.csv / q3_vs_q2.csv")
-  print("[save] q3_selection.pdf / q3_fr_tradeoff.pdf / q3_price_qty.pdf")
-
-
-if __name__ == "__main__":
-  main()
+for i in range(n):
+  base = i * V
+  y, q = base, base + 1 + K
+  add([y, q], [MINQ, -1.0], -np.inf, 0)
+  add([q, y], [1.0, -M[i]], -np.inf, 0)
+  add(list(range(base + 1, base + 1 + K)) + [y],
+      [1.0] * K + [-1.0], 0, 0)
+  zs = list(range(base + 2 + K, base + 2 + 2 * K))
+  add(zs + [q], [1.0] * K + [-(1 - Lv[i])], -np.inf, 0)
+  for j in range(K):
+    xj = base + 1 + j
+    zj = base + 2 + K + j
+    uj = base + 2 + 2 * K + j
+    add([zj, uj, xj], [1.0, 1.0, -D[i, j]], 0, 0)
+add(ycols, [-1.0] * n, -np.inf, -LO)
+add(ycols, [1.0] * n, -np.inf, HI)
+for cname in g["品类"].unique():
+  idx = [i for i, c in enumerate(codes) if g.loc[c, "品类"] == cname]
+  add([i * V for i in idx], [-1.0] * len(idx), -np.inf, -1)
+res = milp(c, integrality=integ, bounds=Bounds(lb, ub),
+           constraints=LinearConstraint(A, np.array(clb), np.array(cub)),
+           options={"time_limit": 60})
 \end{lstlisting}
-
-\section{支撑材料文件清单}
-
-\begin{table}[htbp]
-  \centering
-  \caption{支撑材料文件清单}
-  \begin{tabular}{c l}
-    \toprule
-    目录 & 文件说明 \\
-    \midrule
-    \texttt{code/} & 全部Python源代码 \\
-    \texttt{code/question1/} & 问题一代码（A.py, B.py, C.py, D.py） \\
-    \texttt{code/question2/} & 问题二代码（q2.py, q2\_sensitivity.py） \\
-    \texttt{code/question3/} & 问题三代码（q3.py） \\
-    \texttt{figures/} & 全部图表（PDF格式） \\
-    \texttt{results/} & 全部输出数据（CSV格式） \\
-    \bottomrule
-  \end{tabular}
-  \label{tab:C1}
-\end{table}
-
-\end{appendices}c
+\end{appendices}

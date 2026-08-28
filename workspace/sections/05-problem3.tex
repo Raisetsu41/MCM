@@ -39,7 +39,7 @@ D_i(p)=d_i\left(\frac{p}{p_i^0}\right)^{\hat\beta_i},
 
 \subsubsection{离散价格网格}
 
-把每个单品的价格区间取历史售价百分位区间 $[\min(P_5,p_i^0),\max(P_{95},p_i^0)]$，离散为 $K=11$ 档候选价 $p_{i,k}$（$k=1,\dots,K$），并把参考价 $p_i^0$ 显式并入网格（去重后取 $K$ 档）。网格生成规则默认等距，灵敏度分析（详见第九章）对比 $K=7$ 与分位数取点两种口径。若 $|\hat\beta_i|>1$，内点最优价 $p_i^*=\dfrac{E_i}{E_i-1}\cdot\dfrac{W_i}{1-L_i}$（$E_i=|\hat\beta_i|$）可作为网格内插参考。
+把每个单品的价格区间取历史售价百分位区间 $[\min(P_5,p_i^0),\max(P_{95},p_i^0)]$，离散为 $K=11$ 档候选价 $p_{i,k}$（$k=1,\dots,K$），并把参考价 $p_i^0$ 显式并入网格（去重后取 $K$ 档）。网格生成规则默认等距，灵敏度分析（\ref{sensitivity_analysis}节）对比 $K=7$ 与分位数取点两种口径。若 $|\hat\beta_i|>1$，内点最优价 $p_i^*=\dfrac{E_i}{E_i-1}\cdot\dfrac{W_i}{1-L_i}$（$E_i=|\hat\beta_i|$）可作为网格内插参考。
 
 \subsubsection{目标函数}
 
@@ -50,7 +50,7 @@ D_i(p)=d_i\left(\frac{p}{p_i^0}\right)^{\hat\beta_i},
 \begin{equation}
 \gamma_i=\rho\cdot\max\left(0,\ p_i^0-\frac{W_i}{1-L_i}\right),\qquad \rho\in\{0.5,1.0,1.5\},
 \end{equation}
-$\rho$ 基准取 1.0，灵敏度分析见第九章。
+$\rho$ 基准取 1.0，灵敏度分析见\ref{sensitivity_analysis}节。
 
 \subsubsection{约束条件}
 \begin{align}
@@ -137,6 +137,6 @@ MIP 一次求解即达最优，约束校验全部通过。问题三总体求解�
 
 \subsubsection{小结}
 
-问题三建立了单品级选品、定价与补货联合优化框架。以 45 个候选单品，在选品数 27--33、最小陈列量 2.5 kg 约束下，最优方案上架 33 个单品，总利润 682.08 元，满足率 1.00。灵敏度分析详见第九章，结论稳健；与问题二交叉核对通过。操作层面应优先保障小米椒(份)、西兰花等高毛利单品备货。
+问题三建立了单品级选品、定价与补货联合优化框架。以 45 个候选单品，在选品数 27--33、最小陈列量 2.5 kg 约束下，最优方案上架 33 个单品，总利润 682.08 元，满足率 1.00。灵敏度分析见\ref{sensitivity_analysis}节，结论稳健；与问题二交叉核对通过。操作层面应优先保障小米椒(份)、西兰花等高毛利单品备货。
 
 \textbf{局限与展望：}单品需求独立假设忽略了替代效应\cite{kok2007,vanryzin1999}；确定性需求可升级为单品级报童\cite{federgruen1999,petruzzi1999}；净销量低估真实需求\cite{agrawal1996}；未按周末偏置上调基准需求，结果偏保守；满足率为软惩罚，可改为硬约束或鲁棒选品\cite{vanryzin1999,rusmevichientong2012}；未考虑动态折扣与品类角色差异。

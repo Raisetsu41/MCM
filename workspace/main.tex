@@ -6,6 +6,11 @@
 \documentclass[withoutpreface,bwprint]{cumcmthesis}
 
 % ================= 宏包与格式 =================
+\makeatletter
+% 正文改五号(10.5pt), 行距 12.0pt*1.38 ~ 16.6pt, 与参考论文格式一致
+\renewcommand\normalsize{\@setfontsize\normalsize{10.5}{12.0}}
+\makeatother
+\geometry{top=25mm,bottom=20mm,left=20mm,right=20mm}
 \usepackage{etoolbox}
 \usepackage{ctex}
 \usepackage{graphicx}   % 插图（\includegraphics 必需）
@@ -33,7 +38,7 @@
 \tikzstyle{arrow}=[thick,->,>=stealth]
 
 % ================= 论文基本信息 =================
-\title{论文标题（待定）}
+\title{数据驱动的蔬菜类商品自动定价与补货决策建模}
 
 \begin{document}
 
@@ -53,6 +58,10 @@
 \input{sections/06-problem4}
 \input{sections/07-validation-and-sensitivity}
 \input{sections/08-evaluation-and-improvement}
+
+% ================= AI 工具使用声明 =================
+\section*{AI 工具使用声明}
+本参赛队在竞赛过程中使用了AI 工具，主要用于论文语言润色与排版、部分文献与建模方法初步查找；最终方法的选取、模型建立、代码编写均由参赛队人工完成。详细使用情况见支撑材料。
 
 % ================= 参考文献 =================
 \clearpage

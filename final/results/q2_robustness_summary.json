@@ -1,0 +1,89 @@
+[
+  {
+    "claim": "批发价±10% 内利润不剧烈恶化",
+    "sources": [
+      "q2_sensitivity.csv",
+      "q2_replenishment.csv"
+    ],
+    "perturbation": "W x 1.1 / x 0.9",
+    "metric": "7天总利润相对变化绝对值",
+    "threshold": 30.0,
+    "observed": 0.6516060192908069,
+    "status": "PASS",
+    "limitation": "补货量用近一周均价预测, 未建模日内批发价随机性"
+  },
+  {
+    "claim": "弹性±20% 内最优价与利润稳定",
+    "sources": [
+      "q2_sensitivity.csv"
+    ],
+    "perturbation": "品类弹性 x 1.2 / x 0.8",
+    "metric": "7天总利润相对变化绝对值",
+    "threshold": 30.0,
+    "observed": 0.4768769824586405,
+    "status": "PASS",
+    "limitation": "仅扰动对角弹性, 交叉弹性不变"
+  },
+  {
+    "claim": "价格口径切换不改变弹性符号与利润量级",
+    "sources": [
+      "q2_sensitivity.csv",
+      "q2_sens_detail.csv"
+    ],
+    "perturbation": "固定权重 -> 当期销售额加权 / 中位价",
+    "metric": "7天总利润相对固定权重变化绝对值",
+    "threshold": 30.0,
+    "observed": 72.77285369480957,
+    "status": "CONDITIONAL",
+    "limitation": "未对口径切换重估报童分位数分布参数"
+  },
+  {
+    "claim": "报童订货优于确定性订货",
+    "sources": [
+      "q2_nv_det.csv"
+    ],
+    "perturbation": "最优分位数 y* vs 均值 y0",
+    "metric": "报童7天期望利润 >= 确定性订货期望利润",
+    "threshold": 0.0,
+    "observed": 754.7371455286693,
+    "status": "PASS",
+    "limitation": "确定性口径按 lognormal 期望利润评估, 缺货率口径为 P(D>y)"
+  },
+  {
+    "claim": "损耗率替换后补货量稳定",
+    "sources": [
+      "q2_sensitivity.csv"
+    ],
+    "perturbation": "分类级损耗率 -> 单品销量加权损耗率",
+    "metric": "7天总补货量相对变化绝对值",
+    "threshold": 20.0,
+    "observed": 0.9591637422439514,
+    "status": "PASS",
+    "limitation": "损耗率口径差异来自附件4两类表, 取加权口径作对照"
+  },
+  {
+    "claim": "2022-07 同期回测误差与后28天同量级",
+    "sources": [
+      "q2_backtest_2022.csv",
+      "q2_backtest.csv"
+    ],
+    "perturbation": "样本截止 2022-06-30",
+    "metric": "2022-07 预测 MAPE <= 40%",
+    "threshold": 40.0,
+    "observed": 66.39069226010159,
+    "status": "CONDITIONAL",
+    "limitation": "目标周仅 7 天, 实际销量个别日为 0 时剔除"
+  },
+  {
+    "claim": "品类相关性与独立优化期望收益一致",
+    "sources": [
+      "q2_joint_sim.csv"
+    ],
+    "perturbation": "残差相关矩阵 vs 单位阵(高斯 copula + lognormal 边际)",
+    "metric": "相关模拟期望利润相对独立期望利润偏差 <= 1%",
+    "threshold": 1.0,
+    "observed": 0.11448164691105767,
+    "status": "PASS",
+    "limitation": "copula 相关为残差 Pearson 相关, 与 Spearman 口径略有差异"
+  }
+]
